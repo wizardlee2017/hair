@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eluda.hair.persistence.mapper.ShopMapper">
+ 
+    <select id="getShopInfo" resultType="com.eluda.hair.persistence.dto.ShopInfo">
+        SELECT	name 
+		FROM	shop
+		WHERE	id = #{id}
+    </select>
+    
+    <select id="getCustomerInfo" resultType="com.eluda.hair.persistence.dto.CustomerInfo">
+		SELECT c.id,
+		       c.name,
+		       c.phone_number
+		  FROM shop_customer sc
+		       INNER JOIN customer c
+		       ON sc.customer_id = c.id
+		 WHERE sc.shop_id = #{shopId}
+		   AND sc.customer_id = #{customerId}
+    </select>
+    
+    <select id="getCustomerList" resultType="com.eluda.hair.persistence.dto.CustomerInfo">
+		SELECT c.id,
+		       c.name,
+		       c.phone_number
+		  FROM shop_customer sc
+		       INNER JOIN customer c
+		       ON sc.customer_id = c.id
+		 WHERE sc.shop_id = #{shopId}
+		   AND c.name LIKE CONCAT('%', #{name}, '%')
+    </select>
+    
+    <select id="getShopInfo2" resultType="java.lang.String">
+        SELECT	name 
+		FROM	shop
+		LIMIT   1
+    </select>
+</mapper>
