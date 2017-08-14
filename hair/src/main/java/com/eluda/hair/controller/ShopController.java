@@ -3,6 +3,8 @@ package com.eluda.hair.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,12 +15,25 @@ import com.eluda.hair.persistence.dto.CustomerInfo;
 import com.eluda.hair.persistence.dto.ShopInfo;
 import com.eluda.hair.service.ShopService;
 
-@RestController
+@Controller
 public class ShopController {
 	@Autowired
     private ShopService shopService;
+	
+	@RequestMapping("/shop/searchProcedureHistory")
+	public String searchProcedureHistory(Model model) {
+		return "shop/customer_procedure_history";
+	}
+	
+	@RequestMapping("/shop/customerInfo")
+    public @ResponseBody CustomerInfo getCustomerInfo(){
+    	String shopId = "tst20170812001";
+    	String customerId = "1";
+        return shopService.getCustomerInfo(shopId, customerId);
+    }
+	
      
-    //@RequestMapping(path = {"/shop/info"}, method= RequestMethod.GET)
+    /*//@RequestMapping(path = {"/shop/info"}, method= RequestMethod.GET)
     @RequestMapping("/shop/info")
     //public @ResponseBody ShopInfo getShopInfo(@PathVariable ("id") String id){  
     public @ResponseBody ShopInfo getShopInfo(){
@@ -47,5 +62,5 @@ public class ShopController {
     public @ResponseBody String getShopInfo2(){
     	return shopService.getShopInfo2();
     	//return "aaaa";
-    }
+    }*/
 }

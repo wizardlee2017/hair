@@ -1,4 +1,4 @@
-package com.eluda.hair;
+package com.eluda.hair.config;
 
 //import javax.sql.DataSource;
 
