@@ -15,7 +15,20 @@
 	    	<h3 class="panel-title">검색</h3>
 	  	</div>
 	  	<div class="panel-body">
-	    	이름, 전화번호 검색
+	    	<div class="input-group">
+				<span class="input-group-addon" id="basic-addon1">이름</span>
+				<input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+				<span class="input-group-addon" id="basic-addon2">전화번호</span>
+				<input type="text" class="form-control" placeholder="mobileNumber" aria-describedby="basic-addon2">
+			</div>
+			<div class="btn-toolbar" role="toolbar" aria-label="...">
+				<div class="btn-group" role="group" aria-label="...">
+					<button type="button" class="btn btn-default">검색</button>
+				</div>
+				<div class="btn-group" role="group" aria-label="...">
+					<button type="button" class="btn btn-default">고객 등록</button>
+				</div>
+			</div>
 	  	</div>
 	</div>
 	<div class="panel panel-default">
