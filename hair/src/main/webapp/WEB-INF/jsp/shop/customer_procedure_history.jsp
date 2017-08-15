@@ -1,13 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="contextPath" value="<%= request.getContextPath()%>"></c:set>  
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>test</title>
-<link rel="stylesheet" href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css">
+<link rel="stylesheet" href="${contextPath}/resources/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+<script src="${contextPath}/resources/jquery/jquery-3.2.1.min.js"></script>
+<script src="${contextPath}/resources//bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+
+<!-- <link rel="stylesheet" href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css">
 <script src="/webjars/jquery/3.2.1/jquery.min.js"></script>
-<script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
+<script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script> -->
 </head>
 <body>
 	<div class="panel panel-default">
@@ -16,10 +22,10 @@
 	  	</div>
 	  	<div class="panel-body">
 	    	<div class="input-group">
-				<span class="input-group-addon" id="basic-addon1">이름</span>
-				<input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
-				<span class="input-group-addon" id="basic-addon2">전화번호</span>
-				<input type="text" class="form-control" placeholder="mobileNumber" aria-describedby="basic-addon2">
+	    		<span class="input-group-addon" id="phoneNumber">전화번호</span>
+				<input type="text" class="form-control" placeholder="전화번호 뒷자리" aria-describedby="phoneNumber">
+				<span class="input-group-addon" id="name">이름</span>
+				<input type="text" class="form-control" placeholder="고객명" aria-describedby="name">
 			</div>
 			<div class="btn-toolbar" role="toolbar" aria-label="...">
 				<div class="btn-group" role="group" aria-label="...">
