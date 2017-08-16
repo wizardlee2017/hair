@@ -11,6 +11,8 @@
 <script src="${contextPath}/resources/jquery/jquery-3.2.1.min.js"></script>
 <script src="${contextPath}/resources//bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 
+<script src="${contextPath}/js/shop/customer_procedure_history.js"></script>
+
 <!-- <link rel="stylesheet" href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css">
 <script src="/webjars/jquery/3.2.1/jquery.min.js"></script>
 <script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script> -->
