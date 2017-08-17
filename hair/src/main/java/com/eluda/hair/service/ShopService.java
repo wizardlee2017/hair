@@ -10,7 +10,5 @@ public interface ShopService {
 	
 	public CustomerInfo getCustomerInfo(String shopId, String customerId);
 	
-	public List<CustomerInfo> getCustomerList(String shopId, String name, String phoneNumber);
-	
 	public String getShopInfo2();
 }

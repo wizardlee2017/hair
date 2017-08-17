@@ -25,9 +25,9 @@
 	  	<div class="panel-body">
 	    	<div class="input-group">
 	    		<span class="input-group-addon" id="phoneNumber">전화번호</span>
-				<input type="text" class="form-control" placeholder="전화번호 뒷자리" aria-describedby="phoneNumber">
+				<input type="text" class="form-control" placeholder="전화번호 뒷자리" aria-describedby="phoneNumber" id="customerPhoneNumber">
 				<span class="input-group-addon" id="name">이름</span>
-				<input type="text" class="form-control" placeholder="고객명" aria-describedby="name">
+				<input type="text" class="form-control" placeholder="고객명" aria-describedby="name" id="customerName">
 			</div>
 			<div class="btn-toolbar" role="toolbar" aria-label="...">
 				<div class="btn-group" role="group" aria-label="...">

@@ -19,17 +19,6 @@
 		   AND sc.customer_id = #{customerId}
     </select>
     
-    <select id="getCustomerList" resultType="com.eluda.hair.persistence.dto.CustomerInfo">
-		SELECT c.id,
-		       c.name,
-		       c.phone_number
-		  FROM shop_customer sc
-		       INNER JOIN customer c
-		       ON sc.customer_id = c.id
-		 WHERE sc.shop_id = #{shopId}
-		   AND c.name LIKE CONCAT('%', #{name}, '%')
-    </select>
-    
     <select id="getShopInfo2" resultType="java.lang.String">
         SELECT	name 
 		FROM	shop

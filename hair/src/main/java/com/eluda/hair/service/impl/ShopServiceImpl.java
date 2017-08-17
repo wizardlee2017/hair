@@ -33,9 +33,4 @@ public class ShopServiceImpl implements ShopService {
 		return shopMapper.getCustomerInfo(shopId, customerId) ;
 	}
 
-	@Override
-	public List<CustomerInfo> getCustomerList(String shopId, String name, String phoneNumber) {
-		return shopMapper.getCustomerList(shopId, name, phoneNumber);
-	}
-
 }

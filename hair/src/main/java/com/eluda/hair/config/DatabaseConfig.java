@@ -1,6 +1,5 @@
 package com.eluda.hair.config;
 
-//import javax.sql.DataSource;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.tomcat.jdbc.pool.DataSource;
@@ -31,4 +30,15 @@ public class DatabaseConfig {
       final SqlSessionTemplate sqlSessionTemplate = new SqlSessionTemplate(sqlSessionFactory);
       return sqlSessionTemplate;
     }
+    
+    /*@Order(Ordered.HIGHEST_PRECEDENCE)
+    @Bean
+    public Filter characterEncodingFilter() {
+        CharacterEncodingFilter filter = new CharacterEncodingFilter();
+        filter.setEncoding("UTF-8");
+        filter.setForceEncoding(true);
+        return filter;
+    }*/
+
+    
 }

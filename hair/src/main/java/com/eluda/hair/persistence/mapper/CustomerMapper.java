@@ -1,11 +1,15 @@
 package com.eluda.hair.persistence.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.eluda.hair.persistence.dto.ShopInfo;
+import com.eluda.hair.persistence.dto.CustomerInfo;
 
 @Mapper
 public interface CustomerMapper {
-	public ShopInfo getShopCustomerInfo(@Param("shopId") String shopId, @Param("customerId") String customerId);
+	public CustomerInfo getShopCustomerInfo(@Param("shopId") String shopId, @Param("customerId") String customerId);
+	
+	public List<CustomerInfo> getShopCustomerList(@Param("shopId") String shopId, @Param("customerName") String customerName, @Param("customerPhoneNumber") String customerPhoneNumber);
 }

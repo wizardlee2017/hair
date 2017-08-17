@@ -2,12 +2,44 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.eluda.hair.persistence.mapper.CustomerMapper">
  
-    <select id="getCustomerInfo" resultType="com.eluda.hair.persistence.dto.CustomerInfo">
+  <select id="getCustomerInfo" resultType="com.eluda.hair.persistence.dto.CustomerInfo">
 		SELECT id,
 		       name,
 		       phone_number
 		  FROM customer
 		 WHERE customer_id = #{customerId}
-    </select>
+  </select>
+    
+  <select id="getShopCustomerInfo" resultType="com.eluda.hair.persistence.dto.CustomerInfo">
+		SELECT	c.*
+		FROM    shop_customer sc
+            INNER JOIN customer c
+            ON sc.customer_id = c.id
+		WHERE		sc.shop_id = #{shopId}
+		  AND		sc.customer_id = #{customerId}
+  </select>
+  
+  <select id="getShopCustomerList" resultType="com.eluda.hair.persistence.dto.CustomerInfo">
+    <if test="customerName != null">
+      <bind name="patternCustomerName" value="'%' + customerName + '%'" />
+    </if>
+		<if test="customerPhoneNumber != null">
+      <bind name="patternCustomerPhoneNumber" value="'%' + customerPhoneNumber + '%'" />
+    </if>
+		
+		SELECT  c.id,
+            c.name,
+            c.phone_number
+    FROM    shop_customer sc
+            INNER JOIN customer c
+            ON sc.customer_id = c.id
+    WHERE   sc.shop_id = #{shopId}
+    <if test="customerName != null">
+      AND   c.name LIKE #{patternCustomerName}
+    </if>
+    <if test="customerPhoneNumber != null">
+      AND   c.phone_number LIKE #{patternCustomerPhoneNumber}
+    </if>
+  </select>
     
 </mapper>
