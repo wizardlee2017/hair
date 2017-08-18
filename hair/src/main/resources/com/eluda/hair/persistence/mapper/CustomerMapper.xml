@@ -29,7 +29,7 @@
 		
 		SELECT  c.id,
             c.name,
-            c.phone_number
+            c.phone_number AS phoneNumber
     FROM    shop_customer sc
             INNER JOIN customer c
             ON sc.customer_id = c.id

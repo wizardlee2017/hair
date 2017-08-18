@@ -23,20 +23,24 @@
 	    	<h3 class="panel-title">검색</h3>
 	  	</div>
 	  	<div class="panel-body">
-	    	<div class="input-group">
-	    		<span class="input-group-addon" id="phoneNumber">전화번호</span>
-				<input type="text" class="form-control" placeholder="전화번호 뒷자리" aria-describedby="phoneNumber" id="customerPhoneNumber">
-				<span class="input-group-addon" id="name">이름</span>
-				<input type="text" class="form-control" placeholder="고객명" aria-describedby="name" id="customerName">
-			</div>
-			<div class="btn-toolbar" role="toolbar" aria-label="...">
-				<div class="btn-group" role="group" aria-label="...">
-					<button type="button" class="btn btn-default">검색</button>
-				</div>
-				<div class="btn-group" role="group" aria-label="...">
-					<button type="button" class="btn btn-default">고객 등록</button>
-				</div>
-			</div>
+	  	  <div class="input-group">
+			    <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+          <input id="txtCustomerPhoneNumber" type="text" class="form-control" name="customerPhoneNumber" placeholder="phone number" data-toggle="tooltip" data-placement="bottom" title="전화번호 뒷자리 입력">
+			    <div class="input-group-btn">
+			      <button class="btn btn-default" type="button" id="btnSearchCustomerByPhoneNumber">
+			        <i class="glyphicon glyphicon-search"></i>
+			      </button>
+			    </div>
+			  </div>
+			  <div class="input-group">
+			    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+			    <input id="txtCustomerName" type="text" class="form-control" name=customerName placeholder="고객명" data-toggle="tooltip" data-placement="left" title="고객명 입력">
+			    <div class="input-group-btn">
+            <button class="btn btn-default" type="button" id="btnSearchCustomerByName">
+              <i class="glyphicon glyphicon-search"></i>
+            </button>
+          </div>
+			  </div>
 	  	</div>
 	</div>
 	<div class="panel panel-default">
@@ -44,7 +48,8 @@
 	    	<h3 class="panel-title">검색 결과</h3>
 	  	</div>
 	  	<div class="panel-body">
-	    	검색된 결과 표시(고객 정보)
+	    	<span class="label label-default" id="lblCustomerName">고객명</span>
+	    	<span class="label label-default" id="lblCustomerPhoneNumber">010-1234-1100</span>
 	  	</div>
 	</div>		
 	<div class="panel panel-default">
@@ -77,5 +82,41 @@
 			</table>
 	    
 	</div>
+
+	<div id="searchCustomerListPopup" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+	    <!-- Modal content-->
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        <h4 class="modal-title">고객 목록</h4>
+	      </div>
+	      <div class="modal-body">
+	        <table class="table table-striped table-hover" id="tblCustomerList">
+	          <thead>
+              <tr>
+                <th>이름</th>
+                <th>전화번호</th>
+              </tr>
+		        </thead>
+            <tbody>
+              <tr>
+                <td>일이삼</td>
+                <td>010-1111-1234</td>
+              </tr>
+              <tr>
+                <td>가나다</td>
+                <td>010-1234-1100</td>
+              </tr>
+	          </tbody>
+          </table>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">선택</button>
+	      </div>
+	    </div>
+	
+	  </div>
+</div>
 </body>
 </html>
