@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eluda.hair.persistence.dto.CustomerInfo;
+import com.eluda.hair.persistence.dto.CustomerProcedureHistoryInfo;
 import com.eluda.hair.persistence.dto.ShopInfo;
+import com.eluda.hair.service.CustomerProcedureHistoryService;
 import com.eluda.hair.service.CustomerService;
 import com.eluda.hair.service.ShopService;
 
@@ -28,6 +30,8 @@ public class ShopController {
     private ShopService shopService;
 	@Autowired
 	private CustomerService customerService;
+	@Autowired
+	private CustomerProcedureHistoryService customerProcedureHistoryService;
 	
 	@RequestMapping("/shop/searchProcedureHistory")
 	public String searchProcedureHistory(Model model) {
@@ -52,6 +56,16 @@ public class ShopController {
 		
     	return customerService.getShopCustomerList(shopId, customerName, customerPhoneNumber);
     }
+	
+	@RequestMapping(value = {"/shop/{shopId}/customer/{customerId}/procedure-history/list"}, 
+					method= RequestMethod.GET)
+	public @ResponseBody List<CustomerProcedureHistoryInfo> getShopCustomerProcedureHistoryList(@PathVariable("shopId") String shopId,
+															@PathVariable("customerId") String customerId){
+	logger.debug("shopId : {}", shopId);
+	logger.debug("customerId : {}", customerId);
+	
+	return customerProcedureHistoryService.getShopCustomerProcedureHistoryList(shopId, customerId);
+	}
 	
      
     /*//@RequestMapping(path = {"/shop/info"}, method= RequestMethod.GET)

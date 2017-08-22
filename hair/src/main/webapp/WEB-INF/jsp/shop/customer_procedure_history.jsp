@@ -7,15 +7,21 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>test</title>
+
 <link rel="stylesheet" href="${contextPath}/resources/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="${contextPath}/resources/jQuery.NumPad-master/jquery.numpad.css">
+
 <script src="${contextPath}/resources/jquery/jquery-3.2.1.min.js"></script>
-<script src="${contextPath}/resources//bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<script src="${contextPath}/resources/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<script src="${contextPath}/resources/jQuery.NumPad-master/jquery.numpad.js"></script>
 
 <script src="${contextPath}/js/shop/customer_procedure_history.js"></script>
+
 
 <!-- <link rel="stylesheet" href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css">
 <script src="/webjars/jquery/3.2.1/jquery.min.js"></script>
 <script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script> -->
+    
 </head>
 <body>
 	<div class="panel panel-default">
@@ -92,7 +98,7 @@
 	        <h4 class="modal-title">고객 목록</h4>
 	      </div>
 	      <div class="modal-body">
-	        <table class="table table-striped table-hover" id="tblCustomerList">
+	        <table class="table" id="tblCustomerList">
 	          <thead>
               <tr>
                 <th>이름</th>

@@ -2,6 +2,8 @@ $(document).ready(function(){
 	
 	$('[data-toggle="tooltip"]').tooltip();
 	
+	$('#txtCustomerPhoneNumber').numpad();
+	
 	//click search button
     $("button#searchCustomer").click(function(){
     	var lv_sCustomerPhoneNumber = $("#txtCustomerPhoneNumber").val();
@@ -23,8 +25,15 @@ $(document).ready(function(){
     });
     
     //select customer from customer list on popup.
+    $("#searchCustomerListPopup #tblCustomerList tbody").on("click", "tr", function(){
+    	console.log("select tr");
+    	$(this).addClass("active").siblings().removeClass("active");
+    });
+    
+    //click select button from customer list on popup.
     $("#searchCustomerListPopup .modal-footer button").on("click", function(){
-    	var customerInfo = {"name":"aaa", "phoneNumber":"111"}
+    	var selectedTr = $("#searchCustomerListPopup #tblCustomerList tbody tr.active");
+    	var customerInfo = {"name":$(selectedTr).data("name"), "phoneNumber":$(selectedTr).data("phone_number")}
     	setCustomerInfo( customerInfo );
     });
     
@@ -71,8 +80,43 @@ function searchCustomer(customerPhoneNumber, customerName){
 	});
 }
 
+function requestCustomerProcedureHistoryList(customerPhoneNumber, customerName){
+	
+	var lv_sBaseUrl = "/hair/shop/kor20170701001/customer/list";
+	var lv_sUrl = "/hair/shop/kor20170701001/customer/list";
+	
+	if(customerPhoneNumber.length > 0){
+		lv_sUrl = lv_sBaseUrl + "?customerPhoneNumber=" + customerPhoneNumber;
+	}
+	
+	if(customerName.length > 0){
+		if(lv_sUrl == lv_sBaseUrl){
+			lv_sUrl = lv_sBaseUrl + "?customerName=" + customerName;
+		} else {
+			lv_sUrl = lv_sUrl + "&customerName=" + customerName;
+		}
+	}
+	
+	$.ajax({
+		url : lv_sUrl,
+		method : "GET",
+		success : function(resData) {
+			console.log(resData);				
+			console.log("length : " + resData.length);
+			if(resData.length == 0){
+				console.log("new shop customer. process to search customer master.");					
+			} else if(resData.length == 1){
+				console.log("set customer infomation. request shop procedure history.");					
+			} else if(resData.length > 1){
+				console.log("show customer list on popup");
+				showSearchCustomerListOnPopup( resData );
+			}
+		}
+	});
+}
+
 function showSearchCustomerListOnPopup( customerList ){
-	var lv_sTrTemplate =	"<tr> " +
+	var lv_sTrTemplate =	"<tr data-name=':name' data-phone_number=':phoneNumber'> " +
 							"	<td>:name</td>" + 
 							"	<td>:phoneNumber</td>" +
 							"</tr>";
@@ -82,8 +126,8 @@ function showSearchCustomerListOnPopup( customerList ){
 	//set table for customer list
 	$.each(customerList, function( tv_nLoopIndex, tv_oCustomerInfo ) {
 		console.log(tv_nLoopIndex + " : " + tv_oCustomerInfo);
-		var lv_sAppendStr =	lv_sTrTemplate.replace(":phoneNumber", tv_oCustomerInfo.phoneNumber)
-			  							  .replace(":name", tv_oCustomerInfo.name);
+		var lv_sAppendStr =	lv_sTrTemplate.replace(/:phoneNumber/g, tv_oCustomerInfo.phoneNumber)
+			  							  .replace(/:name/g, tv_oCustomerInfo.name);
 		$("#searchCustomerListPopup #tblCustomerList tbody").append(lv_sAppendStr);
 	});
 	

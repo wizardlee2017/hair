@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eluda.hair.persistence.mapper.CustomerMapper">
+ 
+  <select id="getShopCustomerProcedureHistoryList" resultType="com.eluda.hair.persistence.dto.CustomerProcedureHistoryInfo">
+		SELECT  sm.name,
+            cph.date_yyyymmdd,
+			      sm.price,
+			      cph.price
+    FROM    customer_procedure_history cph
+			      INNER JOIN shop_menu sm
+			      ON cph.shop_menu_id = sm.id
+    WHERE   cph.shop_id = #{shopId}
+      AND   cph.customer_id = #{customerId}
+  </select>
+    
+</mapper>
