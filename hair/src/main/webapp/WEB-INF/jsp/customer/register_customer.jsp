@@ -69,7 +69,6 @@
                 <th>No.</th>
                 <th>시술명</th>
                 <th>시술일</th>
-                <th>디자이너</th>
                 <th>기본가</th>
                 <th>시술가</th>
               </tr>
@@ -79,17 +78,14 @@
             <td>1</td>
             <td>여성컷</td>
             <td>2017.07.05</td>
-            <th>루나</th>
             <td>100</td>
             <td>100</td>
           </tr>
           <tr>
             <td>2</td>
             <td>일반펌</td>
-            <td>2017.07.05</td>
-            <th>지니</th>
             <td>100</td>
-            <td>90</td>
+              <td>90</td>
           </tr>
       </tbody>
     </table>	    	

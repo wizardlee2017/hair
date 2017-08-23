@@ -2,10 +2,12 @@ package com.eluda.hair.persistence.dto;
 
 public class CustomerProcedureHistoryInfo {
 	
+	private String visitNumber;
 	private String procedureName;
 	private String procedureDate;
 	private Double defaultPrice;
 	private Double procedurePrice;
+	private String hairdresserName;
 	
 	public String getProcedureName() {
 		return procedureName;
@@ -30,6 +32,18 @@ public class CustomerProcedureHistoryInfo {
 	}
 	public void setProcedurePrice(Double procedurePrice) {
 		this.procedurePrice = procedurePrice;
+	}
+	public String getVisitNumber() {
+		return visitNumber;
+	}
+	public void setVisitNumber(String visitNumber) {
+		this.visitNumber = visitNumber;
+	}
+	public String getHairdresserName() {
+		return hairdresserName;
+	}
+	public void setHairdresserName(String hairdresserName) {
+		this.hairdresserName = hairdresserName;
 	}
 	
 }
