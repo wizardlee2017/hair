@@ -5,8 +5,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.eluda.hair.persistence.dto.CustomerInfo;
-import com.eluda.hair.persistence.dto.ShopInfo;
+import com.eluda.hair.persistence.vo.CustomerInfo;
+import com.eluda.hair.persistence.vo.ShopInfo;
 
 @Mapper
 public interface ShopMapper {
@@ -16,5 +16,4 @@ public interface ShopMapper {
 	
 	//public List<CustomerInfo> getShopCustomerList(@Param("shopId") String shopId, @Param("customerName") String name, @Param("phoneNumber") String phoneNumber);
 	
-	public String getShopInfo2();
 }

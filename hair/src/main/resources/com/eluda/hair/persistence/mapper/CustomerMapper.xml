@@ -2,15 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.eluda.hair.persistence.mapper.CustomerMapper">
  
-  <select id="getCustomerInfo" resultType="com.eluda.hair.persistence.dto.CustomerInfo">
+  <select id="getCustomerInfo" resultType="com.eluda.hair.persistence.vo.CustomerInfo">
 		SELECT id,
 		       name,
 		       phone_number
 		  FROM customer
 		 WHERE customer_id = #{customerId}
   </select>
+  
+  <select id="getCustomerListByPhoneNumber" resultType="com.eluda.hair.persistence.vo.CustomerInfo">
+    SELECT id,
+           name,
+           phone_number
+      FROM customer
+     WHERE phone_number = #{phoneNumber}
+  </select>
+  
     
-  <select id="getShopCustomerInfo" resultType="com.eluda.hair.persistence.dto.CustomerInfo">
+  <select id="getShopCustomerInfo" resultType="com.eluda.hair.persistence.vo.CustomerInfo">
 		SELECT	c.*
 		FROM    shop_customer sc
             INNER JOIN customer c
@@ -19,7 +28,7 @@
 		  AND		sc.customer_id = #{customerId}
   </select>
   
-  <select id="getShopCustomerList" resultType="com.eluda.hair.persistence.dto.CustomerInfo">
+  <select id="getShopCustomerList" resultType="com.eluda.hair.persistence.vo.CustomerInfo">
     <if test="customerName != null">
       <bind name="patternCustomerName" value="'%' + customerName + '%'" />
     </if>
@@ -41,5 +50,16 @@
       AND   c.phone_number LIKE #{patternCustomerPhoneNumber}
     </if>
   </select>
+  
+  <insert id="insertCustomer" parameterType="com.eluda.hair.persistence.vo.CustomerInfo" useGeneratedKeys="true" keyProperty="id">
+    INSERT
+    INTO    customer  
+            ( name,
+              phone_number
+            )
+    VALUES  ( #{name},
+              #{phoneNumber}
+            )
+  </insert>
     
 </mapper>

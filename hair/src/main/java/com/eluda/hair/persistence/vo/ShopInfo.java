@@ -1,4 +1,4 @@
-package com.eluda.hair.persistence.dto;
+package com.eluda.hair.persistence.vo;
 
 public class ShopInfo {
 	private String id;

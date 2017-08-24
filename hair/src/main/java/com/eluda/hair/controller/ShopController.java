@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.eluda.hair.persistence.dto.CustomerInfo;
+import com.eluda.hair.persistence.vo.CustomerInfo;
 import com.eluda.hair.persistence.dto.CustomerProcedureHistoryInfo;
 import com.eluda.hair.service.CustomerProcedureHistoryService;
 import com.eluda.hair.service.CustomerService;

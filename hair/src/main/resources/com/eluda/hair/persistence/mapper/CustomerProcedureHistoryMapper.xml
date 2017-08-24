@@ -8,14 +8,16 @@
 		        a.procedureDate,
 		        a.defaultPrice,
 		        a.procedurePrice,
-		        a.hairdresserName
+		        a.hairdresserName,
+		        a.memo
 		FROM    (
 		          SELECT  @rownum := @rownum+1 AS visitNumber,
 		                  sm.name AS procedureName,
 		                  cph.date_yyyymmdd AS procedureDate,
 		                  cph.default_price AS defaultPrice,
 		                  cph.price AS procedurePrice,
-		                  h.name AS hairdresserName
+		                  h.name AS hairdresserName,
+		                  cph.memo
 		          FROM    customer_procedure_history cph
 		                  INNER JOIN shop_menu sm
 		                  ON cph.shop_menu_id = sm.id

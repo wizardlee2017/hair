@@ -99,13 +99,13 @@ function requestCustomerProcedureHistoryList(customerInfo){
 
 //시술 목록 구성
 function setCustomerProcedureHistoryList(CustomerProcedureHistoryList){
-	var lv_sTrTemplate =	"<tr data-visit-number=':visitNumber' data-procedure-name=':procedureName' data-procedure-date=':procedureDate' data-hairdresser=':hairdresser' data-defaultPrice=':defaultPrice' data-procedure-price=':procedurePrice'> " +
+	var lv_sTrTemplate =	"<tr data-visit-number=':visitNumber' data-procedure-name=':procedureName' data-procedure-date=':procedureDate' data-hairdresser=':hairdresser' data-procedure-price=':procedurePrice' data-memo=':memo' > " +
 							"	<td>:visitNumber</td>" + 
 							"	<td>:procedureName</td>" +
 							"	<td>:procedureDate</td>" +
 							"	<td>:hairdresser</td>" +
-							"	<td>:defaultPrice</td>" +
 							"	<td>:procedurePrice</td>" +
+							"	<td>:memo</td>" +
 							"</tr>";
 	
 	//clear table for customer list
@@ -118,8 +118,8 @@ function setCustomerProcedureHistoryList(CustomerProcedureHistoryList){
 										  .replace(/:procedureName/g, tv_oProcedureHistoryInfo.procedureName)	
 										  .replace(/:procedureDate/g, tv_oProcedureHistoryInfo.procedureDate)
 										  .replace(/:hairdresser/g, tv_oProcedureHistoryInfo.hairdresserName)
-										  .replace(/:defaultPrice/g, tv_oProcedureHistoryInfo.defaultPrice)
-										  .replace(/:procedurePrice/g, tv_oProcedureHistoryInfo.procedurePrice);
+										  .replace(/:procedurePrice/g, tv_oProcedureHistoryInfo.procedurePrice)
+										  .replace(/:memo/g, tv_oProcedureHistoryInfo.memo);
 		$("#tblCustomerProcedureHistoryList tbody").append(lv_sAppendStr);
 	});
 }

@@ -11,12 +11,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-@Configuration
-@MapperScan(basePackages="com.eluda.hair.persistence.mapper")
-@EnableTransactionManagement
+//@Configuration
+//@MapperScan(basePackages="com.eluda.hair.persistence.mapper")
+//@EnableTransactionManagement
 public class DatabaseConfig {
 	
-	@Bean
+	/*@Bean
     public  SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
         final SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
         sessionFactory.setDataSource(dataSource);
@@ -29,7 +29,7 @@ public class DatabaseConfig {
     public SqlSessionTemplate sqlSessionTemplate(SqlSessionFactory sqlSessionFactory) throws Exception {
       final SqlSessionTemplate sqlSessionTemplate = new SqlSessionTemplate(sqlSessionFactory);
       return sqlSessionTemplate;
-    }
+    }*/
     
     /*@Order(Ordered.HIGHEST_PRECEDENCE)
     @Bean

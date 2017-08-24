@@ -8,6 +8,7 @@ public class CustomerProcedureHistoryInfo {
 	private Double defaultPrice;
 	private Double procedurePrice;
 	private String hairdresserName;
+	private String memo;
 	
 	public String getProcedureName() {
 		return procedureName;
@@ -44,6 +45,12 @@ public class CustomerProcedureHistoryInfo {
 	}
 	public void setHairdresserName(String hairdresserName) {
 		this.hairdresserName = hairdresserName;
+	}
+	public String getMemo() {
+		return memo;
+	}
+	public void setMemo(String memo) {
+		this.memo = memo;
 	}
 	
 }
