@@ -14,7 +14,7 @@ public interface ShopMapper {
 	
 	public CustomerInfo getCustomerInfo(@Param("shopId") String shopId, @Param("customerId") String customerId);
 	
-	public List<CustomerInfo> getShopCustomerList(@Param("shopId") String shopId, @Param("customerName") String name, @Param("phoneNumber") String phoneNumber);
+	//public List<CustomerInfo> getShopCustomerList(@Param("shopId") String shopId, @Param("customerName") String name, @Param("phoneNumber") String phoneNumber);
 	
 	public String getShopInfo2();
 }
