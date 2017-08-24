@@ -61,5 +61,16 @@
               #{phoneNumber}
             )
   </insert>
+  
+  <insert id="insertCustomer2">
+    INSERT
+    INTO    customer  
+            ( name,
+              phone_number
+            )
+    VALUES  ( #{name},
+              #{phoneNumber}
+            )
+  </insert>
     
 </mapper>

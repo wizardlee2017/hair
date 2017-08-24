@@ -19,4 +19,6 @@ public interface CustomerService {
 	public List<CustomerInfo> getCustomerListByPhoneNumber(String phoneNumber);
 	
 	public CustomerInfo insertCustomer(CustomerInfo customerInfo);
+	
+	public void insertCustomer2(CustomerInfo customerInfo);
 }

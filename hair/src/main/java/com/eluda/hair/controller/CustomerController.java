@@ -27,8 +27,10 @@ public class CustomerController {
 	private CustomerService customerService;
 	
 	@RequestMapping(path = {"/customer"}, method= RequestMethod.POST)
-	public @ResponseBody CustomerInfo getCustomerInfo(@RequestBody CustomerInfo pCustomerInfo){
-		return customerService.
+	public @ResponseBody CustomerInfo registerCustomer(@RequestBody CustomerInfo pCustomerInfo){
+		//return customerService.insertCustomer(pCustomerInfo);
+		customerService.insertCustomer2(pCustomerInfo);
+		return new CustomerInfo();
 	}
 	
 	@RequestMapping(path = {"/customer-list/phone-number/{phoneNumber}"}, method= RequestMethod.GET)

@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.eluda.hair.persistence.vo.CustomerInfo;
 import com.eluda.hair.persistence.mapper.CustomerMapper;
@@ -40,9 +41,19 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
+	@Transactional
 	public CustomerInfo insertCustomer(CustomerInfo customerInfo) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return customerMapper.insertCustomer(customerInfo);
+	}
+	
+	@Override
+	@Transactional
+	public void insertCustomer2(CustomerInfo customerInfo) {
+		
+		customerMapper.insertCustomer2(customerInfo.getName(), customerInfo.getPhoneNumber());
+		
+		return; 
 	}
 
 }
