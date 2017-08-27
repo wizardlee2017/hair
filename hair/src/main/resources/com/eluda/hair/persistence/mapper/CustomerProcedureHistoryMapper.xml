@@ -30,5 +30,30 @@
 		        ) a
 		ORDER   BY a.visitNumber DESC
   </select>
+  
+  <insert id="insertCustomerProcedureHistory" parameterType="com.eluda.hair.persistence.vo.CustomerProcedureHistoryVo">
+    INSERT
+    INTO    customer_procedure_history  
+            ( customer_id,
+              shop_id,
+              shop_menu_id,
+              date_yyyymmdd,
+              hairdresser_id,
+              procedure_type_id,
+              price,
+              default_price,
+              memo              
+            )
+    VALUES  ( #{customerId},
+              #{shopId},
+              #{shopMenuId},
+              #{dateYyyymmdd},
+              #{hairdresserId},
+              #{procedureTypeId},
+              #{price},
+              #{defaultPrice},
+              #{memo}       
+            )
+  </insert>
     
 </mapper>

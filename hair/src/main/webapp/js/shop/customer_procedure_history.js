@@ -4,6 +4,7 @@ $(document).ready(function(){
 	
 	$('#txtCustomerPhoneNumber').numpad();
 	
+	//num pad done click
 	$(".nmpd-grid").on("click",".btn.done",function(){
 		console.log("click done");
 		$("button#btnSearchCustomerByPhoneNumber").trigger("click");
@@ -13,20 +14,17 @@ $(document).ready(function(){
     $("button#searchCustomer").click(function(){
     	var lv_sCustomerPhoneNumber = $("#txtCustomerPhoneNumber").val();
     	var lv_sCustomerName = encodeURI($("#txtCustomerName").val(),"UTF-8");
-    	searchCustomer(lv_sCustomerPhoneNumber, lv_sCustomerName);
-    	
+    	searchCustomer(lv_sCustomerPhoneNumber, lv_sCustomerName);    	
     });
     
     $("button#btnSearchCustomerByName").click(function(){
     	var lv_sCustomerName = encodeURI($("#txtCustomerName").val(),"UTF-8");
-    	searchCustomer("", lv_sCustomerName);
-    	
+    	searchCustomer("", lv_sCustomerName);    	
     });
     
     $("button#btnSearchCustomerByPhoneNumber").click(function(){
     	var lv_sCustomerPhoneNumber = $("#txtCustomerPhoneNumber").val();
-    	searchCustomer(lv_sCustomerPhoneNumber, "");
-    	
+    	searchCustomer(lv_sCustomerPhoneNumber, "");    	
     });
     
     //select customer from customer list on popup.
@@ -44,12 +42,35 @@ $(document).ready(function(){
     
     //click register shop customer button
     $("#btnPopupRegisterShopCustomerLayer").click(function(){
-    	$("#popupRegisterShopCustomer").modal();
-    	
+    	$("#popupRegisterShopCustomer").modal();    	
+    });
+    
+    
+    $(document).on("click", "#btnRegisterShopCustomer-popupRegisterShopCustomer", function(){
+    	var customerInfo = {"name":$("#popupRegisterShopCustomer #txtCustomerName").val(), "phoneNumber":$("#popupRegisterShopCustomer #txtCustomerPhoneNumber").val()};
+    	addShopCustomer(customerInfo);
     });
     
 });
 
+
+//add shop customer
+function addShopCustomer( customerInfo ){
+	var lv_sBaseUrl = "/hair/shop/kor20170701001/customer";
+	var lv_sUrl = lv_sBaseUrl.replace(/{customerId}/g, customerInfo.id);
+	
+	$.ajax({
+		url : lv_sUrl,
+		method : "POST",
+		data : JSON.stringify(customerInfo),
+		processData: false,
+	    contentType: "application/json; charset=UTF-8",
+	    complete : function(resData) {
+			console.log(resData);	
+			alert("등록 되었습니다.")
+		}
+	});
+}
 
 function setCustomerInfo( customerInfo ){
 	$("#lblCustomerName").text(customerInfo.name);

@@ -55,10 +55,12 @@
     INSERT
     INTO    customer  
             ( name,
-              phone_number
+              phone_number,
+              register_shop_id
             )
     VALUES  ( #{name},
-              #{phoneNumber}
+              #{phoneNumber},
+              #{registerShopId}
             )
   </insert>
     

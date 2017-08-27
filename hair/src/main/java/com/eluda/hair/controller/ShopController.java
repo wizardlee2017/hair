@@ -75,10 +75,17 @@ public class ShopController {
 		
 		logger.debug("shopId : {}", shopId);
 		logger.debug("customerName : {}", pCustomerInfo.getName());
-		logger.debug("customerPhoneNumber : ", pCustomerInfo.getPhoneNumber());
+		logger.debug("customerPhoneNumber : {}", pCustomerInfo.getPhoneNumber());
+		
+		boolean isNewCustomer = false;
+		
+		if((pCustomerInfo.getId() == null) || ("".equals(pCustomerInfo.getId()))) {
+			isNewCustomer = true;
+			pCustomerInfo.setRegisterShopId(shopId);
+		}
 		
 		try {
-			shopService.registerCustomer(shopId, pCustomerInfo, "".equals(pCustomerInfo.getId()));
+			shopService.registerCustomer(shopId, pCustomerInfo, isNewCustomer);
 			return Response.status(Response.Status.OK).build();
 		} catch (Exception e) {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();

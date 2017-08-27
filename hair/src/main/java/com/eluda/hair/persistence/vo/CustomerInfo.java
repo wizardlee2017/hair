@@ -4,6 +4,7 @@ public class CustomerInfo {
 	private String id;
 	private String name;
 	private String phoneNumber;
+	private String registerShopId;
 	
 	public String getId() {
 		return id;
@@ -22,5 +23,11 @@ public class CustomerInfo {
 	}
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
+	}
+	public String getRegisterShopId() {
+		return registerShopId;
+	}
+	public void setRegisterShopId(String registerShopId) {
+		this.registerShopId = registerShopId;
 	}
 }
