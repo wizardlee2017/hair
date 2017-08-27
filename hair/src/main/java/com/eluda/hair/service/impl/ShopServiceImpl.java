@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.eluda.hair.persistence.vo.CustomerInfo;
 import com.eluda.hair.persistence.vo.ShopInfo;
+import com.eluda.hair.persistence.mapper.CustomerMapper;
 import com.eluda.hair.persistence.mapper.ShopCustomerMapper;
 import com.eluda.hair.persistence.mapper.ShopMapper;
 import com.eluda.hair.service.ShopService;
@@ -20,6 +22,9 @@ public class ShopServiceImpl implements ShopService {
 	@Autowired
 	private ShopCustomerMapper shopCustomerMapper;
 	
+	@Autowired
+	private CustomerMapper customerMapper;
+	
 	@Override
 	public ShopInfo getShopInfo(String id) {
 		
@@ -32,8 +37,14 @@ public class ShopServiceImpl implements ShopService {
 	}
 
 	@Override
-	public void registerCustomer(String shopId, String customerId) {
-		shopCustomerMapper.insertShopCustomer(shopId, customerId);
+	@Transactional
+	public void registerCustomer(String shopId, CustomerInfo customerInfo, boolean isNewCustomer) {
+		
+		if(isNewCustomer) {
+			customerMapper.insertCustomer(customerInfo);
+		}
+		//
+		shopCustomerMapper.insertShopCustomer(shopId, customerInfo.getId());
 		return;
 		
 	}

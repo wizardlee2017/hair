@@ -4,6 +4,11 @@ $(document).ready(function(){
 	
 	$('#txtCustomerPhoneNumber').numpad();
 	
+	$(".nmpd-grid").on("click",".btn.done",function(){
+		console.log("click done");
+		$("button#btnSearchCustomerByPhoneNumber").trigger("click");
+	});
+	
 	//click search button
     $("button#searchCustomer").click(function(){
     	var lv_sCustomerPhoneNumber = $("#txtCustomerPhoneNumber").val();
@@ -37,6 +42,12 @@ $(document).ready(function(){
     	setCustomerInfo( customerInfo );
     });
     
+    //click register shop customer button
+    $("#btnPopupRegisterShopCustomerLayer").click(function(){
+    	$("#popupRegisterShopCustomer").modal();
+    	
+    });
+    
 });
 
 
@@ -45,6 +56,8 @@ function setCustomerInfo( customerInfo ){
 	$("#lblCustomerPhoneNumber").text(customerInfo.phoneNumber);
 	requestCustomerProcedureHistoryList(customerInfo);
 }
+
+//request register shop customer
 
 function searchCustomer(customerPhoneNumber, customerName){
 	

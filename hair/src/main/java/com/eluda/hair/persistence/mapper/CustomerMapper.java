@@ -13,9 +13,7 @@ public interface CustomerMapper {
 	
 	public List<CustomerInfo> getShopCustomerList(@Param("shopId") String shopId, @Param("customerName") String customerName, @Param("customerPhoneNumber") String customerPhoneNumber);
 	
-	public CustomerInfo insertCustomer(CustomerInfo customerInfo);
-	
-	public void insertCustomer2(@Param("name") String name, @Param("phoneNumber") String phoneNumber);
+	public void insertCustomer(CustomerInfo customerInfo);
 	
 	public List<CustomerInfo> getCustomerListByPhoneNumber(@Param("phoneNumber") String phoneNumber);
 }

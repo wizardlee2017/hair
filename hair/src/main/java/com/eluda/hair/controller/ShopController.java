@@ -2,12 +2,15 @@ package com.eluda.hair.controller;
 
 import java.util.List;
 
+import javax.ws.rs.core.Response;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -63,6 +66,24 @@ public class ShopController {
 		logger.debug("customerId : {}", customerId);
 		
 		return customerProcedureHistoryService.getShopCustomerProcedureHistoryList(shopId, customerId);
+	}
+	
+	@RequestMapping(path = {"/shop/{shopId}/customer"}, method= RequestMethod.POST)
+	@ResponseBody
+	public Response registerShopCustomer(@PathVariable("shopId") String shopId,
+			@RequestBody CustomerInfo pCustomerInfo) {
+		
+		logger.debug("shopId : {}", shopId);
+		logger.debug("customerName : {}", pCustomerInfo.getName());
+		logger.debug("customerPhoneNumber : ", pCustomerInfo.getPhoneNumber());
+		
+		try {
+			shopService.registerCustomer(shopId, pCustomerInfo, "".equals(pCustomerInfo.getId()));
+			return Response.status(Response.Status.OK).build();
+		} catch (Exception e) {
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+		}
+
 	}
 
 }

@@ -5,6 +5,8 @@ package com.eluda.hair.service.impl;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,9 @@ import com.eluda.hair.service.CustomerService;
  */
 @Service
 public class CustomerServiceImpl implements CustomerService {
+	
+	Logger logger = LoggerFactory.getLogger(CustomerServiceImpl.class);
+	
 	@Autowired
 	private CustomerMapper customerMapper;
 	
@@ -42,18 +47,12 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	@Transactional
-	public CustomerInfo insertCustomer(CustomerInfo customerInfo) {
+	public void insertCustomer(CustomerInfo customerInfo) {
+		customerMapper.insertCustomer(customerInfo);
 		
-		return customerMapper.insertCustomer(customerInfo);
+		logger.debug("inserted id : " + customerInfo.getId());
+		
+		return;
 	}
 	
-	@Override
-	@Transactional
-	public void insertCustomer2(CustomerInfo customerInfo) {
-		
-		customerMapper.insertCustomer2(customerInfo.getName(), customerInfo.getPhoneNumber());
-		
-		return; 
-	}
-
 }

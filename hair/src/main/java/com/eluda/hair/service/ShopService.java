@@ -9,7 +9,7 @@ public interface ShopService {
 	
 	public CustomerInfo getCustomerInfo(String shopId, String customerId);
 	
-	public void registerCustomer(String shopId, String customerId);
+	public void registerCustomer(String shopId, CustomerInfo customerInfo, boolean isNewCustomer);
 	
 	
 }
