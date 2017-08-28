@@ -17,12 +17,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.eluda.hair.persistence.vo.CustomerInfo;
+import com.eluda.hair.persistence.vo.CustomerProcedureHistoryVo;
 import com.eluda.hair.persistence.dto.CustomerProcedureHistoryInfo;
 import com.eluda.hair.service.CustomerProcedureHistoryService;
 import com.eluda.hair.service.CustomerService;
 import com.eluda.hair.service.ShopService;
 
 @Controller
+@RequestMapping("shop")
 public class ShopController {
 	
 	Logger logger = LoggerFactory.getLogger(ShopController.class);
@@ -34,19 +36,19 @@ public class ShopController {
 	@Autowired
 	private CustomerProcedureHistoryService customerProcedureHistoryService;
 	
-	@RequestMapping("/shop/searchProcedureHistory")
+	@RequestMapping("/searchProcedureHistory")
 	public String searchProcedureHistory(Model model) {
 		return "shop/customer_procedure_history";
 	}
 	
-	@RequestMapping("/shop/customerInfo")
+	@RequestMapping("/customerInfo")
     public @ResponseBody CustomerInfo getCustomerInfo(){
     	String shopId = "tst20170812001";
     	String customerId = "1";
         return shopService.getCustomerInfo(shopId, customerId);
     }
 	
-	@RequestMapping(value = {"/shop/{shopId}/customer/list"}, 
+	@RequestMapping(value = {"/{shopId}/customer/list"}, 
 					method= RequestMethod.GET)
     public @ResponseBody List<CustomerInfo> getShopCustomerList(@PathVariable("shopId") String shopId, 
     															@RequestParam(value="customerName", required=false) String customerName,
@@ -58,7 +60,7 @@ public class ShopController {
     	return customerService.getShopCustomerList(shopId, customerName, customerPhoneNumber);
     }
 	
-	@RequestMapping(value = {"/shop/{shopId}/customer/{customerId}/procedure-history/list"}, 
+	@RequestMapping(value = {"/{shopId}/customer/{customerId}/procedure-history/list"}, 
 					method= RequestMethod.GET)
 	public @ResponseBody List<CustomerProcedureHistoryInfo> getShopCustomerProcedureHistoryList(@PathVariable("shopId") String shopId,
 															@PathVariable("customerId") String customerId){
@@ -68,7 +70,7 @@ public class ShopController {
 		return customerProcedureHistoryService.getShopCustomerProcedureHistoryList(shopId, customerId);
 	}
 	
-	@RequestMapping(path = {"/shop/{shopId}/customer"}, method= RequestMethod.POST)
+	@RequestMapping(path = {"/{shopId}/customer"}, method= RequestMethod.POST)
 	@ResponseBody
 	public Response registerShopCustomer(@PathVariable("shopId") String shopId,
 			@RequestBody CustomerInfo pCustomerInfo) {
@@ -90,7 +92,25 @@ public class ShopController {
 		} catch (Exception e) {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
 		}
-
+	}
+	
+	@RequestMapping(path = {"/{shopId}/customer/{customerId}/procedure-history"}, method= RequestMethod.POST)
+	@ResponseBody
+	public Response insertCustomerProcedureHistory(@PathVariable("shopId") String shopId,
+			@PathVariable("customerId") int customerId,
+			@RequestBody CustomerProcedureHistoryVo pCustomerProcedureHistoryInfo) {
+		
+		logger.debug("shopId : {}", shopId);
+		logger.debug("customerId : {}", customerId);
+		
+		try {
+			pCustomerProcedureHistoryInfo.setShopId(shopId);
+			pCustomerProcedureHistoryInfo.setCustomerId(customerId);
+			customerProcedureHistoryService.insertCustomerProcedureHistory(pCustomerProcedureHistoryInfo);
+			return Response.status(Response.Status.OK).build();
+		} catch (Exception e) {
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+		}
 	}
 
 }

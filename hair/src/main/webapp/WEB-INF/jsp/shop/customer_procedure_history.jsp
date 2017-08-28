@@ -69,40 +69,44 @@
 	</div>		
 	<div class="panel panel-default">
 		<div class="panel-heading">
-	    	<h3 class="panel-title">시술 결과</h3>
-	  	</div>
-	  	<div class="panel-body">
-	    	<table class="table table-striped" id="tblCustomerProcedureHistoryList">
-          <thead>
+    	<h3 class="panel-title">시술 목록 
+    	  <button class="btn btn-success" type="button" id="btnPopupInsertProcedureHistory">
+           <i class="glyphicon glyphicon-plus">추가</i>
+         </button>
+       </h3>	    	
+    </div>
+  	<div class="panel-body">
+    	<table class="table table-striped" id="tblCustomerProcedureHistoryList">
+        <thead>
           <tr>
-                <th>No.</th>
-                <th>시술명</th>
-                <th>시술일</th>
-                <th>디자이너</th>                
-                <th>시술가</th>
-                <th>메모</th>
-              </tr>
+						<th>No.</th>
+						<th>시술명</th>
+						<th>시술일</th>
+						<th>디자이너</th>                
+						<th>시술가</th>
+						<th>메모</th>
+          </tr>
         </thead>
         <tbody>
           <tr>
-            <td>1</td>
-            <td>여성컷</td>
-            <td>2017.07.05</td>
-            <th>루나</th>
-            <td>100</td>
-            <td>일이삼사오육</td>
+						<td>1</td>
+						<td>여성컷</td>
+						<td>2017.07.05</td>
+						<th>루나</th>
+						<td>100</td>
+						<td>일이삼사오육</td>
           </tr>
           <tr>
-            <td>2</td>
-            <td>일반펌</td>
-            <td>2017.07.05</td>
-            <th>지니</th>
-            <td>100</td>
-            <td>일이삼사오육</td>
+						<td>2</td>
+						<td>일반펌</td>
+						<td>2017.07.05</td>
+						<th>지니</th>
+						<td>100</td>
+						<td>일이삼사오육</td>
           </tr>
-      </tbody>
-    </table>	    	
-	  	</div>
+        </tbody>
+      </table>	    	
+  	</div>
 	</div>
 
   <!-- 고객 목록 -->
@@ -159,6 +163,47 @@
             <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
             <input id="txtCustomerPhoneNumber" type="text" class="form-control" name="customerPhoneNumber" placeholder="phone number" data-toggle="tooltip" data-placement="bottom" title="전화번호">           
           </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" id="btnRegisterShopCustomer-popupRegisterShopCustomer">추가</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 시술 추가 -->
+  <div id="popupInsertProcedureHistory" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">시술 이력 추가</h4>
+        </div>
+        <div class="modal-body">
+          <div class="container">          
+					  <div class="btn-group">
+              <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                시술 종류 <span class="caret"></span></button>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="#">컷</a></li>
+                  <li><a href="#">펌</a></li>
+                  <li><a href="#">염색</a></li>
+                </ul>
+              </div>
+              <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                시술<span class="caret"></span></button>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="#">여성컷</a></li>
+	                <li><a href="#">남성컷</a></li>
+	                <li><a href="#">키즈컷</a></li>
+	                <li><a href="#">실버컷</a></li>
+                </ul>
+              </div>
+					  </div>
+					</div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal" id="btnRegisterShopCustomer-popupRegisterShopCustomer">추가</button>

@@ -10,6 +10,13 @@ $(document).ready(function(){
 		$("button#btnSearchCustomerByPhoneNumber").trigger("click");
 	});
 	
+	
+	$(".dropdown-menu li a").click(function(){
+	  $(this).parents(".btn-group:first").find('.btn').html($(this).text() + ' <span class="caret"></span>');
+	  $(this).parents(".btn-group:first").find('.btn').val($(this).data('value'));
+	});
+	
+	
 	//click search button
     $("button#searchCustomer").click(function(){
     	var lv_sCustomerPhoneNumber = $("#txtCustomerPhoneNumber").val();
@@ -49,6 +56,11 @@ $(document).ready(function(){
     $(document).on("click", "#btnRegisterShopCustomer-popupRegisterShopCustomer", function(){
     	var customerInfo = {"name":$("#popupRegisterShopCustomer #txtCustomerName").val(), "phoneNumber":$("#popupRegisterShopCustomer #txtCustomerPhoneNumber").val()};
     	addShopCustomer(customerInfo);
+    });
+    
+    //popup procedure history 
+    $("#btnPopupInsertProcedureHistory").click(function(){
+    	$("#popupInsertProcedureHistory").modal();    	
     });
     
 });

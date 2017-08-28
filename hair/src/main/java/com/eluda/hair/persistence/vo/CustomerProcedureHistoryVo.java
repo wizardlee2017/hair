@@ -4,7 +4,7 @@ public class CustomerProcedureHistoryVo {
 	private int customerId;
 	private String shopId;
 	private String shopMenuId;
-	private String dateYyyyMmDd;
+	private String dateYyyymmdd;
 	private int hairdresserId;
 	private String procedureTypeId;
 	private double price;
@@ -29,12 +29,7 @@ public class CustomerProcedureHistoryVo {
 	public void setShopMenuId(String shopMenuId) {
 		this.shopMenuId = shopMenuId;
 	}
-	public String getDateYyyyMmDd() {
-		return dateYyyyMmDd;
-	}
-	public void setDateYyyyMmDd(String dateYyyyMmDd) {
-		this.dateYyyyMmDd = dateYyyyMmDd;
-	}
+	
 	public int getHairdresserId() {
 		return hairdresserId;
 	}
@@ -64,5 +59,11 @@ public class CustomerProcedureHistoryVo {
 	}
 	public void setMemo(String memo) {
 		this.memo = memo;
+	}
+	public String getDateYyyymmdd() {
+		return dateYyyymmdd;
+	}
+	public void setDateYyyymmdd(String dateYyyymmdd) {
+		this.dateYyyymmdd = dateYyyymmdd;
 	}
 }
