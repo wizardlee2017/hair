@@ -1,5 +1,7 @@
 $(document).ready(function(){
 	
+	var pv_oToday = new Date();
+	
 	//initialize components
 	$('[data-toggle="tooltip"]').tooltip();
 	
@@ -33,6 +35,9 @@ $(document).ready(function(){
 		minView: 2,
 		forceParse: 0
     });
+	//$("#popupInsertProcedureHistory-date").data("date",pv_oToday.toISOString().slice(0,10));
+	$("#popupInsertProcedureHistory-date .form-control").val(pv_oToday.toISOString().slice(0,10));
+	$("#hidSelectedProcedureDate").val(pv_oToday.toISOString().slice(0,10).replace(/-/g,""));
 	
 	$(document).on("click", ".dropdown-menu li a", function(){
 	  $(this).parents(".btn-group:first").find('.btn').html($(this).text() + ' <span class="caret"></span>');
@@ -136,7 +141,9 @@ function addProcedureHistory( procedureHistoryInfo ){
 	    contentType: "application/json; charset=UTF-8",
 	    complete : function(resData) {
 			console.log(resData);	
-			alert("등록 되었습니다.")
+			alert("등록 되었습니다.");
+			var lv_oCustomerInfo = {"id":$("#lblCustomerName").data("id")};
+			requestCustomerProcedureHistoryList(lv_oCustomerInfo);
 		}
 	});
 }
