@@ -34,13 +34,6 @@ $(document).ready(function(){
 		forceParse: 0
     });
 	
-	
-	//customer phone number num pad done click
-	$("#txtCustomerPhoneNumber").on("click",".btn.done",function(){
-		console.log("click done");
-		//$("button#btnSearchCustomerByPhoneNumber").trigger("click");
-	});
-	
 	$(document).on("click", ".dropdown-menu li a", function(){
 	  $(this).parents(".btn-group:first").find('.btn').html($(this).text() + ' <span class="caret"></span>');
 	  $(this).parents(".btn-group:first").find('.btn').val($(this).parents("li:first").data("id"));
@@ -91,6 +84,8 @@ $(document).ready(function(){
     	var selectedTr = $("#searchCustomerListPopup #tblCustomerList tbody tr.active");
     	var customerInfo = {"id":$(selectedTr).data("id"), "name":$(selectedTr).data("name"), "phoneNumber":$(selectedTr).data("phone_number")}
     	setCustomerInfo( customerInfo );
+    	
+    	$("#btnPopupInsertProcedureHistory").removeClass("disabled").addClass("btn-success");
     });
     
     //click register shop customer button
