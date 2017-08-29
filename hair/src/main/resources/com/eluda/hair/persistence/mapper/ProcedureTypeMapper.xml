@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eluda.hair.persistence.mapper.ProcedureTypeMapper">
+ 
+  <select id="getProcedureTypeList" resultType="com.eluda.hair.persistence.vo.ProcedureTypeVo">
+    SELECT pt.id,
+		       ptl.name
+		  FROM procedure_type pt
+		       INNER JOIN procedure_type_language ptl
+		       ON pt.id = ptl.procedure_type_id
+		 WHERE pt.use_yn = 1
+		   AND ptl.language_id = #{languageId}
+  </select>
+    
+</mapper>

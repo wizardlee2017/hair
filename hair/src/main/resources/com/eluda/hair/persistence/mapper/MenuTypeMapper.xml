@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eluda.hair.persistence.mapper.MenuTypeMapper">
+ 
+  <select id="getMenuTypeList" resultType="com.eluda.hair.persistence.vo.MenuTypeVo">
+		SELECT mt.id,
+		       mtl.name
+		  FROM menu_type mt
+		       INNER JOIN menu_type_language mtl
+		       ON mt.id = mtl.menu_type_id
+		 WHERE mt.use_yn = 1
+		   AND mtl.language_id = #{languageId}
+  </select>
+    
+</mapper>

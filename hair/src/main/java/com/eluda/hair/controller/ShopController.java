@@ -18,9 +18,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.eluda.hair.persistence.vo.CustomerInfo;
 import com.eluda.hair.persistence.vo.CustomerProcedureHistoryVo;
+import com.eluda.hair.persistence.vo.ShopMenuVo;
 import com.eluda.hair.persistence.dto.CustomerProcedureHistoryInfo;
+import com.eluda.hair.persistence.dto.RegisterProcedureBasicInfo;
 import com.eluda.hair.service.CustomerProcedureHistoryService;
 import com.eluda.hair.service.CustomerService;
+import com.eluda.hair.service.ShopMenuService;
 import com.eluda.hair.service.ShopService;
 
 @Controller
@@ -35,6 +38,8 @@ public class ShopController {
 	private CustomerService customerService;
 	@Autowired
 	private CustomerProcedureHistoryService customerProcedureHistoryService;
+	@Autowired
+	private ShopMenuService shopMenuService;
 	
 	@RequestMapping("/searchProcedureHistory")
 	public String searchProcedureHistory(Model model) {
@@ -111,6 +116,21 @@ public class ShopController {
 		} catch (Exception e) {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
 		}
+	}
+	
+	@RequestMapping(value = { "/{shopId}/register-procedure-basic-info" }, method = RequestMethod.GET)
+	public @ResponseBody RegisterProcedureBasicInfo getRegisterProcedureBasicInfo(@PathVariable("shopId") String shopId) {
+		logger.debug("shopId : {}", shopId);
+
+		return customerProcedureHistoryService.getRegisterProcedureBasicInfo(shopId);
+	}
+	
+	@RequestMapping(value = { "/{shopId}/menu-list" }, method = RequestMethod.GET)
+	public @ResponseBody List<ShopMenuVo> getShopMenuList(@PathVariable("shopId") String shopId, @RequestParam(value="menuTypeId", required=false) String menuTypeId) {
+		logger.debug("shopId : {}", shopId);
+		logger.debug("menuTypeId : {}", menuTypeId);
+
+		return shopMenuService.getShopMenuList(shopId, menuTypeId);
 	}
 
 }

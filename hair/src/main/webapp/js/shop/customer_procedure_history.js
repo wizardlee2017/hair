@@ -1,19 +1,65 @@
 $(document).ready(function(){
 	
+	//initialize components
 	$('[data-toggle="tooltip"]').tooltip();
 	
-	$('#txtCustomerPhoneNumber').numpad();
+	// Set NumPad defaults for jQuery mobile. 
+    // These defaults will be applied to all NumPads within this document!
+    $.fn.numpad.defaults.gridTpl = '<table class="table modal-content"></table>';
+    $.fn.numpad.defaults.backgroundTpl = '<div class="modal-backdrop in"></div>';
+    $.fn.numpad.defaults.displayTpl = '<input type="text" class="form-control" />';
+    $.fn.numpad.defaults.buttonNumberTpl =  '<button type="button" class="btn btn-default"></button>';
+    $.fn.numpad.defaults.buttonFunctionTpl = '<button type="button" class="btn"></button>';
+    $.fn.numpad.defaults.onKeypadCreate = function(){$(this).find('.done').addClass('btn-primary');};
 	
-	//num pad done click
-	$(".nmpd-grid").on("click",".btn.done",function(){
+	$('#txtCustomerPhoneNumber').numpad(
+			{	onKeypadClose: function(){
+					$("button#btnSearchCustomerByPhoneNumber").trigger("click");
+				}
+			}
+	);
+	
+	$('#txtProcedurePrice').numpad();
+	$('#txtProcedureDefaultPrice').numpad();
+	
+	//datetime picker
+	$('#popupInsertProcedureHistory-date').datetimepicker({
+        language:  'ko',
+        weekStart: 1,
+        todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		minView: 2,
+		forceParse: 0
+    });
+	
+	
+	//customer phone number num pad done click
+	$("#txtCustomerPhoneNumber").on("click",".btn.done",function(){
 		console.log("click done");
-		$("button#btnSearchCustomerByPhoneNumber").trigger("click");
+		//$("button#btnSearchCustomerByPhoneNumber").trigger("click");
 	});
 	
-	
-	$(".dropdown-menu li a").click(function(){
+	$(document).on("click", ".dropdown-menu li a", function(){
 	  $(this).parents(".btn-group:first").find('.btn').html($(this).text() + ' <span class="caret"></span>');
-	  $(this).parents(".btn-group:first").find('.btn').val($(this).data('value'));
+	  $(this).parents(".btn-group:first").find('.btn').val($(this).parents("li:first").data("id"));
+	  
+	  //시술 종류일경우 메뉴 목록 설정
+	  if($(this).parents("#ulMenuTypeList").length != 0){
+		  var lv_sMenuTypeId = $(this).parents("li:first").data("id");
+		  $("#txtProcedurePrice").val("");
+		  $("#txtProcedureDefaultPrice").val("");
+		  $("#ulShopMenuList").parents(".btn-group:first").find('.btn').html('시술 목록 <span class="caret"></span>');
+		  getShopMenuList( lv_sMenuTypeId );
+	  }
+	  
+	  //메뉴 선택일 경우, 가격 설정.
+	  if($(this).parents("#ulShopMenuList").length != 0){
+		  var lv_nPrice = $(this).parents("li:first").data("price");
+		  $("#txtProcedurePrice").val(lv_nPrice);
+	  }
+	  
 	});
 	
 	
@@ -61,10 +107,128 @@ $(document).ready(function(){
     //popup procedure history 
     $("#btnPopupInsertProcedureHistory").click(function(){
     	$("#popupInsertProcedureHistory").modal();    	
+    	getRegisterProcedureBasicInfo();
+    });
+    
+    //시술 추가 click
+    $(document).on("click", "#btnRegisterProdecureHistory-popupInsertProcedureHistory", function(){
+    	var procedureHistoryInfo = {
+    						"customerId":$("#lblCustomerName").data("id"),
+    						"shopMenuId":$("#btnSelectedShopMenu").val(), 
+    						"dateYyyymmdd":$("#hidSelectedProcedureDate").val(),
+    						"hairdresserId":$("#btnSelectedHairdresser").val(),
+    						"procedureTypeId":$("#btnSelectedProcedureType").val(),
+    						"price":$("#txtProcedurePrice").val(),
+    						"memo":$("#taProcedureMemo").val()
+    						};
+    	addProcedureHistory(procedureHistoryInfo);
     });
     
 });
 
+
+
+//시술 추가
+function addProcedureHistory( procedureHistoryInfo ){
+	var lv_sBaseUrl = "/hair/shop/kor20170701001/customer/{customerId}/procedure-history";
+	var lv_sUrl = lv_sBaseUrl.replace(/{customerId}/g, procedureHistoryInfo.customerId);
+	
+	$.ajax({
+		url : lv_sUrl,
+		method : "POST",
+		data : JSON.stringify(procedureHistoryInfo),
+		processData: false,
+	    contentType: "application/json; charset=UTF-8",
+	    complete : function(resData) {
+			console.log(resData);	
+			alert("등록 되었습니다.")
+		}
+	});
+}
+
+//메뉴 목록 획득
+function getShopMenuList( menuTypeId ) {
+	var lv_sUrl = "/hair/shop/kor20170701001/menu-list?menuTypeId=" + menuTypeId;
+	
+	$.ajax({
+		url : lv_sUrl,
+		method : "GET",
+		success : function(resData) {
+			console.log(resData);				
+			console.log("length : " + resData.length);
+			setShopMenuList(resData);
+		}
+	});
+}
+
+//메뉴 목록 설정.
+function setShopMenuList(shopMenuList){
+	
+	var lv_sLiTemplate =	"<li data-id=':id' data-price=':price' ><a href='#'>:name</a></li>";
+	
+	$('#ulShopMenuList').empty('li');
+	$.each(shopMenuList, function( tv_nLoopIndex, tv_oShopMenuInfo ) {
+		console.log(tv_nLoopIndex + ' : ' + tv_oShopMenuInfo);
+		var lv_sAppendStr =	lv_sLiTemplate.replace(/:id/g, tv_oShopMenuInfo.id)
+										  .replace(/:price/g, tv_oShopMenuInfo.price)
+										  .replace(/:name/g, tv_oShopMenuInfo.name);
+		$('#ulShopMenuList').append(lv_sAppendStr);
+	});
+	
+}
+
+//시술 관련 기초 정보 획득
+function getRegisterProcedureBasicInfo() {
+	var lv_sUrl = "/hair/shop/kor20170701001/register-procedure-basic-info";
+	
+	$.ajax({
+		url : lv_sUrl,
+		method : "GET",
+		success : function(resData) {
+			console.log(resData);				
+			setRegisterProcedureBasicInfo(resData);
+		}
+	});
+}
+
+//시술 관련 기초 정보 설정.
+function setRegisterProcedureBasicInfo(registerProcedureBasicInfo){
+	var lv_oHairdresserList = registerProcedureBasicInfo.hairdresserList;
+	var lv_oMenuTypeList = registerProcedureBasicInfo.menuTypeList;
+	var lv_oProcedureTypeList = registerProcedureBasicInfo.procedureTypeList;
+	
+	var lv_sLiTemplateHairdresser =	"<li data-id=':id'><a href='#'>:name</a></li>";
+	var lv_sLiTemplateMenuType =	"<li data-id=':id'><a href='#'>:name</a></li>";
+	var lv_sLiTemplateProcedureType =	"<li data-id=':id'><a href='#'>:name</a></li>";
+	
+	//set hairdresser	
+	$('#ulHairdresserList').empty('li');
+	$.each(lv_oHairdresserList, function( tv_nLoopIndex, tv_oHairdresserInfo ) {
+		console.log(tv_nLoopIndex + ' : ' + tv_oHairdresserInfo);
+		var lv_sAppendStr =	lv_sLiTemplateHairdresser.replace(/:id/g, tv_oHairdresserInfo.id)
+										  			 .replace(/:name/g, tv_oHairdresserInfo.nickname);
+		$('#ulHairdresserList').append(lv_sAppendStr);
+	});
+	
+	//set menu type	
+	$('#ulMenuTypeList').empty('li');
+	$.each(lv_oMenuTypeList, function( tv_nLoopIndex, tv_oMenuTypeInfo ) {
+		console.log(tv_nLoopIndex + ' : ' + tv_oMenuTypeInfo);
+		var lv_sAppendStr =	lv_sLiTemplateMenuType.replace(/:id/g, tv_oMenuTypeInfo.id)
+										  		  .replace(/:name/g, tv_oMenuTypeInfo.name);
+		$('#ulMenuTypeList').append(lv_sAppendStr);
+	});
+	
+	//set procedure type	
+	$('#ulProcedureTypeList').empty('li');
+	$.each(lv_oProcedureTypeList, function( tv_nLoopIndex, tv_oProcedureTypeInfo ) {
+		console.log(tv_nLoopIndex + ' : ' + tv_oProcedureTypeInfo);
+		var lv_sAppendStr =	lv_sLiTemplateProcedureType.replace(/:id/g, tv_oProcedureTypeInfo.id)
+										  		       .replace(/:name/g, tv_oProcedureTypeInfo.name);
+		$('#ulProcedureTypeList').append(lv_sAppendStr);
+	});
+	
+}
 
 //add shop customer
 function addShopCustomer( customerInfo ){
@@ -85,7 +249,7 @@ function addShopCustomer( customerInfo ){
 }
 
 function setCustomerInfo( customerInfo ){
-	$("#lblCustomerName").text(customerInfo.name);
+	$("#lblCustomerName").text(customerInfo.name).data("id", customerInfo.id);
 	$("#lblCustomerPhoneNumber").text(customerInfo.phoneNumber);
 	requestCustomerProcedureHistoryList(customerInfo);
 }

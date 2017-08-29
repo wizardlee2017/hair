@@ -10,24 +10,8 @@
 	
 	<link rel="stylesheet" href="${contextPath}/resources/bootstrap-3.3.7-dist/css/bootstrap.min.css">
 	<link rel="stylesheet" href="${contextPath}/resources/jQuery.NumPad-master/jquery.numpad.css">
+	<link rel="stylesheet" href="${contextPath}/resources/bootstrap-datetimepicker/bootstrap-datetimepicker.css">
 	
-	<script src="${contextPath}/resources/jquery/jquery-3.2.1.min.js"></script>
-	<script src="${contextPath}/resources/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-	<script src="${contextPath}/resources/jQuery.NumPad-master/jquery.numpad.js"></script>
-	
-	<script src="${contextPath}/js/shop/customer_procedure_history.js"></script>
-
-	<script type="text/javascript">
-      // Set NumPad defaults for jQuery mobile. 
-      // These defaults will be applied to all NumPads within this document!
-      $.fn.numpad.defaults.gridTpl = '<table class="table modal-content"></table>';
-      $.fn.numpad.defaults.backgroundTpl = '<div class="modal-backdrop in"></div>';
-      $.fn.numpad.defaults.displayTpl = '<input type="text" class="form-control" />';
-      $.fn.numpad.defaults.buttonNumberTpl =  '<button type="button" class="btn btn-default"></button>';
-      $.fn.numpad.defaults.buttonFunctionTpl = '<button type="button" class="btn"></button>';
-      $.fn.numpad.defaults.onKeypadCreate = function(){$(this).find('.done').addClass('btn-primary');};
-      
-    </script>
 </head>
 <body>
 	<div class="panel panel-default">
@@ -47,15 +31,6 @@
             </button>
 			    </div>
 			  </div>
-			  <!-- <div class="input-group">
-			    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-			    <input id="txtCustomerName" type="text" class="form-control" name=customerName placeholder="고객명" data-toggle="tooltip" data-placement="left" title="고객명 입력">
-			    <div class="input-group-btn">
-            <button class="btn btn-default" type="button" id="btnSearchCustomerByName">
-              <i class="glyphicon glyphicon-search"></i>
-            </button>
-          </div>
-			  </div> -->
 	  	</div>
 	</div>
 	<div class="panel panel-default">
@@ -182,20 +157,20 @@
         </div>
         <div class="modal-body">
           <div class="container">          
-					  <div class="btn-group">
+					  <div class="btn-group btn-group-xs">
               <div class="btn-group">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="btnSelectedMenuType">
                 시술 종류 <span class="caret"></span></button>
-                <ul class="dropdown-menu" role="menu">
+                <ul class="dropdown-menu" role="menu" id="ulMenuTypeList" >
                   <li><a href="#">컷</a></li>
                   <li><a href="#">펌</a></li>
                   <li><a href="#">염색</a></li>
                 </ul>
               </div>
               <div class="btn-group">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                시술<span class="caret"></span></button>
-                <ul class="dropdown-menu" role="menu">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="btnSelectedShopMenu">
+                시술 목록<span class="caret"></span></button>
+                <ul class="dropdown-menu" role="menu" id="ulShopMenuList" >
                   <li><a href="#">여성컷</a></li>
 	                <li><a href="#">남성컷</a></li>
 	                <li><a href="#">키즈컷</a></li>
@@ -203,14 +178,57 @@
                 </ul>
               </div>
 					  </div>
+					  <div class="form-group">
+              <label for="dtp_input2" class="col-md-2 control-label">시술일</label>
+              <div id="popupInsertProcedureHistory-date" class="input-group date form_date col-md-5" data-date="" data-date-format="yyyy-mm-dd" data-link-field="hidSelectedProcedureDate" data-link-format="yyyymmdd">
+                <input class="form-control" size="16" type="text" value="" readonly>
+                <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+              </div>
+              <input type="hidden" id="hidSelectedProcedureDate" value="" /><br/>
+            </div>
+            <div class="btn-group">
+              <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="btnSelectedHairdresser">
+                디자이너 <span class="caret"></span></button>
+                <ul class="dropdown-menu" role="menu" id="ulHairdresserList" >
+                  <li><a href="#">루나</a></li>
+                  <li><a href="#">지니</a></li>
+                </ul>
+              </div>
+              <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="btnSelectedProcedureType">
+                시술 유형<span class="caret"></span></button>
+                <ul class="dropdown-menu" role="menu" id="ulProcedureTypeList" >
+                  <li><a href="#">일반</a></li>
+                  <li><a href="#">행사</a></li>
+                  <li><a href="#">A/S</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="input-group">
+	            <span class="input-group-addon"><i class="glyphicon glyphicon-piggy-bank"></i></span>
+	            <input id="txtProcedurePrice" type="text" class="form-control" name="procedurePrice" placeholder="시술가" data-toggle="tooltip" data-placement="bottom" title="시술가">
+	          </div>
+	          <div class="form-group">
+						  <label for="comment">Memo:</label>
+						  <textarea class="form-control" rows="3" id="taProcedureMemo"></textarea>
+						</div>
 					</div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal" id="btnRegisterShopCustomer-popupRegisterShopCustomer">추가</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" id="btnRegisterProdecureHistory-popupInsertProcedureHistory">추가</button>
         </div>
       </div>
     </div>
   </div>
   
+  <script src="${contextPath}/resources/jquery/jquery-3.2.1.min.js"></script>
+  <script src="${contextPath}/resources/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+  <script src="${contextPath}/resources/jQuery.NumPad-master/jquery.numpad.js"></script>
+  <script src="${contextPath}/js/shop/customer_procedure_history.js"></script>
+  <script type="text/javascript" src="${contextPath}/resources/bootstrap-datetimepicker/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+  <script type="text/javascript" src="${contextPath}/resources/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.ko.js" charset="UTF-8"></script>
+
 </body>
 </html>
