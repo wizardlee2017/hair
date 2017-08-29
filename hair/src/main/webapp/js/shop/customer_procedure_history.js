@@ -35,7 +35,6 @@ $(document).ready(function(){
 		minView: 2,
 		forceParse: 0
     });
-	//$("#popupInsertProcedureHistory-date").data("date",pv_oToday.toISOString().slice(0,10));
 	$("#popupInsertProcedureHistory-date .form-control").val(pv_oToday.toISOString().slice(0,10));
 	$("#hidSelectedProcedureDate").val(pv_oToday.toISOString().slice(0,10).replace(/-/g,""));
 	
