@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.eluda.hair.persistence.vo.CustomerInfo;
+import com.eluda.hair.persistence.vo.CustomerVo;
 import com.eluda.hair.persistence.mapper.CustomerMapper;
 import com.eluda.hair.service.CustomerService;
 
@@ -31,23 +31,23 @@ public class CustomerServiceImpl implements CustomerService {
 	 * @see com.eluda.hair.service.CustomerService#getCustomerInfo(java.lang.String, java.lang.String)
 	 */
 	@Override
-	public CustomerInfo getCustomerInfo(String shopId, String customerId) {
+	public CustomerVo getCustomerInfo(String shopId, String customerId) {
 		return customerMapper.getShopCustomerInfo(shopId, customerId);
 	}
 
 	@Override
-	public List<CustomerInfo> getShopCustomerList(String shopId, String customerName, String customerPhoneNumber) {
+	public List<CustomerVo> getShopCustomerList(String shopId, String customerName, String customerPhoneNumber) {
 		return customerMapper.getShopCustomerList(shopId, customerName, customerPhoneNumber);
 	}
 
 	@Override
-	public List<CustomerInfo> getCustomerListByPhoneNumber(String phoneNumber) {		
+	public List<CustomerVo> getCustomerListByPhoneNumber(String phoneNumber) {		
 		return customerMapper.getCustomerListByPhoneNumber(phoneNumber);
 	}
 
 	@Override
 	@Transactional
-	public void insertCustomer(CustomerInfo customerInfo) {
+	public void insertCustomer(CustomerVo customerInfo) {
 		customerMapper.insertCustomer(customerInfo);
 		
 		logger.debug("inserted id : " + customerInfo.getId());

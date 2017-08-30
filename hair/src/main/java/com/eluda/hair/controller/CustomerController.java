@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.eluda.hair.persistence.vo.CustomerInfo;
+import com.eluda.hair.persistence.vo.CustomerVo;
 import com.eluda.hair.service.CustomerService;
 
 /**
@@ -31,19 +31,19 @@ public class CustomerController {
 	private CustomerService customerService;
 	
 	@RequestMapping(path = {"/customer"}, method= RequestMethod.POST)
-	public @ResponseBody CustomerInfo registerCustomer(@RequestBody CustomerInfo pCustomerInfo){
+	public @ResponseBody CustomerVo registerCustomer(@RequestBody CustomerVo pCustomerInfo){
 		logger.debug("name : " + pCustomerInfo.getName());
 		logger.debug("phone : " + pCustomerInfo.getPhoneNumber());
 		
 		customerService.insertCustomer(pCustomerInfo);
-		return new CustomerInfo();
+		return new CustomerVo();
 		
 		/*customerService.insertCustomer2(pCustomerInfo);
 		return new CustomerInfo();*/
 	}
 	
 	@RequestMapping(path = {"/customer-list/phone-number/{phoneNumber}"}, method= RequestMethod.GET)
-	public @ResponseBody List<CustomerInfo> getCustomerListByPhoneNumber(@PathVariable ("phoneNumber") String phoneNumber){
+	public @ResponseBody List<CustomerVo> getCustomerListByPhoneNumber(@PathVariable ("phoneNumber") String phoneNumber){
 		return customerService.getCustomerListByPhoneNumber(phoneNumber);
 	}
 }

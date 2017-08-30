@@ -1,6 +1,6 @@
 package com.eluda.hair.persistence.vo;
 
-public class CustomerInfo {
+public class CustomerVo {
 	private String id;
 	private String name;
 	private String phoneNumber;

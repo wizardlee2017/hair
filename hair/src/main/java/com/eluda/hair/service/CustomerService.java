@@ -5,18 +5,18 @@ package com.eluda.hair.service;
 
 import java.util.List;
 
-import com.eluda.hair.persistence.vo.CustomerInfo;
+import com.eluda.hair.persistence.vo.CustomerVo;
 
 /**
  * @author wizardlee
  *
  */
 public interface CustomerService {
-	public CustomerInfo getCustomerInfo(String shopId, String customerId);
+	public CustomerVo getCustomerInfo(String shopId, String customerId);
 	
-	public List<CustomerInfo> getShopCustomerList(String shopId, String customerName, String customerPhoneNumber);
+	public List<CustomerVo> getShopCustomerList(String shopId, String customerName, String customerPhoneNumber);
 	
-	public List<CustomerInfo> getCustomerListByPhoneNumber(String phoneNumber);
+	public List<CustomerVo> getCustomerListByPhoneNumber(String phoneNumber);
 	
-	public void insertCustomer(CustomerInfo customerInfo);
+	public void insertCustomer(CustomerVo customerInfo);
 }

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.eluda.hair.persistence.vo.CustomerInfo;
+import com.eluda.hair.persistence.vo.CustomerVo;
 import com.eluda.hair.persistence.vo.CustomerProcedureHistoryVo;
 import com.eluda.hair.persistence.vo.ShopMenuVo;
 import com.eluda.hair.persistence.dto.CustomerProcedureHistoryInfo;
@@ -41,21 +41,14 @@ public class ShopController {
 	@Autowired
 	private ShopMenuService shopMenuService;
 	
-	@RequestMapping("/searchProcedureHistory")
+	@RequestMapping(value = { "", "/searchProcedureHistory" }, method = RequestMethod.GET)
 	public String searchProcedureHistory(Model model) {
 		return "shop/customer_procedure_history";
 	}
 	
-	@RequestMapping("/customerInfo")
-    public @ResponseBody CustomerInfo getCustomerInfo(){
-    	String shopId = "tst20170812001";
-    	String customerId = "1";
-        return shopService.getCustomerInfo(shopId, customerId);
-    }
-	
 	@RequestMapping(value = {"/{shopId}/customer/list"}, 
 					method= RequestMethod.GET)
-    public @ResponseBody List<CustomerInfo> getShopCustomerList(@PathVariable("shopId") String shopId, 
+    public @ResponseBody List<CustomerVo> getShopCustomerList(@PathVariable("shopId") String shopId, 
     															@RequestParam(value="customerName", required=false) String customerName,
     															@RequestParam(value="customerPhoneNumber", required=false) String customerPhoneNumber){
 		logger.debug("shopId : {}", shopId);
@@ -78,7 +71,7 @@ public class ShopController {
 	@RequestMapping(path = {"/{shopId}/customer"}, method= RequestMethod.POST)
 	@ResponseBody
 	public Response registerShopCustomer(@PathVariable("shopId") String shopId,
-			@RequestBody CustomerInfo pCustomerInfo) {
+			@RequestBody CustomerVo pCustomerInfo) {
 		
 		logger.debug("shopId : {}", shopId);
 		logger.debug("customerName : {}", pCustomerInfo.getName());

@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.eluda.hair.persistence.vo.CustomerInfo;
-import com.eluda.hair.persistence.vo.ShopInfo;
+import com.eluda.hair.persistence.vo.CustomerVo;
+import com.eluda.hair.persistence.vo.ShopVo;
 import com.eluda.hair.persistence.mapper.CustomerMapper;
 import com.eluda.hair.persistence.mapper.ShopCustomerMapper;
 import com.eluda.hair.persistence.mapper.ShopMapper;
@@ -26,19 +26,19 @@ public class ShopServiceImpl implements ShopService {
 	private CustomerMapper customerMapper;
 	
 	@Override
-	public ShopInfo getShopInfo(String id) {
+	public ShopVo getShopInfo(String id) {
 		
 		return shopMapper.getShopInfo(id);
 	}
 
 	@Override
-	public CustomerInfo getCustomerInfo(String shopId, String customerId) {
+	public CustomerVo getCustomerInfo(String shopId, String customerId) {
 		return shopMapper.getCustomerInfo(shopId, customerId) ;
 	}
 
 	@Override
 	@Transactional
-	public void registerCustomer(String shopId, CustomerInfo customerInfo, boolean isNewCustomer) {
+	public void registerCustomer(String shopId, CustomerVo customerInfo, boolean isNewCustomer) {
 		
 		if(isNewCustomer) {
 			customerMapper.insertCustomer(customerInfo);

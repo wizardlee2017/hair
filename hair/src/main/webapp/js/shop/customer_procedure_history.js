@@ -317,7 +317,13 @@ function setCustomerProcedureHistoryList(CustomerProcedureHistoryList){
 							"	<td>:hairdresser</td>" +
 							"	<td>:procedurePrice</td>" +
 							"	<td>:memo</td>" +
-							"</tr>";
+							"	<td> " +
+							"     <div class='btn-group'> " +
+			                "       <button type='button' class='btn btn-default btn-sm'><i class='glyphicon glyphicon-ok-sign'></i></button> " +
+			                "       <button type='button' class='btn btn-default btn-sm'><i class='glyphicon glyphicon-remove-sign'></i></button> " +
+			                "     </div> " +
+							"   </td> " +
+							"</tr> ";
 	
 	//clear table for customer list
 	$("#tblCustomerProcedureHistoryList tbody tr").remove();

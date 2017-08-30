@@ -2,14 +2,14 @@ package com.eluda.hair.service;
 
 
 import com.eluda.hair.persistence.dto.RegisterProcedureBasicInfo;
-import com.eluda.hair.persistence.vo.CustomerInfo;
-import com.eluda.hair.persistence.vo.ShopInfo;
+import com.eluda.hair.persistence.vo.CustomerVo;
+import com.eluda.hair.persistence.vo.ShopVo;
 
 public interface ShopService {
-	public ShopInfo getShopInfo(String id);
+	public ShopVo getShopInfo(String id);
 	
-	public CustomerInfo getCustomerInfo(String shopId, String customerId);
+	public CustomerVo getCustomerInfo(String shopId, String customerId);
 	
-	public void registerCustomer(String shopId, CustomerInfo customerInfo, boolean isNewCustomer);
+	public void registerCustomer(String shopId, CustomerVo customerInfo, boolean isNewCustomer);
 	
 }

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eluda.hair.persistence.mapper.BookingMapper">
+  <insert id="insertBooking" parameterType="com.eluda.hair.persistence.vo.BookingVo">
+    INSERT
+    INTO    booking  
+            ( shop_id,
+              customer_id,
+              booking_datetime,
+              procedure_hairdresser_id,
+              progress,
+              booking_way,
+              memo
+            )
+    VALUES  ( #{shopId},
+              #{customerId},
+              #{bookingDatetime},
+              #{procedureHairdresserId},
+              #{progress},
+              #{bookingWay},
+              #{memo}
+            )
+  </insert>  
+</mapper>

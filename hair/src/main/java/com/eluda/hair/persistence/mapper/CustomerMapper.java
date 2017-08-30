@@ -5,15 +5,15 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.eluda.hair.persistence.vo.CustomerInfo;
+import com.eluda.hair.persistence.vo.CustomerVo;
 
 @Mapper
 public interface CustomerMapper {
-	public CustomerInfo getShopCustomerInfo(@Param("shopId") String shopId, @Param("customerId") String customerId);
+	public CustomerVo getShopCustomerInfo(@Param("shopId") String shopId, @Param("customerId") String customerId);
 	
-	public List<CustomerInfo> getShopCustomerList(@Param("shopId") String shopId, @Param("customerName") String customerName, @Param("customerPhoneNumber") String customerPhoneNumber);
+	public List<CustomerVo> getShopCustomerList(@Param("shopId") String shopId, @Param("customerName") String customerName, @Param("customerPhoneNumber") String customerPhoneNumber);
 	
-	public void insertCustomer(CustomerInfo customerInfo);
+	public void insertCustomer(CustomerVo customerInfo);
 		
-	public List<CustomerInfo> getCustomerListByPhoneNumber(@Param("phoneNumber") String phoneNumber);
+	public List<CustomerVo> getCustomerListByPhoneNumber(@Param("phoneNumber") String phoneNumber);
 }
