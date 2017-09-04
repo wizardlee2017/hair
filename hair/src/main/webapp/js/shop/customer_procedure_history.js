@@ -281,9 +281,15 @@ function searchCustomer(customerPhoneNumber, customerName){
 			console.log(resData);				
 			console.log("length : " + resData.length);
 			if(resData.length == 0){
-				console.log("new shop customer. process to search customer master.");					
+				console.log("new shop customer. process to search customer master.");
+				alert("매장 등록 고객이 아닙니다. 신규 고객 등록해주세요. ※공통 고객 목록으로 부터 검색하여 등록하거나 신규 등록한다.(추후 기능 제공)");
 			} else if(resData.length == 1){
-				console.log("set customer infomation. request shop procedure history.");					
+				console.log("set customer infomation. request shop procedure history.");
+				//
+				var customerInfo = {"id":resData[0].id, "name":resData[0].name, "phoneNumber":resData[0].phoneNumber}
+		    	setCustomerInfo( customerInfo );
+		    	
+		    	$("#btnPopupInsertProcedureHistory").removeClass("disabled").addClass("btn-success");
 			} else if(resData.length > 1){
 				console.log("show customer list on popup");
 				showSearchCustomerListOnPopup( resData );
