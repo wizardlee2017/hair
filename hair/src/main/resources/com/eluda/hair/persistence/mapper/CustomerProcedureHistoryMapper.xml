@@ -16,7 +16,7 @@
 		                  cph.date_yyyymmdd AS procedureDate,
 		                  cph.default_price AS defaultPrice,
 		                  cph.price AS procedurePrice,
-		                  h.name AS hairdresserName,
+		                  h.nickname AS hairdresserName,
 		                  cph.memo
 		          FROM    customer_procedure_history cph
 		                  INNER JOIN shop_menu sm
