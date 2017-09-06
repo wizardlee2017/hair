@@ -21,4 +21,28 @@
               #{memo}
             )
   </insert>  
+  
+  <select id="getBookingList" resultType="com.eluda.hair.persistence.dto.BookingInfo">
+    SELECT SUBSTR(b.procedure_expect_begin_datetime,1,8) booking_date,
+		       b.customer_id,
+		       c.name AS customer_name,       
+		       c.phone_number AS customer_phone_number,       
+		       b.procedure_hairdresser_id AS hairdresser_id,
+		       h.nickname hairdresser_name,
+		       sm.name AS procedure_name,
+		       b.procedure_expect_begin_datetime,
+		       b.procedure_expect_end_datetime,
+		       b.memo
+		FROM   booking b
+		       INNER JOIN customer c       
+		       ON b.customer_id = c.id
+		       INNER JOIN hairdresser h
+		       ON b.procedure_hairdresser_id = h.id
+		       LEFT OUTER JOIN shop_menu sm
+		       ON b.procedure_menu_id = sm.id
+		WHERE  b.shop_id = #{shopId}
+		  AND  b.progress = #{customerId}
+		  AND  b.procedure_expect_begin_datetime BETWEEN #{fromDateTime} AND #{toDateTime}
+	  ORDER  BY b.procedure_expect_begin_datetime ASC
+  </select>
 </mapper>

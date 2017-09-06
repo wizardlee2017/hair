@@ -9,6 +9,7 @@
 	<title>test</title>
 	
 	<link rel="stylesheet" href="${contextPath}/resources/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+	<%-- <link rel="stylesheet" href="${contextPath}/resources/bootstrap-4.0.0-beta-dist/css/bootstrap.min.css"> --%>
 	<link rel="stylesheet" href="${contextPath}/resources/jQuery.NumPad-master/jquery.numpad.css">
 	<link rel="stylesheet" href="${contextPath}/resources/bootstrap-datetimepicker/bootstrap-datetimepicker.css">
 	
@@ -236,11 +237,12 @@
     </div>
   </div>
   
-  <script src="${contextPath}/resources/jquery/jquery-3.2.1.min.js"></script>  
-  <script src="${contextPath}/resources/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>  
-  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script> -->  
-  <script src="${contextPath}/resources/jQuery.NumPad-master/jquery.numpad.js"></script>  
-  <script src="${contextPath}/js/shop/customer_procedure_history.js"></script>  
+  <script type="text/javascript" src="${contextPath}/resources/jquery/jquery-3.2.1.min.js"></script>  
+  <script type="text/javascript" src="${contextPath}/resources/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+  <%-- <script type="text/javascript" src="${contextPath}/resources/bootstrap-4.0.0-beta-dist/js/popper.min.js"></script> --%>  
+  <%-- <script type="text/javascript" src="${contextPath}/resources/bootstrap-4.0.0-beta-dist/js/bootstrap.min.js"></script> --%>  
+  <script type="text/javascript" src="${contextPath}/resources/jQuery.NumPad-master/jquery.numpad.js"></script>  
+  <script type="text/javascript" src="${contextPath}/js/shop/customer_procedure_history.js"></script>  
   <script type="text/javascript" src="${contextPath}/resources/bootstrap-datetimepicker/bootstrap-datetimepicker.js" charset="UTF-8"></script>
   <script type="text/javascript" src="${contextPath}/resources/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.ko.js" charset="UTF-8"></script>
 

@@ -2,11 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.eluda.hair.persistence.mapper.ShopMapper">
  
-    <select id="getShopInfo" resultType="com.eluda.hair.persistence.vo.ShopVo">
-        SELECT	name 
-		FROM	shop
-		WHERE	id = #{id}
-    </select>
+  <select id="getShopInfo" resultType="com.eluda.hair.persistence.vo.ShopVo">
+    SELECT name,
+           open_time_hhnn AS open_time,
+           close_time_hhnn AS close_time 
+      FROM shop
+     WHERE id = #{id}
+  </select>
     
     <select id="getCustomerInfo" resultType="com.eluda.hair.persistence.vo.CustomerVo">
 		SELECT c.id,

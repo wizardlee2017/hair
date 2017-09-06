@@ -5,10 +5,12 @@ import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.eluda.hair.persistence.vo.BookingVo;
 import com.eluda.hair.service.BookingService;
@@ -21,6 +23,11 @@ public class BookingController {
 
 	@Autowired
     private BookingService bookingService;
+	
+	@RequestMapping(value = { "", "/dashboard-monitor" }, method = RequestMethod.GET)
+	public ModelAndView bookingDashboardMonitor(Model model) {
+		return new ModelAndView("booking/booking_dashboard_monitor");
+	}
 	
 	@RequestMapping(path = {""}, method= RequestMethod.POST)
 	public Response insertBooking(@RequestBody BookingVo pBookingInfo) {

@@ -8,6 +8,8 @@ public class BookingVo {
 	private int progress;
 	private int bookingWay;
 	private String memo;
+	private String procedureExpectBeginDatetime;
+	private String procedureExpectEndDatetime;
 	
 	public String getShopId() {
 		return shopId;
@@ -50,5 +52,17 @@ public class BookingVo {
 	}
 	public void setMemo(String memo) {
 		this.memo = memo;
+	}
+	public String getProcedureExpectBeginDatetime() {
+		return procedureExpectBeginDatetime;
+	}
+	public void setProcedureExpectBeginDatetime(String procedureExpectBeginDatetime) {
+		this.procedureExpectBeginDatetime = procedureExpectBeginDatetime;
+	}
+	public String getProcedureExpectEndDatetime() {
+		return procedureExpectEndDatetime;
+	}
+	public void setProcedureExpectEndDatetime(String procedureExpectEndDatetime) {
+		this.procedureExpectEndDatetime = procedureExpectEndDatetime;
 	}
 }

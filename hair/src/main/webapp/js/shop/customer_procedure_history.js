@@ -3,7 +3,7 @@ $(document).ready(function(){
 	var pv_oToday = new Date();
 	
 	//initialize components
-	$('[data-toggle="tooltip"]').tooltip();
+	//$('[data-toggle="tooltip"]').tooltip();
 	
 	// Set NumPad defaults for jQuery mobile. 
     // These defaults will be applied to all NumPads within this document!

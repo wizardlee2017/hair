@@ -1,0 +1,11 @@
+table.schedule-week .today{width: 50%;}
+
+table.schedule-week thead tr.hairdresser th {font-style: oblique; font-size: 10px; font-weight: lighter;}
+
+table.schedule-week tbody td {height:40px;}
+table.schedule-week tbody .booking-item {position:absolute;}
+table.schedule-week tbody td.today .booking-item {width:8%; height:70px;}
+table.schedule-week tbody td .booking-item {width:4%; height:50px;}
+
+table.schedule-week .day-start {border-right-style:hidden;}
+table.schedule-week .day-end {border-left-style:hidden;}
