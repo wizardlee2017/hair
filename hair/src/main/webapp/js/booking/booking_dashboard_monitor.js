@@ -25,12 +25,12 @@ function getDashboardInfo() {
 function setScheduler( pv_oSchedulerData ){
 	var lv_sCurrentDate = "";
 	//주간 일자 설정.
-	$("table.schedule-week thead tr.date th:gt(0)").attr("colspan",dashboardInfo.hairdresserList.length);
+	$("table.schedule-week thead tr.date th:gt(0)").attr("colspan",pv_oSchedulerData.hairdresserList.length);
 	
 	$.each(pv_oSchedulerData.dateList, function (tv_nLoopIndex, tv_sDate){
 		console.log(tv_nLoopIndex + " : " + tv_sDate);
 		lv_sCurrentDate = tv_sDate;
-		$("table.schedule-week thead tr.date th:eq(tv_nLoopIndex+1)").text(lv_sCurrentDate);
+		$("table.schedule-week thead tr.date th").eq(tv_nLoopIndex+1).text(lv_sCurrentDate);
 	})
 
 	//set hairdresser
