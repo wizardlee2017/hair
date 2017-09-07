@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.eluda.hair.persistence.dto.BookingDashboardInfo;
 import com.eluda.hair.persistence.mapper.BookingMapper;
+import com.eluda.hair.persistence.mapper.HairdresserMapper;
 import com.eluda.hair.persistence.mapper.ShopMapper;
 import com.eluda.hair.persistence.vo.BookingVo;
 import com.eluda.hair.service.BookingService;
@@ -21,8 +22,12 @@ public class BookingServiceImpl implements BookingService {
 	
 	@Autowired
 	private BookingMapper bookingMapper;
+	
 	@Autowired
 	private ShopMapper shopMapper;
+	
+	@Autowired
+	private HairdresserMapper hairdresserMapper;
 
 	@Override
 	public void insertBooking(BookingVo bookingVo) {
@@ -31,8 +36,11 @@ public class BookingServiceImpl implements BookingService {
 	}
 
 	@Override
-	public BookingDashboardInfo getBookingDashboardInfo(String shopId, int customerId, String procedureExpectBeginDate) throws ParseException {
-		BookingDashboardInfo result = new BookingDashboardInfo(); 
+	public BookingDashboardInfo getBookingDashboardInfo(String shopId, String procedureExpectBeginDate) throws ParseException {
+		BookingDashboardInfo result = new BookingDashboardInfo();
+		
+		String lv_sFromDateTime = "";
+		String lv_sToDateTime = "";
 		
 		//set date list
 		String dateList[] = new String[7];
@@ -44,11 +52,24 @@ public class BookingServiceImpl implements BookingService {
 		calendar.setTime(beginDate);
 		
 		for (int tv_nIdx = 0; tv_nIdx < 7; tv_nIdx++) {
-			dateList[tv_nIdx] = new SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(calendar.getTime());
+			dateList[tv_nIdx] = new SimpleDateFormat("yyyyMMdd-u", Locale.getDefault()).format(calendar.getTime());
 			calendar.add(Calendar.DATE, 1);
 		}
 		
 		result.setDateList(dateList);
+		
+		//set shop info
+		result.setShopInfo(shopMapper.getShopInfo(shopId));
+		
+		//set hairdresser list
+		result.setHairdresserList(hairdresserMapper.getShopHairDresserList(shopId));
+		
+		//set booking list
+		calendar.setTime(beginDate);
+		lv_sFromDateTime = new SimpleDateFormat("yyyyMMdd0000", Locale.getDefault()).format(calendar.getTime());
+		calendar.add(Calendar.DATE, 6);
+		lv_sToDateTime = new SimpleDateFormat("yyyyMMdd2359", Locale.getDefault()).format(calendar.getTime());
+		result.setBookingList(bookingMapper.getBookingList(shopId, 1, lv_sFromDateTime, lv_sToDateTime));
 		
 		return result;
 	}

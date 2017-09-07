@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.eluda.hair.persistence.vo.CustomerVo;
 import com.eluda.hair.service.CustomerService;
@@ -22,7 +23,8 @@ import com.eluda.hair.service.CustomerService;
  * @author wizardlee
  *
  */
-@Controller
+@RestController
+@RequestMapping("customers")
 public class CustomerController {
 	
 	Logger logger = LoggerFactory.getLogger(CustomerController.class);
@@ -30,7 +32,7 @@ public class CustomerController {
 	@Autowired
 	private CustomerService customerService;
 	
-	@RequestMapping(path = {"/customer"}, method= RequestMethod.POST)
+	@RequestMapping(path = {"/"}, method= RequestMethod.POST)
 	public @ResponseBody CustomerVo registerCustomer(@RequestBody CustomerVo pCustomerInfo){
 		logger.debug("name : " + pCustomerInfo.getName());
 		logger.debug("phone : " + pCustomerInfo.getPhoneNumber());

@@ -42,7 +42,7 @@ public class HairApplicationTests {
 		
 		BookingDashboardInfo result = new BookingDashboardInfo();
 		
-		result = bookingService.getBookingDashboardInfo("kor20170701001", 1, "20170906");
+		result = bookingService.getBookingDashboardInfo("kor20170701001", "20170906");
 		
 		logger.debug("date : {}", result.getBookingList());
 		

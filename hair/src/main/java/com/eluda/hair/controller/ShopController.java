@@ -27,7 +27,7 @@ import com.eluda.hair.service.ShopMenuService;
 import com.eluda.hair.service.ShopService;
 
 @Controller
-@RequestMapping("shop")
+@RequestMapping("shops")
 public class ShopController {
 	
 	Logger logger = LoggerFactory.getLogger(ShopController.class);

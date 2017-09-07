@@ -41,7 +41,7 @@
 		       LEFT OUTER JOIN shop_menu sm
 		       ON b.procedure_menu_id = sm.id
 		WHERE  b.shop_id = #{shopId}
-		  AND  b.progress = #{customerId}
+		  AND  b.progress = #{progress}
 		  AND  b.procedure_expect_begin_datetime BETWEEN #{fromDateTime} AND #{toDateTime}
 	  ORDER  BY b.procedure_expect_begin_datetime ASC
   </select>
