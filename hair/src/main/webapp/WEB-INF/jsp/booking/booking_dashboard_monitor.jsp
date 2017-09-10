@@ -18,7 +18,7 @@
 	<div class="container-fluid">
     <div class="panel panel-default">
 	    <div class="panel-heading">
-	        <h3 class="panel-title">Weekly</h3>
+	        <h3 class="panel-title">주간 예약 현황</h3>
 	      </div>
 	      <div class="panel-body">
 	        <table class="table table-bordered schedule-week" id="">
@@ -269,7 +269,7 @@
   
   <script type="text/javascript" src="${contextPath}/resources/jquery/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="${contextPath}/resources/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="${contextPath}/js/common/function_library.js"></script>
+  <script type="text/javascript" src="${contextPath}/js/common/function-library.js"></script>
   <script type="text/javascript" src="${contextPath}/js/booking/booking_dashboard_monitor.js"></script>
   <script type="text/javascript" src="${contextPath}/resources/bootstrap-datetimepicker/bootstrap-datetimepicker.js" charset="UTF-8"></script>
   <script type="text/javascript" src="${contextPath}/resources/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.ko.js" charset="UTF-8"></script>
