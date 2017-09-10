@@ -47,5 +47,13 @@ public class HairApplicationTests {
 		logger.debug("date : {}", result.getBookingList());
 		
 	}
+	
+	@Test
+	public void temporaryTest3() {
+		String tempStr = "commit ec6396d9156ee5cbe06186c060566471cf2c62d3";
+		
+		logger.debug("date : {}", tempStr.substring(6).trim());
+		
+	}
 
 }
