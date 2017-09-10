@@ -129,7 +129,7 @@ $(document).ready(function(){
 
 //시술 추가
 function addProcedureHistory( procedureHistoryInfo ){
-	var lv_sBaseUrl = "/hair/shop/kor20170701001/customer/{customerId}/procedure-history";
+	var lv_sBaseUrl = "/hair/shops/kor20170701001/customer/{customerId}/procedure-history";
 	var lv_sUrl = lv_sBaseUrl.replace(/{customerId}/g, procedureHistoryInfo.customerId);
 	
 	$.ajax({
@@ -149,7 +149,7 @@ function addProcedureHistory( procedureHistoryInfo ){
 
 //메뉴 목록 획득
 function getShopMenuList( menuTypeId ) {
-	var lv_sUrl = "/hair/shop/kor20170701001/menu-list?menuTypeId=" + menuTypeId;
+	var lv_sUrl = "/hair/shops/kor20170701001/menu-list?menuTypeId=" + menuTypeId;
 	
 	$.ajax({
 		url : lv_sUrl,
@@ -180,7 +180,7 @@ function setShopMenuList(shopMenuList){
 
 //시술 관련 기초 정보 획득
 function getRegisterProcedureBasicInfo() {
-	var lv_sUrl = "/hair/shop/kor20170701001/register-procedure-basic-info";
+	var lv_sUrl = "/hair/shops/kor20170701001/register-procedure-basic-info";
 	
 	$.ajax({
 		url : lv_sUrl,
@@ -233,7 +233,7 @@ function setRegisterProcedureBasicInfo(registerProcedureBasicInfo){
 
 //add shop customer
 function addShopCustomer( customerInfo ){
-	var lv_sBaseUrl = "/hair/shop/kor20170701001/customer";
+	var lv_sBaseUrl = "/hair/shops/kor20170701001/customer";
 	var lv_sUrl = lv_sBaseUrl.replace(/{customerId}/g, customerInfo.id);
 	
 	$.ajax({
@@ -259,8 +259,8 @@ function setCustomerInfo( customerInfo ){
 
 function searchCustomer(customerPhoneNumber, customerName){
 	
-	var lv_sBaseUrl = "/hair/shop/kor20170701001/customer/list";
-	var lv_sUrl = "/hair/shop/kor20170701001/customer/list";
+	var lv_sBaseUrl = "/hair/shops/kor20170701001/customer/list";
+	var lv_sUrl = "/hair/shops/kor20170701001/customer/list";
 	
 	if(customerPhoneNumber.length > 0){
 		lv_sUrl = lv_sBaseUrl + "?customerPhoneNumber=" + customerPhoneNumber;
@@ -300,7 +300,7 @@ function searchCustomer(customerPhoneNumber, customerName){
 
 function requestCustomerProcedureHistoryList(customerInfo){
 	
-	var lv_sBaseUrl = "/hair/shop/kor20170701001/customer/{customerId}/procedure-history/list";
+	var lv_sBaseUrl = "/hair/shops/kor20170701001/customer/{customerId}/procedure-history/list";
 	var lv_sUrl = lv_sBaseUrl.replace(/{customerId}/g, customerInfo.id);
 	
 	$.ajax({
