@@ -135,98 +135,10 @@
               <tr>
                 <td>pm.2</td>
                 <td class="today day-start"></td>
-                <td class="today day-end"></td>
-                <td class="day-start"></td>
-                <td class="day-end"></td>
-                <td class="day-start"></td>
-                <td class="day-end"></td>
-                <td class="day-start"></td>
-                <td class="day-end"></td>
-                <td class="day-start"></td>
-                <td class="day-end"></td>
-                <td class="day-start"></td>
-                <td class="day-end"></td>
-                <td class="day-start"></td>
-                <td class="day-end"></td>
-              </tr>
-              <tr>
-                <td>pm.3</td>
-                <td class="today day-start"></td>
                 <td class="today day-end">
                   <span class="booking-item label label-success">3:30~4:10<br>컷
                   </span>
                 </td>
-                <td class="day-start"></td>
-                <td class="day-end"></td>
-                <td class="day-start"></td>
-                <td class="day-end"></td>
-                <td class="day-start"></td>
-                <td class="day-end"></td>
-                <td class="day-start"></td>
-                <td class="day-end"></td>
-                <td class="day-start"></td>
-                <td class="day-end"></td>
-                <td class="day-start"></td>
-                <td class="day-end"></td>
-              </tr>
-              <tr>
-                <td>pm.4</td>
-                <td class="today day-start"></td>
-                <td class="today day-end"></td>
-                <td class="day-start">
-                  <span class="booking-item label label-primary">4:10~6:20<br>염색
-                  </span>
-                </td>
-                <td class="day-end"></td>
-                <td class="day-start"></td>
-                <td class="day-end"></td>
-                <td class="day-start"></td>
-                <td class="day-end"></td>
-                <td class="day-start"></td>
-                <td class="day-end"></td>
-                <td class="day-start"></td>
-                <td class="day-end"></td>
-                <td class="day-start"></td>
-                <td class="day-end"></td>
-              </tr>
-              <tr>
-                <td>pm.5</td>
-                <td class="today day-start"></td>
-                <td class="today day-end"></td>
-                <td class="day-start"></td>
-                <td class="day-end"></td>
-                <td class="day-start"></td>
-                <td class="day-end"></td>
-                <td class="day-start"></td>
-                <td class="day-end"></td>
-                <td class="day-start"></td>
-                <td class="day-end"></td>
-                <td class="day-start"></td>
-                <td class="day-end"></td>
-                <td class="day-start"></td>
-                <td class="day-end"></td>
-              </tr>
-              <tr>
-                <td>pm.7</td>
-                <td class="today day-start"></td>
-                <td class="today day-end"></td>
-                <td class="day-start"></td>
-                <td class="day-end"></td>
-                <td class="day-start"></td>
-                <td class="day-end"></td>
-                <td class="day-start"></td>
-                <td class="day-end"></td>
-                <td class="day-start"></td>
-                <td class="day-end"></td>
-                <td class="day-start"></td>
-                <td class="day-end"></td>
-                <td class="day-start"></td>
-                <td class="day-end"></td>
-              </tr>
-              <tr>
-                <td>pm.8</td>
-                <td class="today day-start"></td>
-                <td class="today day-end"></td>
                 <td class="day-start"></td>
                 <td class="day-end"></td>
                 <td class="day-start"></td>
@@ -245,27 +157,124 @@
 	      </div>
 	  </div>    
 	  <div class="panel panel-default">
-	    <div class="panel-heading">
-	      <h3 class="panel-title">예약</h3>
-	    </div>
       <div class="panel-body">
-        <ul class="nav nav-tabs">
-				  <li class="active"><a data-toggle="tab" href="#request-booking">예약 신청</a></li>
-				  <li><a data-toggle="tab" href="#today-booking-able-time">오늘 예약 가능 시간</a></li>
-				</ul>
-				
-				<div class="tab-content">
-			    <div id="request-booking" class="container tab-pane fade in active">
-			      <span class="label label-default" id="lblCustomerName">예약일시</span>
-			      <span class="label label-default" id="lblCustomerPhoneNumber">시술 종류</span>
-			    </div>
-			    <div id="today-booking-able-time" class="container tab-pane fade">
-			      <span class="label label-default" id="lblCustomerName">오늘 예약 가능 시간 정보</span>
-			    </div>
-			  </div>
+        <button type="button" class="btn btn-primary" id="btnPopupRequestBooking">예약 신청</button>
       </div>
-	</div>
-	
+	  </div>
+  </div>
+  
+  <!-- 고객 목록 -->
+  <div id="searchCustomerListPopup" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">고객 목록</h4>
+        </div>
+        <div class="modal-body">
+          <table class="table" id="tblCustomerList">
+            <thead>
+              <tr>
+                <th>이름</th>
+                <th>전화번호</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>일이삼</td>
+                <td>010-1111-1234</td>
+              </tr>
+              <tr>
+                <td>가나다</td>
+                <td>010-1234-1100</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">선택</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 예약 신청 -->
+  <div id="popupRequestBooking" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">예약 신청</h4>
+        </div>
+        
+        <div class="modal-body">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+              <input type="text" class="form-control" id="popupRequestBooking-customerName" placeholder="Username">              
+            </div>
+            <div class="input-group">
+	             <span class="input-group-addon"><span class="glyphicon glyphicon-phone"></span></span>
+	             <input type="text" class="form-control" id="popupRequestBooking-customerPhoneNumber" placeholder="Phone Number">
+	           </div>
+          </div>
+         
+          <div class="form-group">
+            <label for="dtp_input2" class="col-md-2 control-label">예약일</label>
+            <div id="popupRequestBooking-date" class="input-group date form_date col-md-5" data-date="" data-date-format="yyyy-mm-dd" data-link-field="hidSelectedBookingDate" data-link-format="yyyymmdd">
+              <input class="form-control" size="16" type="text" value="" readonly>
+              <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+            </div>
+            <input type="hidden" id="hidSelectedBookingDate" value="" /><br/>
+          </div>  
+          
+          <div class="btn-group btn-group-xs">
+            <div class="btn-group">
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="btnSelectedMenuType">
+              시술 종류 <span class="caret"></span></button>
+              <ul class="dropdown-menu" role="menu" id="ulMenuTypeList" >
+                <li><a href="#">컷</a></li>
+                <li><a href="#">펌</a></li>
+                <li><a href="#">염색</a></li>
+              </ul>
+            </div>
+            <div class="btn-group">
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="btnSelectedShopMenu">
+              시술 목록<span class="caret"></span></button>
+              <ul class="dropdown-menu" role="menu" id="ulShopMenuList" >
+                <li><a href="#">여성컷</a></li>
+               <li><a href="#">남성컷</a></li>
+               <li><a href="#">키즈컷</a></li>
+               <li><a href="#">실버컷</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="btn-group">
+            <div class="btn-group">
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="btnSelectedHairdresser">
+              디자이너 <span class="caret"></span></button>
+              <ul class="dropdown-menu" role="menu" id="ulHairdresserList" >
+                <li><a href="#">루나</a></li>
+                <li><a href="#">지니</a></li>
+              </ul>
+            </div>
+         </div>
+         
+         <div class="form-group">
+           <label for="comment">Memo:</label>
+           <textarea class="form-control" rows="3" id="taProcedureMemo"></textarea>
+         </div>
+          
+                
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" id="btnRegisterProdecureHistory-popupInsertProcedureHistory">추가</button>
+        </div>
+      </div>
+    </div>
+  </div>
   
   <script type="text/javascript" src="${contextPath}/resources/jquery/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="${contextPath}/resources/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>

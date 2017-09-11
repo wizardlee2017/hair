@@ -1,8 +1,99 @@
 $(document).ready(function(){
 	
+	var pv_oToday = new Date();
+	
+	//datetime picker
+	$('#popupRequestBooking-date').datetimepicker({
+        language:  'ko',
+        weekStart: 1,
+        todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		minView: 2,
+		forceParse: 0
+    });
+	$("#popupRequestBooking-date .form-control").val(pv_oToday.toISOString().slice(0,10));
+	$("#hidSelectedBookingDate").val(pv_oToday.toISOString().slice(0,10).replace(/-/g,""));
+	
+	$(document).on("click", ".dropdown-menu li a", function(){
+		  $(this).parents(".btn-group:first").find('.btn').html($(this).text() + ' <span class="caret"></span>');
+		  $(this).parents(".btn-group:first").find('.btn').val($(this).parents("li:first").data("id"));
+		  
+		  //시술 종류일경우 메뉴 목록 설정
+		  if($(this).parents("#ulMenuTypeList").length != 0){
+			  var lv_sMenuTypeId = $(this).parents("li:first").data("id");
+			  $("#ulShopMenuList").parents(".btn-group:first").find('.btn').html('시술 목록 <span class="caret"></span>');
+			  getShopMenuList( lv_sMenuTypeId );
+		  }
+		  
+		});
+	
+	
 	getDashboardInfo();
+	
+	//click register shop customer button
+    $("#btnPopupRequestBooking").click(function(){
+    	$("#popupRequestBooking").modal();
+    	getRequestBookingBasicInfo();
+    });
+    
+    $(document).on("focusout", "#popupRequestBooking-customerName, #popupRequestBooking-customerPhoneNumber", function(){
+    	console.log("check customer name and phone number");
+    	checkBookingCustomer();
+    });
     
 });
+
+
+//예약 신청자 조회
+function checkBookingCustomer(){
+	var lv_sCustomerName = $("#popupRequestBooking-customerName").val();
+	var lv_sCustomerPhoneNumber = $("#popupRequestBooking-customerPhoneNumber").val();
+	//이름과 전화번호가 모두 기입되어 있으면 해당 정보로 고객 조회를 한다.
+	if ( (lv_sCustomerName.trim().length > 0) && (lv_sCustomerPhoneNumber.trim().length > 0)) {
+		//고객 조회 - 기존 고객일 경우, 확인 절차 진행, 신규일 경우 일단 pass -> 예약 신청시 신규 처리.
+		if( lv_sCustomerPhoneNumber.trim().length > 0 ) {
+    		var lv_sBaseUrl = "/hair/customers/phone-number/{phoneNumber}";
+        	var lv_sUrl = lv_sBaseUrl.replace(/{phoneNumber}/g, lv_sCustomerPhoneNumber);
+        	
+        	$.ajax({
+        		url : lv_sUrl,
+        		method : "GET",
+        		success : function(resData) {
+        			console.log(resData);				
+        			console.log("length : " + resData.length);
+        			//전화번호 기준으로 이미 고객 등록이 되어 있는데, 고객명이 다를 경우 확인, 기존 고객 정보 사용할지, 새로 등록하지 확인. 
+        			if( (resData.length > 0 ) && (resData[0].name != lv_sCustomerName)){
+        				showSearchCustomerListOnPopup(resData);
+        			}
+        		}
+        	});
+    	}
+	} else {
+		//pass -> 예약 신청시 validate check.
+	}
+}
+
+function showSearchCustomerListOnPopup( customerList ){
+	var lv_sTrTemplate =	"<tr data-id=':id' data-name=':name' data-phone_number=':phoneNumber'> " +
+							"	<td>:name</td>" + 
+							"	<td>:phoneNumber</td>" +
+							"</tr>";
+	//clear table for customer list
+	$("#searchCustomerListPopup #tblCustomerList tbody tr").remove();
+	
+	//set table for customer list
+	$.each(customerList, function( tv_nLoopIndex, tv_oCustomerInfo ) {
+		console.log(tv_nLoopIndex + " : " + tv_oCustomerInfo);
+		var lv_sAppendStr =	lv_sTrTemplate.replace(/:id/g, tv_oCustomerInfo.id)
+										  .replace(/:phoneNumber/g, tv_oCustomerInfo.phoneNumber)	
+			  							  .replace(/:name/g, tv_oCustomerInfo.name);
+		$("#searchCustomerListPopup #tblCustomerList tbody").append(lv_sAppendStr);
+	});
+	
+	 $("#searchCustomerListPopup").modal();
+}
 
 //Dashboard 정보 획득
 function getDashboardInfo() {
@@ -182,5 +273,78 @@ function getHairdresserColor( p_nHairdresserSeq ){
 	} else {
 		return "label-success";
 	}
+	
+}
+
+//예약 신청 관련 기초 정보 획득
+function getRequestBookingBasicInfo() {
+	var lv_sUrl = "/hair/shops/kor20170701001/register-procedure-basic-info";
+	
+	$.ajax({
+		url : lv_sUrl,
+		method : "GET",
+		success : function(resData) {
+			console.log(resData);				
+			setRequestBookingBasicInfo(resData);
+		}
+	});
+}
+
+//예약 신청 관련 기초 정보 설정.
+function setRequestBookingBasicInfo( p_RequestBookingBasicInfo){
+	var lv_oHairdresserList = p_RequestBookingBasicInfo.hairdresserList;
+	var lv_oMenuTypeList = p_RequestBookingBasicInfo.menuTypeList;
+	
+	var lv_sLiTemplateHairdresser =	"<li data-id=':id'><a href='#'>:name</a></li>";
+	var lv_sLiTemplateMenuType =	"<li data-id=':id'><a href='#'>:name</a></li>";
+	
+	//set hairdresser	
+	$('#ulHairdresserList').empty('li');
+	$.each(lv_oHairdresserList, function( tv_nLoopIndex, tv_oHairdresserInfo ) {
+		//console.log(tv_nLoopIndex + ' : ' + tv_oHairdresserInfo);
+		var lv_sAppendStr =	lv_sLiTemplateHairdresser.replace(/:id/g, tv_oHairdresserInfo.id)
+										  			 .replace(/:name/g, tv_oHairdresserInfo.nickname);
+		$('#ulHairdresserList').append(lv_sAppendStr);
+	});
+	
+	//set menu type	
+	$('#ulMenuTypeList').empty('li');
+	$.each(lv_oMenuTypeList, function( tv_nLoopIndex, tv_oMenuTypeInfo ) {
+		console.log(tv_nLoopIndex + ' : ' + tv_oMenuTypeInfo);
+		var lv_sAppendStr =	lv_sLiTemplateMenuType.replace(/:id/g, tv_oMenuTypeInfo.id)
+										  		  .replace(/:name/g, tv_oMenuTypeInfo.name);
+		$('#ulMenuTypeList').append(lv_sAppendStr);
+	});
+	
+}
+
+//메뉴 목록 획득
+function getShopMenuList( menuTypeId ) {
+	var lv_sUrl = "/hair/shops/kor20170701001/menu-list?menuTypeId=" + menuTypeId;
+	
+	$.ajax({
+		url : lv_sUrl,
+		method : "GET",
+		success : function(resData) {
+			console.log(resData);				
+			console.log("length : " + resData.length);
+			setShopMenuList(resData);
+		}
+	});
+}
+
+//메뉴 목록 설정.
+function setShopMenuList(shopMenuList){
+	
+	var lv_sLiTemplate =	"<li data-id=':id' data-price=':price' ><a href='#'>:name</a></li>";
+	
+	$('#ulShopMenuList').empty('li');
+	$.each(shopMenuList, function( tv_nLoopIndex, tv_oShopMenuInfo ) {
+		console.log(tv_nLoopIndex + ' : ' + tv_oShopMenuInfo);
+		var lv_sAppendStr =	lv_sLiTemplate.replace(/:id/g, tv_oShopMenuInfo.id)
+										  .replace(/:price/g, tv_oShopMenuInfo.price)
+										  .replace(/:name/g, tv_oShopMenuInfo.name);
+		$('#ulShopMenuList').append(lv_sAppendStr);
+	});
 	
 }

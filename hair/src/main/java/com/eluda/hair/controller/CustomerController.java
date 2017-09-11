@@ -44,7 +44,7 @@ public class CustomerController {
 		return new CustomerInfo();*/
 	}
 	
-	@RequestMapping(path = {"/customer-list/phone-number/{phoneNumber}"}, method= RequestMethod.GET)
+	@RequestMapping(path = {"/phone-number/{phoneNumber}"}, method= RequestMethod.GET)
 	public @ResponseBody List<CustomerVo> getCustomerListByPhoneNumber(@PathVariable ("phoneNumber") String phoneNumber){
 		return customerService.getCustomerListByPhoneNumber(phoneNumber);
 	}
