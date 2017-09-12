@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	
+		
 	var pv_oToday = new Date();
 	
 	//datetime picker
@@ -41,6 +41,21 @@ $(document).ready(function(){
     $(document).on("focusout", "#popupRequestBooking-customerName, #popupRequestBooking-customerPhoneNumber", function(){
     	console.log("check customer name and phone number");
     	checkBookingCustomer();
+    });
+    
+    //select customer from customer list on popup.
+    $("#searchCustomerListPopup #tblCustomerList tbody").on("click", "tr", function(){
+    	console.log("select tr");
+    	$(this).addClass("active").siblings().removeClass("active");
+    });
+    
+    //click select button from customer list on popup.
+    $("#searchCustomerListPopup .modal-footer button").on("click", function(){
+    	var selectedTr = $("#searchCustomerListPopup #tblCustomerList tbody tr.active");
+    	var customerInfo = {"id":$(selectedTr).data("id"), "name":$(selectedTr).data("name"), "phoneNumber":$(selectedTr).data("phone_number")}
+    	
+    	$("#popupRequestBooking-customerName").val($(selectedTr).data("name"));
+    	
     });
     
 });

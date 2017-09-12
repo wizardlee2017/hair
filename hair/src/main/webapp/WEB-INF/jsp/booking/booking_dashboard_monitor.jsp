@@ -164,7 +164,7 @@
   </div>
   
   <!-- 고객 목록 -->
-  <div id="searchCustomerListPopup" class="modal fade" role="dialog">
+  <div id="searchCustomerListPopup" class="modal fade" role="dialog" style="z-index: 1060;">
     <div class="modal-dialog">
       <!-- Modal content-->
       <div class="modal-content">
@@ -200,7 +200,7 @@
   </div>
   
   <!-- 예약 신청 -->
-  <div id="popupRequestBooking" class="modal fade" role="dialog">
+  <div id="popupRequestBooking" class="modal fade" role="dialog" style="z-index: 1050;">
     <div class="modal-dialog">
       <!-- Modal content-->
       <div class="modal-content">

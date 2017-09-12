@@ -50,9 +50,10 @@ public class HairApplicationTests {
 	
 	@Test
 	public void temporaryTest3() {
+		String tempStr2 = "commit";
 		String tempStr = "commit ec6396d9156ee5cbe06186c060566471cf2c62d3";
 		
-		logger.debug("date : {}", tempStr.substring(6).trim());
+		logger.debug("Str : {}", tempStr.substring(tempStr2.length()).trim());
 		
 	}
 
