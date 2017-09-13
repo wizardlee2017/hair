@@ -4,6 +4,7 @@ public class BookingVo {
 	private String shopId;
 	private int customerId;
 	private String bookingDatetime;
+	private String procedureMenuId;
 	private int procedureHairdresserId;
 	private int progress;
 	private int bookingWay;
@@ -64,5 +65,11 @@ public class BookingVo {
 	}
 	public void setProcedureExpectEndDatetime(String procedureExpectEndDatetime) {
 		this.procedureExpectEndDatetime = procedureExpectEndDatetime;
+	}
+	public String getProcedureMenuId() {
+		return procedureMenuId;
+	}
+	public void setProcedureMenuId(String procedureMenuId) {
+		this.procedureMenuId = procedureMenuId;
 	}
 }

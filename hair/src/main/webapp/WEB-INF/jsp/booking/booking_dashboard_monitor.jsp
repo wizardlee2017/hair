@@ -173,6 +173,8 @@
           <h4 class="modal-title">고객 목록</h4>
         </div>
         <div class="modal-body">
+          동일한 전화번호로 등록된 정보가 존재 합니다.
+          동일인이 아닐 경우, 신규등록 버튼 클릭을 하시고, 동일인일 경우 아래 목록에서 선택하세요.
           <table class="table" id="tblCustomerList">
             <thead>
               <tr>
@@ -193,7 +195,8 @@
           </table>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">선택</button>
+          <button type="button" class="btn btn-success" data-dismiss="modal">신규</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" id="searchCustomerListPopup-selectCustomer">선택</button>
         </div>
       </div>
     </div>
@@ -223,7 +226,7 @@
          
           <div class="form-group">
             <label for="dtp_input2" class="col-md-2 control-label">예약일</label>
-            <div id="popupRequestBooking-date" class="input-group date form_date col-md-5" data-date="" data-date-format="yyyy-mm-dd" data-link-field="hidSelectedBookingDate" data-link-format="yyyymmdd">
+            <div id="popupRequestBooking-date" class="input-group date form_date col-md-5" data-date="" data-date-format="yyyy-mm-dd hh:ii" data-link-field="hidSelectedBookingDate" data-link-format="yyyymmddhhii">
               <input class="form-control" size="16" type="text" value="" readonly>
               <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
             </div>
@@ -270,7 +273,7 @@
                 
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal" id="btnRegisterProdecureHistory-popupInsertProcedureHistory">추가</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" id="btnRegisterProdecureHistory-popupInsertProcedureHistory">예약 신청</button>
         </div>
       </div>
     </div>

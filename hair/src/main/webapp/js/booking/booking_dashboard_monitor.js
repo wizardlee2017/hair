@@ -5,12 +5,13 @@ $(document).ready(function(){
 	//datetime picker
 	$('#popupRequestBooking-date').datetimepicker({
         language:  'ko',
+        format: 'yyyy-mm-dd hh:ii',
         weekStart: 1,
         todayBtn:  1,
 		autoclose: 1,
 		todayHighlight: 1,
 		startView: 2,
-		minView: 2,
+		minView: 0,
 		forceParse: 0
     });
 	$("#popupRequestBooking-date .form-control").val(pv_oToday.toISOString().slice(0,10));
@@ -50,16 +51,60 @@ $(document).ready(function(){
     });
     
     //click select button from customer list on popup.
-    $("#searchCustomerListPopup .modal-footer button").on("click", function(){
+    $("#searchCustomerListPopup .modal-footer button#searchCustomerListPopup-selectCustomer").on("click", function(){
     	var selectedTr = $("#searchCustomerListPopup #tblCustomerList tbody tr.active");
     	var customerInfo = {"id":$(selectedTr).data("id"), "name":$(selectedTr).data("name"), "phoneNumber":$(selectedTr).data("phone_number")}
     	
-    	$("#popupRequestBooking-customerName").val($(selectedTr).data("name"));
+    	$("#popupRequestBooking-customerName").val($(selectedTr).data("name"))
+    										  .data("customer-id", $(selectedTr).data("id"));
     	
+    });
+    
+    //click request booking
+    $("#btnRegisterProdecureHistory-popupInsertProcedureHistory").click(function(){
+    	var bookingInfo = {
+				"shopId":"kor20170701001",
+				"customerId":$("#popupRequestBooking-customerName").data("customer-id"), 
+				"bookingDatetime":$("#hidSelectedBookingDate").val(),
+				"procedureHairdresserId":$("#btnSelectedHairdresser").val(),
+				"procedureTypeId":$("#btnSelectedProcedureType").val(),
+				"price":$("#txtProcedurePrice").val(),
+				"memo":$("#taProcedureMemo").val()
+				};
+    	/*
+    	{
+    		  "shopId" : "kor20170701001",
+    		  "customerId": 1,
+    		  "bookingDatetime" : "201708301430",
+    		  "procedureHairdresserId" : 1,
+    		  "progress" : 0,
+    		  "bookingWay" : 20,
+    		  "memo" : "테스트 데이터"
+    		}*/
+    	requestBooking( bookingInfo );
     });
     
 });
 
+
+//request booking
+function requestBooking( bookingInfo ) {
+	var lv_sBaseUrl = "/hair/booking";
+	var lv_sUrl = lv_sBaseUrl;
+	
+	$.ajax({
+		url : lv_sUrl,
+		method : "POST",
+		data : JSON.stringify(bookingInfo),
+		processData: false,
+	    contentType: "application/json; charset=UTF-8",
+	    complete : function(resData) {
+			console.log(resData);	
+			alert("예약 신청 되었습니다. 접수처리가 되면 예약표에 표시됩니다.");
+			
+		}
+	});
+}
 
 //예약 신청자 조회
 function checkBookingCustomer(){
