@@ -14,8 +14,6 @@ $(document).ready(function(){
 		minView: 0,
 		forceParse: 0
     });
-	$("#popupRequestBooking-date .form-control").val(pv_oToday.toISOString().slice(0,10));
-	$("#hidSelectedBookingDate").val(pv_oToday.toISOString().slice(0,10).replace(/-/g,""));
 	
 	$(document).on("click", ".dropdown-menu li a", function(){
 		  $(this).parents(".btn-group:first").find('.btn').html($(this).text() + ' <span class="caret"></span>');
@@ -35,13 +33,26 @@ $(document).ready(function(){
 	
 	//click register shop customer button
     $("#btnPopupRequestBooking").click(function(){
+    	$("#popupRequestBooking-date .form-control").val(moment().format('YYYY-MM-DD HH:mm'));
+    	$("#hidSelectedBookingDate").val(moment().format('YYYYMMDDHHmm'));
+    	$("#popupRequestBooking-customerName").val("");
+    	$("#popupRequestBooking-customerPhoneNumber").val("");
+    	$("#popupRequestBooking-taProcedureMemo").val("");
     	$("#popupRequestBooking").modal();
     	getRequestBookingBasicInfo();
+    });
+    
+    $(document).on("keypress", "#popupRequestBooking-customerName, #popupRequestBooking-customerPhoneNumber", function(event){
+    	if ( event.which == 13 ) {
+    	     $("#popupRequestBooking-customerName, #popupRequestBooking-customerPhoneNumber").focusout();
+    	  }
+    	
     });
     
     $(document).on("focusout", "#popupRequestBooking-customerName, #popupRequestBooking-customerPhoneNumber", function(){
     	console.log("check customer name and phone number");
     	checkBookingCustomer();
+    	
     });
     
     //select customer from customer list on popup.
@@ -66,21 +77,11 @@ $(document).ready(function(){
 				"shopId":"kor20170701001",
 				"customerId":$("#popupRequestBooking-customerName").data("customer-id"), 
 				"bookingDatetime":$("#hidSelectedBookingDate").val(),
+				"procedureMenuId":$("#popupRequestBooking-btnSelectedShopMenu").val(),
 				"procedureHairdresserId":$("#btnSelectedHairdresser").val(),
-				"procedureTypeId":$("#btnSelectedProcedureType").val(),
-				"price":$("#txtProcedurePrice").val(),
-				"memo":$("#taProcedureMemo").val()
+				"bookingWay":20,
+				"memo":$("#popupRequestBooking-taProcedureMemo").val()
 				};
-    	/*
-    	{
-    		  "shopId" : "kor20170701001",
-    		  "customerId": 1,
-    		  "bookingDatetime" : "201708301430",
-    		  "procedureHairdresserId" : 1,
-    		  "progress" : 0,
-    		  "bookingWay" : 20,
-    		  "memo" : "테스트 데이터"
-    		}*/
     	requestBooking( bookingInfo );
     });
     
@@ -244,13 +245,13 @@ function setScheduler( pv_oSchedulerData ){
     	
     	
     	lv_sAppendStr = lv_sBookingTemplate.replace(/:hairdresserColor/g,getHairdresserColor(tv_oBookingInfo.hairdresserId))
-    									   .replace(/:beginTime/g,getTimeStr(tv_oBookingInfo.procedureExpectBeginDatetime))
+    									   .replace(/:beginTime/g,getTimeStr(tv_oBookingInfo.bookingDatetime))
     									   .replace(/:endTime/g,getTimeStr(tv_oBookingInfo.procedureExpectEndDatetime))
     									   .replace(/:procedureName/g,tv_oBookingInfo.procedureName);
     	
     	console.log("lv_sAppendStr : " + lv_sAppendStr);
     	
-    	lv_oTd = $("table.schedule-week tbody td[data-datetime='"+ getTimeAxisStr(tv_oBookingInfo.procedureExpectBeginDatetime) +"'][data-hairdresser-id='"+ tv_oBookingInfo.hairdresserId + "']");
+    	lv_oTd = $("table.schedule-week tbody td[data-datetime='"+ getTimeAxisStr(tv_oBookingInfo.bookingDatetime) +"'][data-hairdresser-id='"+ tv_oBookingInfo.hairdresserId + "']");
     	lv_oTd.append(lv_sAppendStr);
     })
 }

@@ -30,8 +30,11 @@ public class BookingServiceImpl implements BookingService {
 	private HairdresserMapper hairdresserMapper;
 
 	@Override
-	public void insertBooking(BookingVo bookingVo) {
-		bookingMapper.insertBooking(bookingVo);
+	@Transactional
+	public void requestBooking(BookingVo bookingVo) {
+		//진행상태를 예약 신청(0)으로 설정.
+		bookingVo.setProgress(0);
+		bookingMapper.requestBooking(bookingVo);
 
 	}
 
@@ -69,7 +72,7 @@ public class BookingServiceImpl implements BookingService {
 		lv_sFromDateTime = new SimpleDateFormat("yyyyMMdd0000", Locale.getDefault()).format(calendar.getTime());
 		calendar.add(Calendar.DATE, 6);
 		lv_sToDateTime = new SimpleDateFormat("yyyyMMdd2359", Locale.getDefault()).format(calendar.getTime());
-		result.setBookingList(bookingMapper.getBookingList(shopId, 1, lv_sFromDateTime, lv_sToDateTime));
+		result.setBookingList(bookingMapper.getRequestBookingList(shopId, lv_sFromDateTime, lv_sToDateTime));
 		
 		return result;
 	}

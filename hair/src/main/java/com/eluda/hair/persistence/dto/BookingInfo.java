@@ -2,8 +2,9 @@ package com.eluda.hair.persistence.dto;
 
 public class BookingInfo {
 	
-	private String bookingDate;
+	private String bookingDatetime;
 	private int customerId;
+	private String assignedOrNot;
 	private String customerName;
 	private String customerPhoneNumber;
 	private String hairdresserId;
@@ -13,12 +14,6 @@ public class BookingInfo {
 	private String procedureExpectEndDatetime;
 	private String memo;
 	
-	public String getBookingDate() {
-		return bookingDate;
-	}
-	public void setBookingDate(String bookingDate) {
-		this.bookingDate = bookingDate;
-	}
 	public int getCustomerId() {
 		return customerId;
 	}
@@ -72,6 +67,18 @@ public class BookingInfo {
 	}
 	public void setMemo(String memo) {
 		this.memo = memo;
+	}
+	public String getAssignedOrNot() {
+		return assignedOrNot;
+	}
+	public void setAssignedOrNot(String assignedOrNot) {
+		this.assignedOrNot = assignedOrNot;
+	}
+	public String getBookingDatetime() {
+		return bookingDatetime;
+	}
+	public void setBookingDatetime(String bookingDatetime) {
+		this.bookingDatetime = bookingDatetime;
 	}
 	
 }

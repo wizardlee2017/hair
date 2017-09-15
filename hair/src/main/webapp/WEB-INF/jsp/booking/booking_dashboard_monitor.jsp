@@ -244,7 +244,7 @@
               </ul>
             </div>
             <div class="btn-group">
-              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="btnSelectedShopMenu">
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="popupRequestBooking-btnSelectedShopMenu">
               시술 목록<span class="caret"></span></button>
               <ul class="dropdown-menu" role="menu" id="ulShopMenuList" >
                 <li><a href="#">여성컷</a></li>
@@ -267,7 +267,7 @@
          
          <div class="form-group">
            <label for="comment">Memo:</label>
-           <textarea class="form-control" rows="3" id="taProcedureMemo"></textarea>
+           <textarea class="form-control" rows="3" id="popupRequestBooking-taProcedureMemo"></textarea>
          </div>
           
                 
@@ -282,6 +282,7 @@
   <script type="text/javascript" src="${contextPath}/resources/jquery/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="${contextPath}/resources/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="${contextPath}/js/common/function-library.js"></script>
+  <script type="text/javascript" src="${contextPath}/resources/moment-with-locales.js"></script>
   <script type="text/javascript" src="${contextPath}/js/booking/booking_dashboard_monitor.js"></script>
   <script type="text/javascript" src="${contextPath}/resources/bootstrap-datetimepicker/bootstrap-datetimepicker.js" charset="UTF-8"></script>
   <script type="text/javascript" src="${contextPath}/resources/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.ko.js" charset="UTF-8"></script>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.eluda.hair.persistence.mapper.BookingMapper">
-  <insert id="insertBooking" parameterType="com.eluda.hair.persistence.vo.BookingVo">
+  <insert id="requestBooking" parameterType="com.eluda.hair.persistence.vo.BookingVo">
     INSERT
     INTO    booking  
             ( shop_id,
@@ -24,18 +24,30 @@
             )
   </insert>  
   
-  <select id="getBookingList" resultType="com.eluda.hair.persistence.dto.BookingInfo">
-    SELECT SUBSTR(b.procedure_expect_begin_datetime,1,8) booking_date,
-		       b.customer_id,
-		       c.name AS customer_name,       
-		       c.phone_number AS customer_phone_number,       
-		       b.procedure_hairdresser_id AS hairdresser_id,
-		       h.nickname hairdresser_name,
-		       sm.name AS procedure_name,
-		       b.procedure_expect_begin_datetime,
-		       b.procedure_expect_end_datetime,
-		       b.memo
-		FROM   booking b
+  <select id="getRequestBookingList" resultType="com.eluda.hair.persistence.dto.BookingInfo">
+    SELECT b.criteria_datetime AS booking_datetime,      
+           b.customer_id,
+           IF(b.progress=0, 'N', 'Y') AS assigned_or_not,
+           c.name AS customer_name,       
+           c.phone_number AS customer_phone_number,       
+           b.procedure_hairdresser_id AS hairdresser_id,
+           h.nickname hairdresser_name,
+           sm.name AS procedure_name,
+           b.procedure_expect_begin_datetime,
+           b.procedure_expect_end_datetime,
+           b.memo
+    FROM   (
+             SELECT shop_id,
+                    customer_id,
+                    IFNULL(procedure_expect_begin_datetime, booking_datetime) AS criteria_datetime,
+                    procedure_menu_id,
+                    procedure_hairdresser_id,
+                    procedure_expect_begin_datetime,
+                    procedure_expect_end_datetime,
+                    progress,
+                    memo
+               FROM booking
+           ) b
 		       INNER JOIN customer c       
 		       ON b.customer_id = c.id
 		       INNER JOIN hairdresser h
@@ -43,8 +55,8 @@
 		       LEFT OUTER JOIN shop_menu sm
 		       ON b.procedure_menu_id = sm.id
 		WHERE  b.shop_id = #{shopId}
-		  AND  b.progress = #{progress}
-		  AND  b.procedure_expect_begin_datetime BETWEEN #{fromDateTime} AND #{toDateTime}
-	  ORDER  BY b.procedure_expect_begin_datetime ASC
+		  AND  b.progress IN ( 0, 1 )
+		  AND  b.criteria_datetime BETWEEN #{fromDateTime} AND #{toDateTime}
+	  ORDER  BY b.criteria_datetime ASC
   </select>
 </mapper>

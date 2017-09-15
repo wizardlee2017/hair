@@ -41,7 +41,7 @@ public class BookingController {
 		logger.debug("customerId : {}", pBookingInfo.getCustomerId());
 		
 		try {
-			bookingService.insertBooking(pBookingInfo);
+			bookingService.requestBooking(pBookingInfo);
 			return Response.status(Response.Status.OK).build();
 		} catch (Exception e) {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();

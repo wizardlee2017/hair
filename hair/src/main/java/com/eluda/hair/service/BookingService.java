@@ -6,7 +6,7 @@ import com.eluda.hair.persistence.dto.BookingDashboardInfo;
 import com.eluda.hair.persistence.vo.BookingVo;
 
 public interface BookingService {
-	public void insertBooking(BookingVo bookingVo);
+	public void requestBooking(BookingVo bookingVo);
 	
 	public BookingDashboardInfo getBookingDashboardInfo( String shopId, String procedureExpectBeginDate) throws ParseException;
 }
