@@ -79,7 +79,7 @@ public class ShopController {
 		
 		boolean isNewCustomer = false;
 		
-		if((pCustomerInfo.getId() == null) || ("".equals(pCustomerInfo.getId()))) {
+		if( pCustomerInfo.getId() <= 0 ) {
 			isNewCustomer = true;
 			pCustomerInfo.setRegisterShopId(shopId);
 		}

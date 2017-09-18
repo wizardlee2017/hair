@@ -22,7 +22,7 @@
 	  	<div class="panel-body">
 	  	  <div class="input-group">
 			    <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
-          <input id="txtCustomerPhoneNumber" type="text" class="form-control" name="customerPhoneNumber" placeholder="phone number" data-numpad="nmpd1" data-toggle="tooltip" data-placement="bottom" title="전화번호 뒷자리 입력">
+          <input id="txtCustomerPhoneNumber" type="text" class="form-control" name="customerPhoneNumber" placeholder="전화번호, 미등록 고객은 000 입력" data-numpad="nmpd1" data-toggle="tooltip" data-placement="bottom" title="전화번호 뒷자리 입력, 미등록 고객은 000 입력">
 			    <div class="input-group-btn">
 			      <button class="btn btn-default" type="button" id="btnSearchCustomerByPhoneNumber">
 			        <i class="glyphicon glyphicon-search"></i>

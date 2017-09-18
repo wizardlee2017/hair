@@ -36,6 +36,7 @@ $(document).ready(function(){
     	$("#popupRequestBooking-date .form-control").val(moment().format('YYYY-MM-DD HH:mm'));
     	$("#hidSelectedBookingDate").val(moment().format('YYYYMMDDHHmm'));
     	$("#popupRequestBooking-customerName").val("");
+    	$("#popupRequestBooking-customerName").data("customer-id","");
     	$("#popupRequestBooking-customerPhoneNumber").val("");
     	$("#popupRequestBooking-taProcedureMemo").val("");
     	$("#popupRequestBooking").modal();
@@ -76,6 +77,8 @@ $(document).ready(function(){
     	var bookingInfo = {
 				"shopId":"kor20170701001",
 				"customerId":$("#popupRequestBooking-customerName").data("customer-id"), 
+				"customerName":$("#popupRequestBooking-customerName").val(),
+				"customerPhoneNumber":$("#popupRequestBooking-customerPhoneNumber").val(),
 				"bookingDatetime":$("#hidSelectedBookingDate").val(),
 				"procedureMenuId":$("#popupRequestBooking-btnSelectedShopMenu").val(),
 				"procedureHairdresserId":$("#btnSelectedHairdresser").val(),
@@ -321,9 +324,15 @@ function getTimeAxisStr( p_sDateTime ){
 }
 
 function getTimeStr( p_sDateTime ){
-	var lv_sResult = p_sDateTime;
+	var lv_sResult = "";
 	
-	lv_sResult = p_sDateTime.substr(8,2) + ":" + p_sDateTime.substr(10,2);
+	try{
+		lv_sResult = p_sDateTime.substr(8,2) + ":" + p_sDateTime.substr(10,2);
+	} catch(e) {
+		console.log("exception-getTimeStr : " + e );
+	}
+	
+	
 	
 	return lv_sResult;
 }

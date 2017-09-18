@@ -1,10 +1,10 @@
-package com.eluda.hair.persistence.vo;
+package com.eluda.hair.persistence.dto;
 
-import com.eluda.hair.persistence.dto.BookingRequestInfo;
-
-public class BookingVo {
+public class BookingRequestInfo {
 	private String shopId;
 	private int customerId;
+	private String customerName;
+	private String customerPhoneNumber;
 	private String bookingDatetime;
 	private String procedureMenuId;
 	private int procedureHairdresserId;
@@ -13,20 +13,6 @@ public class BookingVo {
 	private String memo;
 	private String procedureExpectBeginDatetime;
 	private String procedureExpectEndDatetime;
-	
-	public BookingVo() {		
-	}
-	
-	public BookingVo( BookingRequestInfo pBookingRequestInfo ) {
-		this.shopId = pBookingRequestInfo.getShopId();
-		this.customerId = pBookingRequestInfo.getCustomerId();
-		this.bookingDatetime = pBookingRequestInfo.getBookingDatetime();
-		this.procedureMenuId = pBookingRequestInfo.getProcedureMenuId();
-		this.procedureHairdresserId = pBookingRequestInfo.getProcedureHairdresserId();
-		this.progress = pBookingRequestInfo.getProgress();
-		this.bookingWay = pBookingRequestInfo.getBookingWay();
-		this.memo = pBookingRequestInfo.getMemo();
-	}
 	
 	public String getShopId() {
 		return shopId;
@@ -87,5 +73,17 @@ public class BookingVo {
 	}
 	public void setProcedureMenuId(String procedureMenuId) {
 		this.procedureMenuId = procedureMenuId;
+	}
+	public String getCustomerName() {
+		return customerName;
+	}
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+	public String getCustomerPhoneNumber() {
+		return customerPhoneNumber;
+	}
+	public void setCustomerPhoneNumber(String customerPhoneNumber) {
+		this.customerPhoneNumber = customerPhoneNumber;
 	}
 }
