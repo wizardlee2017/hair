@@ -39,7 +39,7 @@ public class BookingServiceImpl implements BookingService {
 	}
 
 	@Override
-	public BookingDashboardInfo getBookingDashboardInfo(String shopId, String procedureExpectBeginDate) throws ParseException {
+	public BookingDashboardInfo getBookingDashboardInfo(String shopId, String procedureExpectBeginDate, int customerId) throws ParseException {
 		BookingDashboardInfo result = new BookingDashboardInfo();
 		
 		String lv_sFromDateTime = "";
@@ -55,7 +55,8 @@ public class BookingServiceImpl implements BookingService {
 		calendar.setTime(beginDate);
 		
 		for (int tv_nIdx = 0; tv_nIdx < 7; tv_nIdx++) {
-			dateList[tv_nIdx] = new SimpleDateFormat("yyyyMMdd-u", Locale.getDefault()).format(calendar.getTime());
+			//dateList[tv_nIdx] = new SimpleDateFormat("yyyyMMdd-u", Locale.getDefault()).format(calendar.getTime());
+			dateList[tv_nIdx] = new SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(calendar.getTime());
 			calendar.add(Calendar.DATE, 1);
 		}
 		
@@ -72,7 +73,7 @@ public class BookingServiceImpl implements BookingService {
 		lv_sFromDateTime = new SimpleDateFormat("yyyyMMdd0000", Locale.getDefault()).format(calendar.getTime());
 		calendar.add(Calendar.DATE, 6);
 		lv_sToDateTime = new SimpleDateFormat("yyyyMMdd2359", Locale.getDefault()).format(calendar.getTime());
-		result.setBookingList(bookingMapper.getRequestBookingList(shopId, lv_sFromDateTime, lv_sToDateTime));
+		result.setBookingList(bookingMapper.getRequestBookingList(shopId, lv_sFromDateTime, lv_sToDateTime, customerId));
 		
 		return result;
 	}

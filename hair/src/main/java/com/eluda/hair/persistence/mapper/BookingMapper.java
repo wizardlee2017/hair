@@ -13,5 +13,5 @@ import com.eluda.hair.persistence.vo.BookingVo;
 public interface BookingMapper {
 	public void requestBooking(BookingVo bookingVo);
 	
-	public List<BookingInfo> getRequestBookingList(@Param("shopId") String shopId, @Param("fromDateTime") String fromDateTime, @Param("toDateTime") String toDateTime);
+	public List<BookingInfo> getRequestBookingList(@Param("shopId") String shopId, @Param("fromDateTime") String fromDateTime, @Param("toDateTime") String toDateTime, @Param("customerId") int customerId);
 }

@@ -4,6 +4,7 @@ public class BookingInfo {
 	
 	private String bookingDatetime;
 	private int customerId;
+	private String myBookingOrNot;
 	private String assignedOrNot;
 	private String customerName;
 	private String customerPhoneNumber;
@@ -79,6 +80,12 @@ public class BookingInfo {
 	}
 	public void setBookingDatetime(String bookingDatetime) {
 		this.bookingDatetime = bookingDatetime;
+	}
+	public String getMyBookingOrNot() {
+		return myBookingOrNot;
+	}
+	public void setMyBookingOrNot(String myBookingOrNot) {
+		this.myBookingOrNot = myBookingOrNot;
 	}
 	
 }

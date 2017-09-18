@@ -70,10 +70,12 @@ public class BookingController {
 	}
 	
 	@RequestMapping(value = { "/{shopId}/dashboard-info" }, method = RequestMethod.GET)
-	public BookingDashboardInfo getDashboardInfo(@PathVariable("shopId") String shopId, @RequestParam(value="begin-date", required=false) String beginDate) {
+	public BookingDashboardInfo getDashboardInfo(@PathVariable("shopId") String shopId, 
+			@RequestParam(value="begin-date", required=false) String beginDate,
+			@RequestParam(value="customer-id", required=false) int customerId) {
 		BookingDashboardInfo lv_oBookingDashboardInfo = new BookingDashboardInfo();
 		try {
-			lv_oBookingDashboardInfo = bookingService.getBookingDashboardInfo(shopId,  beginDate);
+			lv_oBookingDashboardInfo = bookingService.getBookingDashboardInfo(shopId,  beginDate, customerId);
 		} catch (ParseException e) {
 			logger.debug("exception trace {}", e);
 		}

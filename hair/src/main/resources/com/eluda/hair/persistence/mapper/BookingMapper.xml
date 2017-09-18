@@ -27,6 +27,7 @@
   <select id="getRequestBookingList" resultType="com.eluda.hair.persistence.dto.BookingInfo">
     SELECT b.criteria_datetime AS booking_datetime,      
            b.customer_id,
+           b.my_booking_or_not,
            IF(b.progress=0, 'N', 'Y') AS assigned_or_not,
            c.name AS customer_name,       
            c.phone_number AS customer_phone_number,       
@@ -39,7 +40,8 @@
     FROM   (
              SELECT shop_id,
                     customer_id,
-                    IFNULL(procedure_expect_begin_datetime, booking_datetime) AS criteria_datetime,
+                    IF(customer_id=IFNULL(#{customerId},0),IFNULL(procedure_expect_begin_datetime, booking_datetime), procedure_expect_begin_datetime) AS criteria_datetime,
+                    IF(customer_id=IFNULL(#{customerId},0),'Y', 'N') AS my_booking_or_not,
                     procedure_menu_id,
                     procedure_hairdresser_id,
                     procedure_expect_begin_datetime,

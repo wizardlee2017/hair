@@ -1,11 +1,18 @@
-table.schedule-week .today{width: 30%;}
+table.schedule-week thead tr.date th.today{width: 30%; min-width: 160px;}
+table.schedule-week thead tr.date th[colspan="2"]:not(.today){width: 10%;}
 
 table.schedule-week thead tr.hairdresser th {font-style: oblique; font-size: 10px; font-weight: lighter;}
 
 table.schedule-week tbody td {height:40px;}
 table.schedule-week tbody .booking-item {position:absolute;}
-table.schedule-week tbody td.today .booking-item {width:8%; height:45px;}
-table.schedule-week tbody td .booking-item {width:5%; height:45px;}
+table.schedule-week tbody td.today .booking-item {width: 10%; height:45px; min-width: 70px;}
+table.schedule-week tbody td .booking-item {width:5%; height:45px; display: inline; border-radius: .25em; padding: .2em .6em .3em; font-size: 75%; font-weight: 700; line-height: 1; text-align: center; white-space: nowrap; vertical-align: baseline; }
+table.schedule-week tbody td .booking-item.hairdresser0 {color: #fff; background-color: #828282; }
+table.schedule-week tbody td .booking-item.hairdresser1 {color: #fff; background-color: #337ab7; }
+table.schedule-week tbody td .booking-item.hairdresser2 {color: #fff; background-color: #5cb85c; }
+table.schedule-week tbody td .booking-item.hairdresser3 {color: #fff; background-color: #cd853f; }
+
+table.schedule-week tbody td .booking-item.my-booking {color: #000;}
 
 table.schedule-week .day-start {border-right-style:hidden;}
 table.schedule-week .day-end {border-left-style:hidden;}

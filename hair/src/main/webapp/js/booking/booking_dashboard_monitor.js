@@ -1,5 +1,7 @@
 $(document).ready(function(){
-		
+	//TODO: support global set	
+	moment.locale("ko");
+	
 	var pv_oToday = new Date();
 	
 	//datetime picker
@@ -104,7 +106,8 @@ function requestBooking( bookingInfo ) {
 	    contentType: "application/json; charset=UTF-8",
 	    complete : function(resData) {
 			console.log(resData);	
-			alert("예약 신청 되었습니다. 접수처리가 되면 예약표에 표시됩니다.");
+			alert("예약 신청 되었습니다. 접수처리가 되면 예약 확정 표시됩니다. 예약 시간은 접수 과정을 통해 변경될 수 있습니다.");
+			getDashboardInfo();
 			
 		}
 	});
@@ -162,9 +165,14 @@ function showSearchCustomerListOnPopup( customerList ){
 //Dashboard 정보 획득
 function getDashboardInfo() {
 	
-	var lv_sToday = new Date();
+	var lv_sToday = moment().format("YYYYMMDD");
+	var lv_nCustomerId = $("#popupRequestBooking-customerName").data("customer-id");
 	
-	var lv_sUrl = "/hair/booking/kor20170701001/dashboard-info?begin-date=" + lv_sToday.toISOString().slice(0,10).replace(/-/g,"");
+	if(lv_nCustomerId == undefined){
+		lv_nCustomerId = 0;
+	}
+	
+	var lv_sUrl = "/hair/booking/kor20170701001/dashboard-info?begin-date=" + lv_sToday + "&customer-id=" + lv_nCustomerId;
 	
 	$.ajax({
 		url : lv_sUrl,
@@ -181,9 +189,10 @@ function setScheduler( pv_oSchedulerData ){
 	var lv_sCurrentDate = "";
 	var lv_sAppendStr = "";
 	var lv_sThHairdresserTemplate = "<th data-hairdresser-id=:id>:nickname</th>";
-	var lv_sBookingTemplate = "<span class='booking-item label :hairdresserColor'>:beginTime ~ :endTime<br>:procedureName</span>";
+	var lv_sBookingTemplate = "<span class='booking-item :hairdresserColor :myBookingOrNot'>:beginTime ~ :endTime<br>:procedureName</span>";
 	var lv_nCurrentTimeValue = 0;
 	var lv_oTd;
+	var lv_sMyBookingOrNot = "";
   
 	//주간 일자 설정.
 	$("table.schedule-week thead tr.date th:gt(0)").attr("colspan",pv_oSchedulerData.hairdresserList.length);
@@ -196,7 +205,8 @@ function setScheduler( pv_oSchedulerData ){
 	$.each(pv_oSchedulerData.dateList, function (tv_nLoopIndex, tv_sDate){
 		console.log(tv_nLoopIndex + " : " + tv_sDate);
 		//set date
-		lv_sCurrentDate = tv_sDate;
+		//lv_sCurrentDate = tv_sDate;
+		lv_sCurrentDate = moment(tv_sDate, "YYYYMMDD").format("YYYY-MM-DD(ddd)");
 		$("table.schedule-week thead tr.date th").eq(tv_nLoopIndex+1).text(lv_sCurrentDate);
     
 	    //set hairdresser
@@ -206,7 +216,7 @@ function setScheduler( pv_oSchedulerData ){
 	                                               .replace(/:nickname/g,tv_oHairdresserInfo.nickname);
 	      $("table.schedule-week thead tr.hairdresser").append(lv_sAppendStr);
 	      //set today class
-	      if(tv_nLoopIndexHairdresser <  pv_oSchedulerData.hairdresserList.length){
+	      if(tv_nLoopIndex <  1){
 	        $("table.schedule-week thead tr.hairdresser th:last").addClass("today");
 	      }
 	
@@ -246,8 +256,16 @@ function setScheduler( pv_oSchedulerData ){
     	console.log("hairdresserColor : " + getHairdresserColor(tv_oBookingInfo.hairdresserId));
     	console.log("procedureExpectBeginDatetime : " + tv_oBookingInfo.procedureExpectBeginDatetime);
     	
+    	if ( tv_oBookingInfo.myBookingOrNot == "Y" ) {
+    		lv_sMyBookingOrNot = "my-booking";
+    	} else {
+    		lv_sMyBookingOrNot = "";
+    	}
+    		
+    	
     	
     	lv_sAppendStr = lv_sBookingTemplate.replace(/:hairdresserColor/g,getHairdresserColor(tv_oBookingInfo.hairdresserId))
+    									   .replace(/:myBookingOrNot/g,lv_sMyBookingOrNot)
     									   .replace(/:beginTime/g,getTimeStr(tv_oBookingInfo.bookingDatetime))
     									   .replace(/:endTime/g,getTimeStr(tv_oBookingInfo.procedureExpectEndDatetime))
     									   .replace(/:procedureName/g,tv_oBookingInfo.procedureName);
@@ -338,11 +356,18 @@ function getTimeStr( p_sDateTime ){
 }
 
 function getHairdresserColor( p_nHairdresserSeq ){
-	if( p_nHairdresserSeq == 1 ){
+	try {
+		return "hairdresser" + p_nHairdresserSeq;
+	} catch (e){
+		return "hairdresser0";
+	}
+	
+	
+	/*if( p_nHairdresserSeq == 1 ){
 		return "label-primary";
 	} else {
 		return "label-success";
-	}
+	}*/
 	
 }
 
