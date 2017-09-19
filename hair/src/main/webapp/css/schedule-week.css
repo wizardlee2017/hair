@@ -1,5 +1,5 @@
-table.schedule-week thead tr.date th.today{width: 30%; min-width: 160px;}
-table.schedule-week thead tr.date th[colspan="2"]:not(.today){width: 10%;}
+table.schedule-week thead tr.date th.today {width: 30%; min-width: 160px;}
+table.schedule-week thead tr.date th[colspan="2"]:not(.today) {width: 10%;}
 
 table.schedule-week thead tr.hairdresser th {font-style: oblique; font-size: 10px; font-weight: lighter;}
 

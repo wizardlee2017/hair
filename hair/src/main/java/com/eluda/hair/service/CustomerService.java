@@ -12,7 +12,7 @@ import com.eluda.hair.persistence.vo.CustomerVo;
  *
  */
 public interface CustomerService {
-	public CustomerVo getCustomerInfo(String shopId, String customerId);
+	public CustomerVo getCustomerInfo(String shopId, int customerId);
 	
 	public List<CustomerVo> getShopCustomerList(String shopId, String customerName, String customerPhoneNumber);
 	

@@ -17,6 +17,8 @@ $(document).ready(function(){
 		forceParse: 0
     });
 	
+	getDashboardInfo();
+	
 	$(document).on("click", ".dropdown-menu li a", function(){
 		  $(this).parents(".btn-group:first").find('.btn').html($(this).text() + ' <span class="caret"></span>');
 		  $(this).parents(".btn-group:first").find('.btn').val($(this).parents("li:first").data("id"));
@@ -29,9 +31,6 @@ $(document).ready(function(){
 		  }
 		  
 		});
-	
-	
-	getDashboardInfo();
 	
 	//click register shop customer button
     $("#btnPopupRequestBooking").click(function(){
@@ -52,8 +51,9 @@ $(document).ready(function(){
     	
     });
     
-    $(document).on("focusout", "#popupRequestBooking-customerName, #popupRequestBooking-customerPhoneNumber", function(){
+    $(document).on("focusout", "#popupRequestBooking-customerName, #popupRequestBooking-customerPhoneNumber", function(event){
     	console.log("check customer name and phone number");
+    	event.preventDefault();
     	checkBookingCustomer();
     	
     });
@@ -133,6 +133,8 @@ function checkBookingCustomer(){
         			//전화번호 기준으로 이미 고객 등록이 되어 있는데, 고객명이 다를 경우 확인, 기존 고객 정보 사용할지, 새로 등록하지 확인. 
         			if( (resData.length > 0 ) && (resData[0].name != lv_sCustomerName)){
         				showSearchCustomerListOnPopup(resData);
+        			} else if( (resData.length == 1 ) && (resData[0].name == lv_sCustomerName)){
+        				$("#popupRequestBooking-customerName").data("customer-id",resData[0].id);
         			}
         		}
         	});

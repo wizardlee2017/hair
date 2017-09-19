@@ -9,7 +9,7 @@ import com.eluda.hair.persistence.vo.CustomerVo;
 
 @Mapper
 public interface CustomerMapper {
-	public CustomerVo getShopCustomerInfo(@Param("shopId") String shopId, @Param("customerId") String customerId);
+	public CustomerVo getShopCustomerInfo(@Param("shopId") String shopId, @Param("customerId") int customerId);
 	
 	public List<CustomerVo> getShopCustomerList(@Param("shopId") String shopId, @Param("customerName") String customerName, @Param("customerPhoneNumber") String customerPhoneNumber);
 	

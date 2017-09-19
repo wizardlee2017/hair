@@ -31,7 +31,7 @@ public class CustomerServiceImpl implements CustomerService {
 	 * @see com.eluda.hair.service.CustomerService#getCustomerInfo(java.lang.String, java.lang.String)
 	 */
 	@Override
-	public CustomerVo getCustomerInfo(String shopId, String customerId) {
+	public CustomerVo getCustomerInfo(String shopId, int customerId) {
 		return customerMapper.getShopCustomerInfo(shopId, customerId);
 	}
 
