@@ -43,7 +43,7 @@
             INNER JOIN customer c
             ON sc.customer_id = c.id
     WHERE   sc.shop_id = #{shopId}
-      AND   c.delete_yn = 0
+      AND   sc.delete_yn = 0
     <if test="customerName != null">
       AND   c.name LIKE #{patternCustomerName}
     </if>
