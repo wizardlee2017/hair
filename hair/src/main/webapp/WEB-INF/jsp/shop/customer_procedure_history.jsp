@@ -146,15 +146,43 @@
         <div class="modal-body">
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-            <input id="txtCustomerName" type="text" class="form-control" name="customerName" placeholder="customer name" data-toggle="tooltip" data-placement="bottom" title="고객명">           
+            <input id="popupRegisterShopCustomer-txtCustomerName" type="text" class="form-control" name="customerName" placeholder="customer name" data-toggle="tooltip" data-placement="bottom" title="고객명">           
           </div>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
-            <input id="txtCustomerPhoneNumber" type="text" class="form-control" name="customerPhoneNumber" placeholder="phone number" data-toggle="tooltip" data-placement="bottom" title="전화번호">           
+            <input id="popupRegisterShopCustomer-txtCustomerPhoneNumber" type="text" class="form-control" name="customerPhoneNumber" placeholder="phone number" data-toggle="tooltip" data-placement="bottom" title="전화번호">           
           </div>
+          <br>
+          <div class="input-group customer-list hidden">
+	          동일한 전화번호로 등록된 정보가 존재 합니다.
+	          동일인이 아닐 경우, 신규등록 버튼 클릭을 하시고, 동일인일 경우 아래 목록에서 선택하세요.
+	          <table class="table customer-list">
+	            <thead>
+	              <tr>
+	                <th>이름</th>
+	                <th>전화번호</th>
+	              </tr>
+	            </thead>
+	            <tbody>
+	              <tr>
+	                <td>일이삼</td>
+	                <td>010-1111-1234</td>
+	              </tr>
+	              <tr>
+	                <td>가나다</td>
+	                <td>010-1234-1100</td>
+	              </tr>
+	            </tbody>
+	          </table>
+	          <div class="input-group">
+	            <button type="button" class="btn btn-success new" >신규로 등록.(다른 사람일 경우)</button>
+              <button type="button" class="btn btn-default old disabled" >기존 고객으로 등록(같은 사람일 경우)</button>           
+	          </div>
+	        </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal" id="btnRegisterShopCustomer-popupRegisterShopCustomer">추가</button>
+          <button type="button" class="btn btn-success checkValidation">중복 확인</button>
+          <button type="button" class="btn btn-default disabled" id="btnRegisterShopCustomer-popupRegisterShopCustomer">추가</button>
         </div>
       </div>
     </div>

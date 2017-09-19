@@ -50,12 +50,18 @@ public class ShopController {
 					method= RequestMethod.GET)
     public @ResponseBody List<CustomerVo> getShopCustomerList(@PathVariable("shopId") String shopId, 
     															@RequestParam(value="customerName", required=false) String customerName,
-    															@RequestParam(value="customerPhoneNumber", required=false) String customerPhoneNumber){
+    															@RequestParam(value="customerPhoneNumber", required=false) String customerPhoneNumber,
+    															@RequestParam(value="accuracy", required=false, defaultValue="like") String accuracy){
 		logger.debug("shopId : {}", shopId);
 		logger.debug("customerName : {}", customerName);
 		logger.debug("customerPhoneNumber : ", customerPhoneNumber);
 		
-    	return customerService.getShopCustomerList(shopId, customerName, customerPhoneNumber);
+		if( "like".equals(accuracy)) {
+			return customerService.getShopCustomerList(shopId, customerName, customerPhoneNumber);
+		} else {
+			return customerService.getCustomerListByPhoneNumber(customerPhoneNumber);
+		}
+    	
     }
 	
 	@RequestMapping(value = {"/{shopId}/customer/{customerId}/procedure-history/list"}, 

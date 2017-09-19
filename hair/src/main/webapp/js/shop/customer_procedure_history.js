@@ -86,7 +86,7 @@ $(document).ready(function(){
     //click select button from customer list on popup.
     $("#searchCustomerListPopup .modal-footer button").on("click", function(){
     	var selectedTr = $("#searchCustomerListPopup #tblCustomerList tbody tr.active");
-    	var customerInfo = {"id":$(selectedTr).data("id"), "name":$(selectedTr).data("name"), "phoneNumber":$(selectedTr).data("phone_number")}
+    	var customerInfo = {"id":$(selectedTr).data("id"), "name":$(selectedTr).data("name"), "phoneNumber":$(selectedTr).data("phone-number")}
     	setCustomerInfo( customerInfo );
     	
     	$("#btnPopupInsertProcedureHistory").removeClass("disabled").addClass("btn-success");
@@ -99,7 +99,7 @@ $(document).ready(function(){
     
     
     $(document).on("click", "#btnRegisterShopCustomer-popupRegisterShopCustomer", function(){
-    	var customerInfo = {"name":$("#popupRegisterShopCustomer #txtCustomerName").val(), "phoneNumber":$("#popupRegisterShopCustomer #txtCustomerPhoneNumber").val()};
+    	var customerInfo = {"name":$("#popupRegisterShopCustomer-txtCustomerName").val(), "phoneNumber":$("#popupRegisterShopCustomer-txtCustomerPhoneNumber").val()};
     	addShopCustomer(customerInfo);
     });
     
@@ -123,7 +123,78 @@ $(document).ready(function(){
     	addProcedureHistory(procedureHistoryInfo);
     });
     
+    //신규 고객 추가시 중복 확인 클릭
+    $("#popupRegisterShopCustomer").on("click", "button.checkValidation", function(){
+    	searchCustomerByPhoneNumberEuqal($("#popupRegisterShopCustomer-txtCustomerPhoneNumber").val());
+    });
+    
+    //신규 고객 추가시 동일 번호 고객 목록 클릭
+    $("#popupRegisterShopCustomer table.customer-list tbody").on("click", "tr", function(){
+    	console.log("select tr");
+    	$(this).addClass("active").siblings().removeClass("active");
+    	$("#popupRegisterShopCustomer-txtCustomerName").val($(this).data("name"));
+    	$("#popupRegisterShopCustomer-txtCustomerName").data("customer-id",$(this).data("id"));
+    	$("popupRegisterShopCustomer-txtCustomerPhoneNumber").val($(this).data("phone-number"));
+    	$("#popupRegisterShopCustomer div.customer-list button.old").removeClass("disabled");
+    });
+    
+    //신규 고객 추가시 동일 전화번호의 고객정보가 있을경우, 동일 전화번호를 사용한체 신규 고객으로 등록하기 클릭
+    $("#popupRegisterShopCustomer").on("click", "div.customer-list button.new", function(){
+    	var customerInfo = {"name":$("#popupRegisterShopCustomer-txtCustomerName").val(), "phoneNumber":$("#popupRegisterShopCustomer-txtCustomerPhoneNumber").val()};
+    	addShopCustomer(customerInfo);
+    });
+    
+    
 });
+
+function showSearchCustomerListByPhoneNumberEqual( customerList ){
+	var lv_sTrTemplate =	"<tr data-id=':id' data-name=':name' data-phone-number=':phoneNumber'> " +
+							"	<td>:name</td>" + 
+							"	<td>:phoneNumber</td>" +
+							"</tr>";
+	//clear table for customer list
+	$("#popupRegisterShopCustomer table.customer-list tbody tr").remove();
+	
+	//set table for customer list
+	$.each(customerList, function( tv_nLoopIndex, tv_oCustomerInfo ) {
+		console.log(tv_nLoopIndex + " : " + tv_oCustomerInfo);
+		var lv_sAppendStr =	lv_sTrTemplate.replace(/:id/g, tv_oCustomerInfo.id)
+										  .replace(/:phoneNumber/g, tv_oCustomerInfo.phoneNumber)	
+			  							  .replace(/:name/g, tv_oCustomerInfo.name);
+		$("#popupRegisterShopCustomer table.customer-list tbody").append(lv_sAppendStr);
+	});
+	
+	$("#popupRegisterShopCustomer div.customer-list").removeClass("hidden");
+}
+
+//search customer list by phone number.
+function searchCustomerByPhoneNumberEuqal(customerPhoneNumber){
+	
+	var lv_sBaseUrl = "/hair/shops/kor20170701001/customer/list";
+	var lv_sUrl = "/hair/shops/kor20170701001/customer/list";
+	
+	if(customerPhoneNumber.length > 0){
+		lv_sUrl = lv_sBaseUrl + "?customerPhoneNumber=" + customerPhoneNumber + "&accuracy=equal";
+	}
+	
+	$.ajax({
+		url : lv_sUrl,
+		method : "GET",
+		success : function(resData) {
+			console.log(resData);				
+			console.log("length : " + resData.length);
+			if(resData.length == 0){
+				console.log("new shop customer. process to insert customer master.");
+				$("#popupRegisterShopCustomer-txtCustomerName").data("customer-id","");
+				$("#popupRegisterShopCustomer div.customer-list").addClass("hidden");
+				$("#btnRegisterShopCustomer-popupRegisterShopCustomer").removeClass("disabled");
+			} else if(resData.length >= 1){
+				console.log("공통 고객 목록 창 표시.");
+				showSearchCustomerListByPhoneNumberEqual( resData );
+			}
+		}
+	});
+}
 
 
 
@@ -282,7 +353,11 @@ function searchCustomer(customerPhoneNumber, customerName){
 			console.log("length : " + resData.length);
 			if(resData.length == 0){
 				console.log("new shop customer. process to search customer master.");
-				alert("매장 등록 고객이 아닙니다. 신규 고객 등록해주세요. ※공통 고객 목록으로 부터 검색하여 등록하거나 신규 등록한다.(추후 기능 제공)");
+				alert("매장 등록 고객이 아닙니다. 신규 고객 등록해주세요. ※공통 고객 목록으로 부터 검색하여 등록하거나 신규 등록한다.");
+				
+				$("#popupRegisterShopCustomer").modal();
+				
+				//searchCustomerByPhoneNumberEuqal(customerPhoneNumber);
 			} else if(resData.length == 1){
 				console.log("set customer infomation. request shop procedure history.");
 				//
@@ -347,8 +422,9 @@ function setCustomerProcedureHistoryList(CustomerProcedureHistoryList){
 	});
 }
 
+
 function showSearchCustomerListOnPopup( customerList ){
-	var lv_sTrTemplate =	"<tr data-id=':id' data-name=':name' data-phone_number=':phoneNumber'> " +
+	var lv_sTrTemplate =	"<tr data-id=':id' data-name=':name' data-phone-number=':phoneNumber'> " +
 							"	<td>:name</td>" + 
 							"	<td>:phoneNumber</td>" +
 							"</tr>";
