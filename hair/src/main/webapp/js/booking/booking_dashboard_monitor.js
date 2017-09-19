@@ -52,7 +52,7 @@ $(document).ready(function(){
     });
     
     $(document).on("focusout", "#popupRequestBooking-customerName, #popupRequestBooking-customerPhoneNumber", function(event){
-    	console.log("check customer name and phone number");
+    	console.log("check customer name and phone number.");
     	event.preventDefault();
     	checkBookingCustomer();
     	
