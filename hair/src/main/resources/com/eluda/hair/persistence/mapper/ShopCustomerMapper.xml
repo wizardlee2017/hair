@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.eluda.hair.persistence.mapper.ShopCustomerMapper">
   
-  <insert id="insertShopCustomer">
+  <!-- <insert id="insertShopCustomer">
     INSERT
     INTO    shop_customer  
             ( shop_id,
@@ -10,6 +10,20 @@
             )
     VALUES  ( #{shopId},
               #{customerId}
+            )
+  </insert> -->
+  
+  
+  <insert id="insertShopCustomer" parameterType="com.eluda.hair.persistence.vo.ShopCustomerVo">
+    INSERT
+    INTO    shop_customer  
+            ( shop_id,
+              customer_id,
+              memo
+            )
+    VALUES  ( #{shopId},
+              #{customerId},
+              #{memo}
             )
   </insert>
     

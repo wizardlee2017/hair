@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.eluda.hair.persistence.vo.CustomerVo;
+import com.eluda.hair.persistence.dto.ShopCustomerInfo;
 import com.eluda.hair.persistence.mapper.CustomerMapper;
 import com.eluda.hair.service.CustomerService;
 
@@ -36,7 +37,7 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public List<CustomerVo> getShopCustomerList(String shopId, String customerName, String customerPhoneNumber) {
+	public List<ShopCustomerInfo> getShopCustomerList(String shopId, String customerName, String customerPhoneNumber) {
 		return customerMapper.getShopCustomerList(shopId, customerName, customerPhoneNumber);
 	}
 

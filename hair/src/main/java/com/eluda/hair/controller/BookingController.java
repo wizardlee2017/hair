@@ -18,8 +18,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.eluda.hair.persistence.dto.BookingDashboardInfo;
 import com.eluda.hair.persistence.dto.BookingRequestInfo;
+import com.eluda.hair.persistence.dto.ShopCustomerInfo;
 import com.eluda.hair.persistence.vo.BookingVo;
 import com.eluda.hair.persistence.vo.CustomerVo;
+import com.eluda.hair.persistence.vo.ShopCustomerVo;
 import com.eluda.hair.service.BookingService;
 import com.eluda.hair.service.CustomerService;
 import com.eluda.hair.service.ShopService;
@@ -50,25 +52,26 @@ public class BookingController {
 		logger.debug("shopId : {}", pBookingRequestInfo.getShopId());
 		logger.debug("customerId : {}", pBookingRequestInfo.getCustomerId());
 		
-		CustomerVo lv_cCustomerInfo = new CustomerVo();
+		ShopCustomerInfo lv_cShopCustomerInfo = new ShopCustomerInfo();
 		
-		lv_cCustomerInfo.setName(pBookingRequestInfo.getCustomerName());
-		lv_cCustomerInfo.setPhoneNumber(pBookingRequestInfo.getCustomerPhoneNumber());
-		lv_cCustomerInfo.setRegisterShopId(pBookingRequestInfo.getShopId());
+		lv_cShopCustomerInfo.setCustomerName(pBookingRequestInfo.getCustomerName());
+		lv_cShopCustomerInfo.setCustomerPhoneNumber(pBookingRequestInfo.getCustomerPhoneNumber());
+		lv_cShopCustomerInfo.setRegisterShopId(pBookingRequestInfo.getShopId());		
+		lv_cShopCustomerInfo.setShopId(pBookingRequestInfo.getShopId());
 		
 		if( pBookingRequestInfo.getCustomerId() <= 0 ) {
 			//신규 고객 등록.
-			shopService.registerCustomer(pBookingRequestInfo.getShopId(), lv_cCustomerInfo, true);
+			shopService.registerCustomer(lv_cShopCustomerInfo, true);
 			
-			pBookingRequestInfo.setCustomerId(lv_cCustomerInfo.getId());
+			pBookingRequestInfo.setCustomerId(lv_cShopCustomerInfo.getCustomerId());
 		} else {
 			//매장 고객인지 확인
 			CustomerVo lv_cShopCustomer = customerService.getCustomerInfo(pBookingRequestInfo.getShopId(), pBookingRequestInfo.getCustomerId());
 			
 			if( lv_cShopCustomer == null ) {
-				lv_cCustomerInfo.setId(pBookingRequestInfo.getCustomerId());
+				lv_cShopCustomerInfo.setCustomerId(pBookingRequestInfo.getCustomerId());
 				//매장 고객이 아니면 매장 고객에 추가.
-				shopService.registerCustomer(pBookingRequestInfo.getShopId(), lv_cCustomerInfo, false);
+				shopService.registerCustomer(lv_cShopCustomerInfo, false);
 			}
 			
 		}

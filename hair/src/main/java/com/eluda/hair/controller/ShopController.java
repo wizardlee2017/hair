@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.eluda.hair.persistence.vo.CustomerVo;
+import com.eluda.hair.persistence.vo.ShopCustomerVo;
 import com.eluda.hair.persistence.vo.CustomerProcedureHistoryVo;
 import com.eluda.hair.persistence.vo.ShopMenuVo;
 import com.eluda.hair.persistence.dto.CustomerProcedureHistoryInfo;
 import com.eluda.hair.persistence.dto.RegisterProcedureBasicInfo;
+import com.eluda.hair.persistence.dto.ShopCustomerInfo;
 import com.eluda.hair.service.CustomerProcedureHistoryService;
 import com.eluda.hair.service.CustomerService;
 import com.eluda.hair.service.ShopMenuService;
@@ -48,7 +50,7 @@ public class ShopController {
 	
 	@RequestMapping(value = {"/{shopId}/customer/list"}, 
 					method= RequestMethod.GET)
-    public @ResponseBody List<CustomerVo> getShopCustomerList(@PathVariable("shopId") String shopId, 
+    public @ResponseBody List<ShopCustomerInfo> getShopCustomerList(@PathVariable("shopId") String shopId, 
     															@RequestParam(value="customerName", required=false) String customerName,
     															@RequestParam(value="customerPhoneNumber", required=false) String customerPhoneNumber,
     															@RequestParam(value="accuracy", required=false, defaultValue="like") String accuracy){
@@ -56,13 +58,17 @@ public class ShopController {
 		logger.debug("customerName : {}", customerName);
 		logger.debug("customerPhoneNumber : ", customerPhoneNumber);
 		
-		if( "like".equals(accuracy)) {
-			return customerService.getShopCustomerList(shopId, customerName, customerPhoneNumber);
-		} else {
-			return customerService.getCustomerListByPhoneNumber(customerPhoneNumber);
-		}
-    	
+		return customerService.getShopCustomerList(shopId, customerName, customerPhoneNumber);
+		
     }
+	
+	@RequestMapping(value = {"/customer/list/phone-number"}, 
+			method= RequestMethod.GET)
+	public @ResponseBody List<CustomerVo> getCustomerListByPhoneNumber(@RequestParam(value="customerPhoneNumber", required=false) String customerPhoneNumber){
+	logger.debug("customerPhoneNumber : ", customerPhoneNumber);
+	
+	return customerService.getCustomerListByPhoneNumber(customerPhoneNumber);
+	}
 	
 	@RequestMapping(value = {"/{shopId}/customer/{customerId}/procedure-history/list"}, 
 					method= RequestMethod.GET)
@@ -76,22 +82,22 @@ public class ShopController {
 	
 	@RequestMapping(path = {"/{shopId}/customer"}, method= RequestMethod.POST)
 	@ResponseBody
-	public Response registerShopCustomer(@PathVariable("shopId") String shopId,
-			@RequestBody CustomerVo pCustomerInfo) {
+	public Response registerShopCustomer(@PathVariable("shopId") String shopId,			
+			@RequestBody ShopCustomerInfo pShopCustomerInfo ) {
 		
 		logger.debug("shopId : {}", shopId);
-		logger.debug("customerName : {}", pCustomerInfo.getName());
-		logger.debug("customerPhoneNumber : {}", pCustomerInfo.getPhoneNumber());
+		logger.debug("customerName : {}", pShopCustomerInfo.getCustomerName());
+		logger.debug("customerPhoneNumber : {}", pShopCustomerInfo.getCustomerPhoneNumber());
 		
 		boolean isNewCustomer = false;
 		
-		if( pCustomerInfo.getId() <= 0 ) {
+		if( pShopCustomerInfo.getCustomerId() <= 0 ) {
 			isNewCustomer = true;
-			pCustomerInfo.setRegisterShopId(shopId);
+			pShopCustomerInfo.setRegisterShopId(shopId);
 		}
 		
 		try {
-			shopService.registerCustomer(shopId, pCustomerInfo, isNewCustomer);
+			shopService.registerCustomer(pShopCustomerInfo, isNewCustomer);
 			return Response.status(Response.Status.OK).build();
 		} catch (Exception e) {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();

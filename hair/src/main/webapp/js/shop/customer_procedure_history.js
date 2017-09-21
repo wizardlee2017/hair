@@ -86,10 +86,8 @@ $(document).ready(function(){
     //click select button from customer list on popup.
     $("#searchCustomerListPopup .modal-footer button").on("click", function(){
     	var selectedTr = $("#searchCustomerListPopup #tblCustomerList tbody tr.active");
-    	var customerInfo = {"id":$(selectedTr).data("id"), "name":$(selectedTr).data("name"), "phoneNumber":$(selectedTr).data("phone-number")}
-    	setCustomerInfo( customerInfo );
-    	
-    	$("#btnPopupInsertProcedureHistory").removeClass("disabled").addClass("btn-success");
+    	var shopCustomerInfo = {"shopId":"kor20170701001", "customerId":$(selectedTr).data("id"), "customerName":$(selectedTr).data("name"), "customerPhoneNumber":$(selectedTr).data("phone-number"), "memo":$(selectedTr).data("memo")}
+    	setCustomerInfo( shopCustomerInfo );
     });
     
     //click register shop customer button
@@ -99,8 +97,11 @@ $(document).ready(function(){
     
     
     $(document).on("click", "#btnRegisterShopCustomer-popupRegisterShopCustomer", function(){
-    	var customerInfo = {"name":$("#popupRegisterShopCustomer-txtCustomerName").val(), "phoneNumber":$("#popupRegisterShopCustomer-txtCustomerPhoneNumber").val()};
-    	addShopCustomer(customerInfo);
+    	if( $("#btnRegisterShopCustomer-popupRegisterShopCustomer").hasClass("disabled") == false ) {
+    		var shopCustomerInfo = {"shopId":"kor20170701001", "customerName":$("#popupRegisterShopCustomer-txtCustomerName").val(), "customerPhoneNumber":$("#popupRegisterShopCustomer-txtCustomerPhoneNumber").val(), "memo": $("#popupRegisterShopCustomer-taCustomerMemo").val()};
+        	addShopCustomer(shopCustomerInfo);
+    	}
+    	
     });
     
     //popup procedure history 
@@ -140,14 +141,17 @@ $(document).ready(function(){
     
     //신규 고객 추가시 동일 전화번호의 고객정보가 있을경우, 동일 전화번호를 사용한체 신규 고객으로 등록하기 클릭(고객 마스터 등록)
     $("#popupRegisterShopCustomer").on("click", "div.customer-list button.new", function(){
-    	var customerInfo = {"name":$("#popupRegisterShopCustomer-txtCustomerName").val(), "phoneNumber":$("#popupRegisterShopCustomer-txtCustomerPhoneNumber").val()};
-    	addShopCustomer(customerInfo);
+    	var shopCustomerInfo = {"shopId":"kor20170701001", "customerName":$("#popupRegisterShopCustomer-txtCustomerName").val(), "customerPhoneNumber":$("#popupRegisterShopCustomer-txtCustomerPhoneNumber").val(), "memo": $("#popupRegisterShopCustomer-taCustomerMemo").val()};
+    	addShopCustomer(shopCustomerInfo);
     });
     
     //신규 고객 추가시 동일 전화번호의 고객정보가 있을경우, 동일 전화번호를 사용한체 기존 고객으로 등록하기 클릭(매장 고객으로만 등록)
     $("#popupRegisterShopCustomer").on("click", "div.customer-list button.old", function(){
-    	var customerInfo = {"name":$("#popupRegisterShopCustomer-txtCustomerName").val(), "id": $("#popupRegisterShopCustomer-txtCustomerName").data("customer-id"), "phoneNumber":$("#popupRegisterShopCustomer-txtCustomerPhoneNumber").val()};
-    	addShopCustomer(customerInfo);
+    	if( $(this).hasClass("disabled") == false ) {
+    		var shopCustomerInfo = {"shopId":"kor20170701001", "customerId":$("#popupRegisterShopCustomer-txtCustomerName").data("customer-id"), "customerName":$("#popupRegisterShopCustomer-txtCustomerName").val(), "customerPhoneNumber":$("#popupRegisterShopCustomer-txtCustomerPhoneNumber").val(), "memo": $("#popupRegisterShopCustomer-taCustomerMemo").val()};
+        	addShopCustomer(shopCustomerInfo);
+    	}
+    	
     });
     
     //고객 등록 popup 될때,
@@ -229,8 +233,7 @@ function addProcedureHistory( procedureHistoryInfo ){
 	    complete : function(resData) {
 			console.log(resData);	
 			alert("등록 되었습니다.");
-			var lv_oCustomerInfo = {"id":$("#lblCustomerName").data("id")};
-			requestCustomerProcedureHistoryList(lv_oCustomerInfo);
+			requestCustomerProcedureHistoryList("kor20170701001", $("#lblCustomerName").data("id"));
 		}
 	});
 }
@@ -320,28 +323,31 @@ function setRegisterProcedureBasicInfo(registerProcedureBasicInfo){
 }
 
 //add shop customer
-function addShopCustomer( customerInfo ){
+function addShopCustomer( shopCustomerInfo ){
 	var lv_sUrl = "/hair/shops/kor20170701001/customer";
 	
 	$.ajax({
 		url : lv_sUrl,
 		method : "POST",
-		data : JSON.stringify(customerInfo),
+		data : JSON.stringify(shopCustomerInfo),
 		processData: false,
 	    contentType: "application/json; charset=UTF-8",
 	    complete : function(resData) {
 			console.log(resData);	
 			alert("등록 되었습니다.");
 			$("#popupRegisterShopCustomer").modal("hide");
-			setCustomerInfo( customerInfo );
+			setCustomerInfo( shopCustomerInfo );
 		}
 	});
 }
 
-function setCustomerInfo( customerInfo ){
-	$("#lblCustomerName").text(customerInfo.name).data("id", customerInfo.id);
-	$("#lblCustomerPhoneNumber").text(customerInfo.phoneNumber);
-	requestCustomerProcedureHistoryList(customerInfo);
+function setCustomerInfo( shopCustomerInfo ){
+	$("#btnPopupInsertProcedureHistory").removeClass("disabled").addClass("btn-success");
+	$("#lblCustomerName").text(shopCustomerInfo.customerName).data("id", shopCustomerInfo.customerId);
+	$("#lblCustomerPhoneNumber").text(shopCustomerInfo.customerPhoneNumber);
+	$("#lblCustomerMemo").text(shopCustomerInfo.memo);	
+	$("#txtCustomerPhoneNumber").val("");
+	requestCustomerProcedureHistoryList(shopCustomerInfo.shopId, shopCustomerInfo.customerId);
 }
 
 //request register shop customer
@@ -379,10 +385,9 @@ function searchCustomer(customerPhoneNumber, customerName){
 			} else if(resData.length == 1){
 				console.log("set customer infomation. request shop procedure history.");
 				//
-				var customerInfo = {"id":resData[0].id, "name":resData[0].name, "phoneNumber":resData[0].phoneNumber}
-		    	setCustomerInfo( customerInfo );
-		    	
-		    	$("#btnPopupInsertProcedureHistory").removeClass("disabled").addClass("btn-success");
+				//var customerInfo = {"id":resData[0].id, "name":resData[0].name, "phoneNumber":resData[0].phoneNumber};
+				var shopCustomerInfo = {"shopId":"kor20170701001", "customerId":resData[0].id, "customerName":resData[0].name, "customerPhoneNumber":resData[0].phoneNumber};
+		    	setCustomerInfo( shopCustomerInfo );
 			} else if(resData.length > 1){
 				console.log("show customer list on popup");
 				showSearchCustomerListOnPopup( resData );
@@ -391,10 +396,11 @@ function searchCustomer(customerPhoneNumber, customerName){
 	});
 }
 
-function requestCustomerProcedureHistoryList(customerInfo){
+function requestCustomerProcedureHistoryList(shopId, customerId){
 	
-	var lv_sBaseUrl = "/hair/shops/kor20170701001/customer/{customerId}/procedure-history/list";
-	var lv_sUrl = lv_sBaseUrl.replace(/{customerId}/g, customerInfo.id);
+	var lv_sBaseUrl = "/hair/shops/{shopId}/customer/{customerId}/procedure-history/list";
+	var lv_sUrl = lv_sBaseUrl.replace(/{shopId}/g, shopId)
+							 .replace(/{customerId}/g, customerId);
 	
 	$.ajax({
 		url : lv_sUrl,
@@ -441,8 +447,8 @@ function setCustomerProcedureHistoryList(CustomerProcedureHistoryList){
 }
 
 
-function showSearchCustomerListOnPopup( customerList ){
-	var lv_sTrTemplate =	"<tr data-id=':id' data-name=':name' data-phone-number=':phoneNumber'> " +
+function showSearchCustomerListOnPopup( shopCustomerList ){
+	var lv_sTrTemplate =	"<tr data-id=':id' data-name=':name' data-phone-number=':phoneNumber' data-memo=':memo' > " +
 							"	<td>:name</td>" + 
 							"	<td>:phoneNumber</td>" +
 							"</tr>";
@@ -450,11 +456,12 @@ function showSearchCustomerListOnPopup( customerList ){
 	$("#searchCustomerListPopup #tblCustomerList tbody tr").remove();
 	
 	//set table for customer list
-	$.each(customerList, function( tv_nLoopIndex, tv_oCustomerInfo ) {
+	$.each(shopCustomerList, function( tv_nLoopIndex, tv_oCustomerInfo ) {
 		console.log(tv_nLoopIndex + " : " + tv_oCustomerInfo);
-		var lv_sAppendStr =	lv_sTrTemplate.replace(/:id/g, tv_oCustomerInfo.id)
-										  .replace(/:phoneNumber/g, tv_oCustomerInfo.phoneNumber)	
-			  							  .replace(/:name/g, tv_oCustomerInfo.name);
+		var lv_sAppendStr =	lv_sTrTemplate.replace(/:id/g, tv_oCustomerInfo.customerId)
+										  .replace(/:phoneNumber/g, tv_oCustomerInfo.customerPhoneNumber)	
+			  							  .replace(/:name/g, tv_oCustomerInfo.customerName)
+			  							  .replace(/:memo/g, tv_oCustomerInfo.memo);
 		$("#searchCustomerListPopup #tblCustomerList tbody").append(lv_sAppendStr);
 	});
 	

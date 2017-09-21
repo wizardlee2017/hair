@@ -28,7 +28,7 @@
 		  AND		sc.customer_id = #{customerId}
   </select>
   
-  <select id="getShopCustomerList" resultType="com.eluda.hair.persistence.vo.CustomerVo">
+  <select id="getShopCustomerList" resultType="com.eluda.hair.persistence.dto.ShopCustomerInfo">
     <if test="customerName != null">
       <bind name="patternCustomerName" value="'%' + customerName + '%'" />
     </if>
@@ -36,9 +36,13 @@
       <bind name="patternCustomerPhoneNumber" value="'%' + customerPhoneNumber + '%'" />
     </if>
 		
-		SELECT  c.id,
-            c.name,
-            c.phone_number AS phoneNumber
+		SELECT  sc.shop_id,
+		        c.id AS customer_id,
+            c.name AS customer_name,
+            c.phone_number AS customer_phone_number,
+            c.register_shop_id,
+            sc.memo,
+            sc.obnoxious_score
     FROM    shop_customer sc
             INNER JOIN customer c
             ON sc.customer_id = c.id

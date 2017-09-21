@@ -41,6 +41,7 @@
 	  	<div class="panel-body">
 	    	<span class="label label-default" id="lblCustomerName">고객명</span>
 	    	<span class="label label-default" id="lblCustomerPhoneNumber">010-1234-1100</span>
+	    	<span class="label label-default" id="lblCustomerMemo">Customer Memo</span>
 	  	</div>
 	</div>		
 	<div class="panel panel-default">
@@ -152,10 +153,13 @@
             <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
             <input id="popupRegisterShopCustomer-txtCustomerPhoneNumber" type="text" class="form-control" name="customerPhoneNumber" placeholder="phone number" data-toggle="tooltip" data-placement="bottom" title="전화번호">           
           </div>
+          <div class="form-group">
+            <textarea class="form-control" rows="3" id="popupRegisterShopCustomer-taCustomerMemo" placeholder="Memo사항 있을경우 기록"></textarea>
+          </div>
           <br>
           <div class="input-group customer-list hidden">
 	          동일한 전화번호로 등록된 정보가 존재 합니다.
-	          동일인이 아닐 경우, 신규등록 버튼 클릭을 하시고, 동일인일 경우 아래 목록에서 선택하세요.
+	          동일인이 아닐 경우, 신규등록 버튼 클릭을 하시고, 동일인일 경우 아래 목록에서 선택한 다음 [기존 고객으로 등록] 버튼을 클릭하세요.
 	          <table class="table customer-list">
 	            <thead>
 	              <tr>

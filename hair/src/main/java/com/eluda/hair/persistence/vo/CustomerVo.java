@@ -1,10 +1,24 @@
 package com.eluda.hair.persistence.vo;
 
+import com.eluda.hair.persistence.dto.ShopCustomerInfo;
+
 public class CustomerVo {
 	private int id;
 	private String name;
 	private String phoneNumber;
 	private String registerShopId;
+	
+	
+	public CustomerVo() {
+		
+	}
+	
+	public CustomerVo(ShopCustomerInfo pShopCustomerInfo) {
+		this.id = pShopCustomerInfo.getCustomerId();
+		this.name = pShopCustomerInfo.getCustomerName();
+		this.phoneNumber = pShopCustomerInfo.getCustomerPhoneNumber();
+		this.registerShopId = pShopCustomerInfo.getRegisterShopId();
+	}
 	
 	public String getName() {
 		return name;
