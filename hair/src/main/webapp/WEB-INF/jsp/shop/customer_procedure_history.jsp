@@ -181,6 +181,7 @@
 	        </div>
         </div>
         <div class="modal-footer">
+          <span class="label label-primary hidden">고객등록이 가능합니다.</span>
           <button type="button" class="btn btn-success checkValidation">중복 확인</button>
           <button type="button" class="btn btn-default disabled" id="btnRegisterShopCustomer-popupRegisterShopCustomer">추가</button>
         </div>
