@@ -93,6 +93,19 @@ $(document).ready(function(){
 });
 
 
+
+//offset:offset time:timeMinutes
+function getBookingItemHeightLevel( p_sBeginTime, p_sEndTime ){
+	var lv_oBeginTime = moment(p_sBeginTime, "YYYYMMDDHHmm", true);
+}
+
+
+function getBookingItemOffset( p_sBeginTime ){
+	var lv_sMinutes = p_sBeginTime.substr(3);
+	var lv_nOffset = parseInt(lv_sMinutes/10 + 0.5);
+	return lv_nOffset;
+}
+
 //request booking
 function requestBooking( bookingInfo ) {
 	var lv_sBaseUrl = "/hair/booking";
@@ -191,7 +204,7 @@ function setScheduler( pv_oSchedulerData ){
 	var lv_sCurrentDate = "";
 	var lv_sAppendStr = "";
 	var lv_sThHairdresserTemplate = "<th data-hairdresser-id=:id>:nickname</th>";
-	var lv_sBookingTemplate = "<span class='booking-item :hairdresserColor :myBookingOrNot'>:beginTime ~ :endTime<br>:procedureName</span>";
+	var lv_sBookingTemplate = "<span class='booking-item :hairdresserColor :myBookingOrNot offset:offset time:timeMinutes'>:beginTime ~ :endTime<br>:procedureName</span>";
 	var lv_nCurrentTimeValue = 0;
 	var lv_oTd;
 	var lv_sMyBookingOrNot = "";
@@ -268,6 +281,7 @@ function setScheduler( pv_oSchedulerData ){
     	
     	lv_sAppendStr = lv_sBookingTemplate.replace(/:hairdresserColor/g,getHairdresserColor(tv_oBookingInfo.hairdresserId))
     									   .replace(/:myBookingOrNot/g,lv_sMyBookingOrNot)
+    									   .replace(/:offset/g,getBookingItemOffset(tv_oBookingInfo.bookingDatetime))
     									   .replace(/:beginTime/g,getTimeStr(tv_oBookingInfo.bookingDatetime))
     									   .replace(/:endTime/g,getTimeStr(tv_oBookingInfo.procedureExpectEndDatetime))
     									   .replace(/:procedureName/g,tv_oBookingInfo.procedureName);
