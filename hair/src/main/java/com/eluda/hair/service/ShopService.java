@@ -13,6 +13,6 @@ public interface ShopService {
 	public CustomerVo getCustomerInfo(String shopId, String customerId);
 	
 	//public void registerCustomer(String shopId, CustomerVo customerInfo, boolean isNewCustomer);
-	public void registerCustomer(ShopCustomerInfo pShopCustomerInfo, boolean isNewCustomer);
+	public int registerCustomer(ShopCustomerInfo pShopCustomerInfo, boolean isNewCustomer);
 	
 }

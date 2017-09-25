@@ -40,8 +40,9 @@ public class ShopServiceImpl implements ShopService {
 
 	@Override
 	@Transactional
-	public void registerCustomer(ShopCustomerInfo pShopCustomerInfo, boolean isNewCustomer) {
+	public int registerCustomer(ShopCustomerInfo pShopCustomerInfo, boolean isNewCustomer) {
 		int lv_nNewCustomerId = 0;
+		int result = 0;
 		if(isNewCustomer) {
 			CustomerVo lv_cCustomerInfo = new CustomerVo(pShopCustomerInfo);
 			customerMapper.insertCustomer(lv_cCustomerInfo);
@@ -51,10 +52,13 @@ public class ShopServiceImpl implements ShopService {
 		//shopCustomerMapper.insertShopCustomer(shopId, customerInfo.getId());
 		ShopCustomerVo lv_cShopCustomerInfo = new ShopCustomerVo(pShopCustomerInfo);
 		if( lv_nNewCustomerId > 0 ) {
-			lv_cShopCustomerInfo.setCustomerId(lv_nNewCustomerId);
+			lv_cShopCustomerInfo.setCustomerId(lv_nNewCustomerId);		
+			result = lv_nNewCustomerId;
+		} else {
+			result = lv_cShopCustomerInfo.getCustomerId();
 		}
 		shopCustomerMapper.insertShopCustomer(lv_cShopCustomerInfo);
-		return;
+		return result;
 		
 	}
 

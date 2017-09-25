@@ -3,32 +3,34 @@
 <mapper namespace="com.eluda.hair.persistence.mapper.CustomerProcedureHistoryMapper">
  
   <select id="getShopCustomerProcedureHistoryList" resultType="com.eluda.hair.persistence.dto.CustomerProcedureHistoryInfo">
-		SELECT  a.visitNumber,
-		        a.procedureName,
-		        a.procedureDate,
-		        a.defaultPrice,
-		        a.procedurePrice,
-		        a.hairdresserName,
-		        a.memo
-		FROM    (
-		          SELECT  @rownum := @rownum+1 AS visitNumber,
-		                  sm.name AS procedureName,
-		                  cph.date_yyyymmdd AS procedureDate,
-		                  cph.default_price AS defaultPrice,
-		                  cph.price AS procedurePrice,
-		                  h.nickname AS hairdresserName,
-		                  cph.memo
-		          FROM    customer_procedure_history cph
-		                  INNER JOIN shop_menu sm
-		                  ON cph.shop_menu_id = sm.id
-		                  LEFT OUTER JOIN hairdresser h
-		                  ON cph.hairdresser_id = h.id
-		                  ,(SELECT @rownum := 0) AS R
-		          WHERE   cph.shop_id = #{shopId}
-		            AND   cph.customer_id = #{customerId}
-		          ORDER   BY cph.date_yyyymmdd ASC
-		        ) a
-		ORDER   BY a.visitNumber DESC
+    SELECT *
+    FROM   (
+             SELECT @rownum := @rownum+1 AS visitNumber,
+                    a.procedureName,
+                    a.procedureDate,
+                    a.defaultPrice,
+                    a.procedurePrice,
+                    a.hairdresserName,
+                    a.memo
+               FROM (
+                      SELECT sm.name AS procedureName,
+                             cph.date_yyyymmdd AS procedureDate,
+                             cph.default_price AS defaultPrice,
+                             cph.price AS procedurePrice,
+                             h.nickname AS hairdresserName,
+                             cph.memo
+                        FROM customer_procedure_history cph
+                             INNER JOIN shop_menu sm
+                             ON cph.shop_menu_id = sm.id
+                             LEFT OUTER JOIN hairdresser h
+                             ON cph.hairdresser_id = h.id
+                      WHERE cph.shop_id = #{shopId}
+                        AND cph.customer_id = #{customerId}
+                      ORDER BY cph.date_yyyymmdd ASC
+                    ) a,
+                    (SELECT @rownum := 0) AS R
+           ) aa
+    ORDER BY aa.visitNumber DESC
   </select>
   
   <insert id="insertCustomerProcedureHistory" parameterType="com.eluda.hair.persistence.vo.CustomerProcedureHistoryVo">

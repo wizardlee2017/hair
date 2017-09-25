@@ -1,6 +1,8 @@
 package com.eluda.hair.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.ws.rs.core.Response;
 
@@ -90,6 +92,8 @@ public class ShopController {
 		logger.debug("customerPhoneNumber : {}", pShopCustomerInfo.getCustomerPhoneNumber());
 		
 		boolean isNewCustomer = false;
+		int lv_nCustomerId = 0;
+		
 		
 		if( pShopCustomerInfo.getCustomerId() <= 0 ) {
 			isNewCustomer = true;
@@ -97,8 +101,15 @@ public class ShopController {
 		}
 		
 		try {
-			shopService.registerCustomer(pShopCustomerInfo, isNewCustomer);
-			return Response.status(Response.Status.OK).build();
+			lv_nCustomerId = shopService.registerCustomer(pShopCustomerInfo, isNewCustomer);
+			Map<String, Integer> lv_cResult = new HashMap<String, Integer>();
+			lv_cResult.put("customerId", lv_nCustomerId);
+			//Response lv_cResult = Response.status(Response.Status.OK).build();
+					
+					
+			
+			//return lv_cResult;
+			return Response.ok(lv_cResult).build();
 		} catch (Exception e) {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
 		}

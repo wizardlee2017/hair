@@ -190,11 +190,13 @@ function showSearchCustomerListByPhoneNumberEqual( customerList ){
 //search customer list by phone number.
 function searchCustomerByPhoneNumberEuqal(customerPhoneNumber){
 	
-	var lv_sBaseUrl = "/hair/shops/kor20170701001/customer/list";
-	var lv_sUrl = "/hair/shops/kor20170701001/customer/list";
+	var lv_sBaseUrl = "/hair/shops/customer/list/phone-number";
+	var lv_sUrl = "";
 	
 	if(customerPhoneNumber.length > 0){
 		lv_sUrl = lv_sBaseUrl + "?customerPhoneNumber=" + customerPhoneNumber + "&accuracy=equal";
+	} else {
+		return;
 	}
 	
 	$.ajax({
@@ -336,6 +338,7 @@ function addShopCustomer( shopCustomerInfo ){
 			console.log(resData);	
 			alert("등록 되었습니다.");
 			$("#popupRegisterShopCustomer").modal("hide");
+			shopCustomerInfo.customerId = resData.responseJSON.context.entity.customerId;
 			setCustomerInfo( shopCustomerInfo );
 		}
 	});
@@ -381,12 +384,11 @@ function searchCustomer(customerPhoneNumber, customerName){
 				
 				$("#popupRegisterShopCustomer").modal();
 				
-				//searchCustomerByPhoneNumberEuqal(customerPhoneNumber);
 			} else if(resData.length == 1){
 				console.log("set customer infomation. request shop procedure history.");
 				//
 				//var customerInfo = {"id":resData[0].id, "name":resData[0].name, "phoneNumber":resData[0].phoneNumber};
-				var shopCustomerInfo = {"shopId":"kor20170701001", "customerId":resData[0].id, "customerName":resData[0].name, "customerPhoneNumber":resData[0].phoneNumber};
+				var shopCustomerInfo = {"shopId":"kor20170701001", "customerId":resData[0].customerId, "customerName":resData[0].customerName, "customerPhoneNumber":resData[0].customerPhoneNumber};
 		    	setCustomerInfo( shopCustomerInfo );
 			} else if(resData.length > 1){
 				console.log("show customer list on popup");
