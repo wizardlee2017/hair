@@ -93,16 +93,50 @@ $(document).ready(function(){
 });
 
 
-
-//offset:offset time:timeMinutes
-function getBookingItemHeightLevel( p_sBeginTime, p_sEndTime ){
-	var lv_oBeginTime = moment(p_sBeginTime, "YYYYMMDDHHmm", true);
+//예약항목 위치, 크기 조정.
+function setBookingItemPositionAndSize( p_oBookingItem ){
+	var lv_nTdHeight = $("table.schedule-week tbody td:first").outerHeight();	//시간을 표시하는 TD의 높이.
+	var lv_nUnitHeight = parseInt(lv_nTdHeight/6);	//10분당 높이.
+	var lv_sBeginDateTime = $(p_oBookingItem).data("begin-datetime");
+	var lv_sEndDateTime = $(p_oBookingItem).data("end-datetime");
+	var lv_nOffset = getBookingItemOffset(lv_sBeginDateTime);
+	var lv_nHeightLevel = getBookingItemHeightLevel( lv_sBeginDateTime, lv_sEndDateTime );
+	var $lv_oParentTd = p_oBookingItem.parent("td:first");
+	//set margin - 예약 항목이 표시되는 위치를 맞추기 위해.
+	p_oBookingItem.css("margin-top", lv_nUnitHeight*lv_nOffset);
+	p_oBookingItem.height(lv_nUnitHeight*lv_nHeightLevel);
+	p_oBookingItem.outerWidth($lv_oParentTd.innerWidth()-parseInt($lv_oParentTd.css("padding-left"))-parseInt($lv_oParentTd.css("padding-right")));
+	
 }
 
+//시술시간을 기준으로 예약건이 예약표에 표시될때 높이단계 획득
+function getBookingItemHeightLevel( p_sBeginTime, p_sEndTime ){
+	var lv_nHeightLevel = 3;
+	try {
+		var lv_oBeginTime = moment(p_sBeginTime, "YYYYMNDDHHmm");
+		var lv_oEndTime = moment(p_sEndTime, "YYYYMNDDHHmm");
+		var lv_nDuration = lv_oEndTime.diff(lv_oBeginTime,"m");	//시간차이( 분 )
+		lv_nHeightLevel = parseInt(lv_nDuration/10); 	//시간차이를 10분단위로 나누고 소수점 이라 버림.
+	} catch (e){
+		console.log("set level 3. : " + e);
+	}
+	
+	return lv_nHeightLevel;
+	
+}
 
+//시술 시작 시간을 기준으로 예약건이 예약표에 표시될때 y좌표 단계 획득.
 function getBookingItemOffset( p_sBeginTime ){
-	var lv_sMinutes = p_sBeginTime.substr(3);
-	var lv_nOffset = parseInt(lv_sMinutes/10 + 0.5);
+	var lv_nOffset = 0;
+	try {
+		var lv_oBeginTime = moment(p_sBeginTime, "YYYYMNDDHHmm");
+		var lv_oCriteriaTime = moment(p_sBeginTime, "YYYYMNDDHH00");
+		var lv_nDuration = lv_oBeginTime.diff(lv_oCriteriaTime,"m");	//시간차이( 분 )
+		lv_nOffset = parseInt(lv_nDuration/10 + 0.5); 	//시간차이를 10분단위로 나누고 반올림.
+	} catch (e){
+		console.log("set offset 0. : " + e);
+	}
+	
 	return lv_nOffset;
 }
 
@@ -204,9 +238,9 @@ function setScheduler( pv_oSchedulerData ){
 	var lv_sCurrentDate = "";
 	var lv_sAppendStr = "";
 	var lv_sThHairdresserTemplate = "<th data-hairdresser-id=:id>:nickname</th>";
-	var lv_sBookingTemplate = "<span class='booking-item :hairdresserColor :myBookingOrNot offset:offset time:timeMinutes'>:beginTime ~ :endTime<br>:procedureName</span>";
+	var lv_sBookingTemplate = "<span class='booking-item :hairdresserColor :myBookingOrNot offset:offset duration:durationMinutes' data-begin-datetime=:beginDatetime data-end-datetime=:endDatetime>:beginTime ~ :endTime<br>:procedureName</span>";
 	var lv_nCurrentTimeValue = 0;
-	var lv_oTd;
+	var $lv_oTd;
 	var lv_sMyBookingOrNot = "";
   
 	//주간 일자 설정.
@@ -282,14 +316,19 @@ function setScheduler( pv_oSchedulerData ){
     	lv_sAppendStr = lv_sBookingTemplate.replace(/:hairdresserColor/g,getHairdresserColor(tv_oBookingInfo.hairdresserId))
     									   .replace(/:myBookingOrNot/g,lv_sMyBookingOrNot)
     									   .replace(/:offset/g,getBookingItemOffset(tv_oBookingInfo.bookingDatetime))
+    									   .replace(/:durationMinutes/g,getBookingItemHeightLevel(tv_oBookingInfo.bookingDatetime, tv_oBookingInfo.procedureExpectEndDatetime))
+    									   .replace(/:beginDatetime/g,tv_oBookingInfo.bookingDatetime)
+    									   .replace(/:endDatetime/g,tv_oBookingInfo.procedureExpectEndDatetime)
     									   .replace(/:beginTime/g,getTimeStr(tv_oBookingInfo.bookingDatetime))
     									   .replace(/:endTime/g,getTimeStr(tv_oBookingInfo.procedureExpectEndDatetime))
     									   .replace(/:procedureName/g,tv_oBookingInfo.procedureName);
     	
     	console.log("lv_sAppendStr : " + lv_sAppendStr);
     	
-    	lv_oTd = $("table.schedule-week tbody td[data-datetime='"+ getTimeAxisStr(tv_oBookingInfo.bookingDatetime) +"'][data-hairdresser-id='"+ tv_oBookingInfo.hairdresserId + "']");
-    	lv_oTd.append(lv_sAppendStr);
+    	$lv_oTd = $("table.schedule-week tbody td[data-datetime='"+ getTimeAxisStr(tv_oBookingInfo.bookingDatetime) +"'][data-hairdresser-id='"+ tv_oBookingInfo.hairdresserId + "']");
+    	$lv_oTd.append(lv_sAppendStr);
+    	
+    	setBookingItemPositionAndSize($lv_oTd.find(".booking-item").last());
     })
 }
 
@@ -377,13 +416,6 @@ function getHairdresserColor( p_nHairdresserSeq ){
 	} catch (e){
 		return "hairdresser0";
 	}
-	
-	
-	/*if( p_nHairdresserSeq == 1 ){
-		return "label-primary";
-	} else {
-		return "label-success";
-	}*/
 	
 }
 
