@@ -61,4 +61,26 @@
 		  AND  b.criteria_datetime BETWEEN #{fromDateTime} AND #{toDateTime}
 	  ORDER  BY b.criteria_datetime ASC
   </select>
+  
+  <select id="getBookingListRequestStep" resultType="com.eluda.hair.persistence.dto.BookingRequestSetpInfo">
+    SELECT b.shop_id,
+		       b.customer_id,
+		       b.booking_datetime,
+		       c.name AS customer_name,
+           c.phone_number AS customer_phone_number,
+           b.booking_way,
+		       h.nickname AS hairdresser_name,
+		       sm.name AS procedure_menu_name
+		  FROM booking b
+		       INNER JOIN customer c
+		       ON b.customer_id = c.id
+		       INNER JOIN hairdresser h
+		       ON b.procedure_hairdresser_id = h.id
+		       LEFT OUTER JOIN shop_menu sm
+		       ON b.procedure_menu_id = sm.id
+		 WHERE b.shop_id = #{shopId}
+		   AND b.progress = 0
+		   AND b.booking_datetime BETWEEN #{fromDateTime} AND #{toDateTime}
+		 ORDER BY b.booking_datetime DESC
+  </select>
 </mapper>
