@@ -7,6 +7,7 @@ public class BookingRequestStepInfo {
 	private String customerPhoneNumber;
 	private String bookingDatetime;
 	private String procedureMenuId;
+	private String procedureMenuName;
 	private int procedureHairdresserId;
 	private int progress;
 	private int bookingWay;
@@ -85,5 +86,11 @@ public class BookingRequestStepInfo {
 	}
 	public void setCustomerPhoneNumber(String customerPhoneNumber) {
 		this.customerPhoneNumber = customerPhoneNumber;
+	}
+	public String getProcedureMenuName() {
+		return procedureMenuName;
+	}
+	public void setProcedureMenuName(String procedureMenuName) {
+		this.procedureMenuName = procedureMenuName;
 	}
 }

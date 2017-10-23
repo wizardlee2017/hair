@@ -65,12 +65,18 @@
   <select id="getBookingListRequestStep" resultType="com.eluda.hair.persistence.dto.BookingRequestSetpInfo">
     SELECT b.shop_id,
 		       b.customer_id,
-		       b.booking_datetime,
 		       c.name AS customer_name,
            c.phone_number AS customer_phone_number,
+           b.booking_datetime,
+           sm.id AS prodedure_menu_id,
+           sm.name AS procedure_menu_name,
+           h.id AS procedure_hairdresser_id,
+           h.nickname AS hairdresser_name,
+           b.progress,
            b.booking_way,
-		       h.nickname AS hairdresser_name,
-		       sm.name AS procedure_menu_name
+           b.memo,
+           b.procedure_expect_begin_datetime,
+           b.procedure_expect_end_datetime
 		  FROM booking b
 		       INNER JOIN customer c
 		       ON b.customer_id = c.id
