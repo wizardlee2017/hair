@@ -62,7 +62,7 @@
 	  ORDER  BY b.criteria_datetime ASC
   </select>
   
-  <select id="getBookingListRequestStep" resultType="com.eluda.hair.persistence.dto.BookingRequestSetpInfo">
+  <select id="getBookingListRequestStep" resultType="com.eluda.hair.persistence.dto.BookingRequestStepInfo">
     SELECT b.shop_id,
 		       b.customer_id,
 		       c.name AS customer_name,
