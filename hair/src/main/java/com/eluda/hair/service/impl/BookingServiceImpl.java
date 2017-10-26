@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.eluda.hair.persistence.dto.BookingDashboardInfo;
+import com.eluda.hair.persistence.dto.BookingListBasicInfo;
 import com.eluda.hair.persistence.mapper.BookingMapper;
 import com.eluda.hair.persistence.mapper.HairdresserMapper;
 import com.eluda.hair.persistence.mapper.ShopMapper;
@@ -83,6 +84,15 @@ public class BookingServiceImpl implements BookingService {
 	@Override
 	public List<BookingProgressVo> getBookingProgressList(){
 		return bookingMapper.getBookingProgressList("kor");
+	}
+	
+	@Override
+	public BookingListBasicInfo getBookingListBasicInfo( String shopId ) {
+		BookingListBasicInfo lv_oResult = new BookingListBasicInfo();
+		
+		lv_oResult.setBookingProgressList(getBookingProgressList());
+		
+		return lv_oResult;
 	}
 
 }

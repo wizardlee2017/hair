@@ -111,8 +111,9 @@ public class BookingController {
 	@RequestMapping(value = { "/booking-progress-list" }, method = RequestMethod.GET)
 	public BookingListBasicInfo bookingProgressList() {
 		BookingListBasicInfo lv_oResult = new BookingListBasicInfo();
-		String lv_sShopId = "";
+		String lv_sShopId = "kor20170701001";
 		lv_oResult.setBookingProgressList(bookingService.getBookingProgressList());
+
 		
 		return lv_oResult;
 	}
