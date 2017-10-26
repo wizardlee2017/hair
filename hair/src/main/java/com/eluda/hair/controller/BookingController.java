@@ -1,6 +1,7 @@
 package com.eluda.hair.controller;
 
 import java.text.ParseException;
+import java.util.List;
 
 import javax.ws.rs.core.Response;
 
@@ -17,8 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.eluda.hair.persistence.dto.BookingDashboardInfo;
+import com.eluda.hair.persistence.dto.BookingListBasicInfo;
 import com.eluda.hair.persistence.dto.BookingRequestInfo;
 import com.eluda.hair.persistence.dto.ShopCustomerInfo;
+import com.eluda.hair.persistence.vo.BookingProgressVo;
 import com.eluda.hair.persistence.vo.BookingVo;
 import com.eluda.hair.persistence.vo.CustomerVo;
 import com.eluda.hair.persistence.vo.ShopCustomerVo;
@@ -98,6 +101,20 @@ public class BookingController {
 		}
 		
 		return lv_oBookingDashboardInfo;
+	}
+	
+	@RequestMapping(value = { "/list" }, method = RequestMethod.GET)
+	public ModelAndView bookingList() {
+		return new ModelAndView("booking/booking_list");
+	}
+	
+	@RequestMapping(value = { "/booking-progress-list" }, method = RequestMethod.GET)
+	public BookingListBasicInfo bookingProgressList() {
+		BookingListBasicInfo lv_oResult = new BookingListBasicInfo();
+		String lv_sShopId = "";
+		lv_oResult.setBookingProgressList(bookingService.getBookingProgressList());
+		
+		return lv_oResult;
 	}
 	
 

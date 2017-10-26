@@ -89,4 +89,11 @@
 		   AND b.booking_datetime BETWEEN #{fromDateTime} AND #{toDateTime}
 		 ORDER BY b.booking_datetime DESC
   </select>
+  
+  <select id="getBookingProgressList" resultType="com.eluda.hair.persistence.vo.BookingProgressVo">
+    SELECT booking_progress_id,
+           name
+      FROM booking_progress_language
+     WHERE language_id = #{languageId}
+  </select>
 </mapper>

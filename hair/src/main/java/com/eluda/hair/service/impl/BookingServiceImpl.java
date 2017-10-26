@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import com.eluda.hair.persistence.dto.BookingDashboardInfo;
 import com.eluda.hair.persistence.mapper.BookingMapper;
 import com.eluda.hair.persistence.mapper.HairdresserMapper;
 import com.eluda.hair.persistence.mapper.ShopMapper;
+import com.eluda.hair.persistence.vo.BookingProgressVo;
 import com.eluda.hair.persistence.vo.BookingVo;
 import com.eluda.hair.service.BookingService;
 
@@ -76,6 +78,11 @@ public class BookingServiceImpl implements BookingService {
 		result.setBookingList(bookingMapper.getRequestBookingList(shopId, lv_sFromDateTime, lv_sToDateTime, customerId));
 		
 		return result;
+	}
+	
+	@Override
+	public List<BookingProgressVo> getBookingProgressList(){
+		return bookingMapper.getBookingProgressList("kor");
 	}
 
 }
