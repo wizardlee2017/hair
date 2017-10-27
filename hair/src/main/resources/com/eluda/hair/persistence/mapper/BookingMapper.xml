@@ -75,7 +75,7 @@
            b.progress,
            b.booking_way,
            b.memo,
-           b.service_expect_begin_datetime,
+           IFNULL(b.service_expect_begin_datetime, b.booking_datetime) AS service_expect_begin_datetime,
            b.service_expect_end_datetime
 		  FROM booking b
 		       INNER JOIN customer c

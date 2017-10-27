@@ -104,18 +104,18 @@
           <dl class="dl-horizontal">
 				    <dt>예약 일시</dt>
 				    <dd>
-				      <div id="popupBookingInfo-bookingDatetime" class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd hh:ii" data-link-field="popupBookingInfo-bookingDatetime" data-link-format="yyyymmddhhii">
+				      <div id="popupBookingInfo-serviceExpectBeginDatetime" class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd hh:ii" data-link-field="hid-popupBookingInfo-serviceExpectBeginDatetime" data-link-format="yyyymmddhhii">
                 <input class="form-control" size="16" type="text" value="" readonly>
                 <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
                 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 	            </div>
-	            <input type="hidden" id="popupBookingInfo-bookingDatetime" value="" /><br/> 
+	            <input type="hidden" id="hid-popupBookingInfo-serviceExpectBeginDatetime" value="" /><br/> 
 					    <span>(고객 요청 일시 : <span class="bookingDatetime" >2017.09.10 오전 11:20</span> )</span>
 				    </dd>
 				    <dt>고객</dt>
 				    <dd id="popupBookingInfo-customerName">고객1, 010-1234-1234, <span class="label label-default" id="lblCustomerName">이전 예약 이력</span></dd>
 				    <dt>시술</dt>
-				    <dd>염색</dd>
+				    <dd id="popupBookingInfo-serviceName">염색</dd>
 				    <dt>디자이너</dt>
             <dd>
               <div class="btn-group">

@@ -42,12 +42,15 @@ $(document).ready(function(){
 	
 	//예약 목록에서 변경 button click
 	$("#tblBookingList tbody").on("click", ".btn", function(){
+		var lv_sServiceExpectBeginDateTime = $(this).parents("tr:first").data("service-expect-begin-datetime");
 		var lv_sBookingDate = $(this).parents("tr:first").data("booking-datetime");
 		var lv_sCustomerName = $(this).parents("tr:first").data("customer-name");
 		var lv_sServiceName = $(this).parents("tr:first").data("service-name");
-		$("#bookingInfoPopup #popupBookingInfo-bookingDatetime .form-control").val(moment(lv_sBookingDate,"YYYYMMDDHHmm").format("YYYY-MM-DD a h:m"));
-		$("#bookingInfoPopup span.bookingDatetime").text(moment(lv_sBookingDate,"YYYYMMDDHHmm").format("YYYY-MM-DD a h:m"));
+		$("#bookingInfoPopup #popupBookingInfo-serviceExpectBeginDatetime .form-control").val(moment(lv_sServiceExpectBeginDateTime,"YYYYMMDDHHmm").format("YYYY-MM-DD a h:mm"));
+		$("#bookingInfoPopup #hid-popupBookingInfo-serviceExpectBeginDatetime").val(moment(lv_sServiceExpectBeginDateTime,"YYYYMMDDHHmm").format("YYYYMMDDHHmm"));
+		$("#bookingInfoPopup span.bookingDatetime").text(moment(lv_sBookingDate,"YYYYMMDDHHmm").format("YYYY-MM-DD a h:mm"));
 		$("#bookingInfoPopup #popupBookingInfo-customerName").text(lv_sCustomerName);
+		$("#bookingInfoPopup #popupBookingInfo-serviceName").text(lv_sServiceName);
 		$("#bookingInfoPopup").modal();
     });
 	
@@ -136,7 +139,7 @@ function searchBookingList( p_progress, p_fromDate, p_toDate ){
 
 //예약 목록 표시
 function setBookingList( p_aBookingList ){
-	var lv_sTrTemplate =	"<tr data-booking-datetime=':bookingDateTime' data-customer-name=':customerName' data-customer-phone-number=':customerPhoneNumber' data-memo=':memo'> " +
+	var lv_sTrTemplate =	"<tr data-booking-datetime=':bookingDateTime' data-service-name=':serviceName' data-service-expect-begin-datetime=':serviceExpectBeginDateTime' data-service-expect-end-datetime=':serviceExpectEndDateTime' data-customer-name=':customerName' data-customer-phone-number=':customerPhoneNumber' data-memo=':memo'> " +
 							"	<td>:formatedBookingDateTime</td>" + 
 							"	<td>:customerName</td>" +
 							"	<td>:serviceName</td>" +
@@ -154,6 +157,9 @@ function setBookingList( p_aBookingList ){
 	$.each(p_aBookingList, function( tv_nLoopIndex, tv_oBookingInfo ) {
 		console.log(tv_nLoopIndex + " : " + tv_oBookingInfo);
 		var lv_sAppendStr =	lv_sTrTemplate.replace(/:bookingDateTime/g, tv_oBookingInfo.bookingDatetime)
+		                                  .replace(/:serviceName/g, tv_oBookingInfo.serviceName)
+										  .replace(/:serviceExpectBeginDateTime/g, tv_oBookingInfo.serviceExpectBeginDatetime)
+										  .replace(/:serviceExpectEndDateTime/g, tv_oBookingInfo.serviceExpectEndDatetime)
 										  .replace(/:customerPhoneNumber/g, tv_oBookingInfo.customerPhoneNumber)
 										  .replace(/:formatedBookingDateTime/g, tv_oBookingInfo.bookingDatetime)	
 										  .replace(/:customerName/g, tv_oBookingInfo.customerName)
