@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.eluda.hair.persistence.dto.BookingDashboardInfo;
+import com.eluda.hair.persistence.dto.BookingInfo;
 import com.eluda.hair.persistence.dto.BookingListBasicInfo;
 import com.eluda.hair.persistence.dto.BookingRequestInfo;
 import com.eluda.hair.persistence.dto.ShopCustomerInfo;
@@ -103,19 +104,28 @@ public class BookingController {
 		return lv_oBookingDashboardInfo;
 	}
 	
-	@RequestMapping(value = { "/list" }, method = RequestMethod.GET)
-	public ModelAndView bookingList() {
+	@RequestMapping(value = { "/list/view" }, method = RequestMethod.GET)
+	public ModelAndView viewBookingList() {
 		return new ModelAndView("booking/booking_list");
 	}
 	
-	@RequestMapping(value = { "/booking-progress-list" }, method = RequestMethod.GET)
-	public BookingListBasicInfo bookingProgressList() {
+	@RequestMapping(path = { "/booking-list-basic-info" }, method = RequestMethod.GET)
+	public BookingListBasicInfo bookingListBasicInfo() {
 		BookingListBasicInfo lv_oResult = new BookingListBasicInfo();
 		String lv_sShopId = "kor20170701001";
-		lv_oResult.setBookingProgressList(bookingService.getBookingProgressList());
-
+		lv_oResult = bookingService.getBookingListBasicInfo(lv_sShopId);
 		
 		return lv_oResult;
+	}
+	
+	@RequestMapping(path = { "/{shopId}/list" }, method = RequestMethod.GET)
+	public List<BookingInfo> bookingList(@PathVariable("shopId") String p_sShopId, 
+			@RequestParam(value="progress") int p_nProgress,
+			@RequestParam(value="fromDate") String p_sFromDate,
+			@RequestParam(value="toDate") String p_sToDate) {
+		String lv_sFromDateTime = p_sFromDate + "0000";
+		String lv_sToDateTime = p_sToDate + "2359";
+		return bookingService.getBookingList(p_sShopId, p_nProgress, lv_sFromDateTime, lv_sToDateTime);
 	}
 	
 

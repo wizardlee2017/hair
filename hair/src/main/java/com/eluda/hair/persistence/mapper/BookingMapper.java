@@ -17,4 +17,6 @@ public interface BookingMapper {
 	public List<BookingInfo> getRequestBookingList(@Param("shopId") String shopId, @Param("fromDateTime") String fromDateTime, @Param("toDateTime") String toDateTime, @Param("customerId") int customerId);
 	
 	public List<BookingProgressVo> getBookingProgressList(@Param("languageId") String languageId);
+	
+	public List<BookingInfo> getBookingList(@Param("shopId") String shopId, @Param("progress") int progress, @Param("fromDateTime") String fromDateTime, @Param("toDateTime") String toDateTime);
 }

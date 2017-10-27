@@ -10,7 +10,6 @@
 	
 	<link rel="stylesheet" href="${contextPath}/resources/bootstrap-3.3.7-dist/css/bootstrap.min.css">
 	<%-- <link rel="stylesheet" href="${contextPath}/resources/bootstrap-4.0.0-beta-dist/css/bootstrap.min.css"> --%>
-	<link rel="stylesheet" href="${contextPath}/resources/jQuery.NumPad-master/jquery.numpad.css">
 	<link rel="stylesheet" href="${contextPath}/resources/bootstrap-datetimepicker/bootstrap-datetimepicker.css">
 	
 </head>
@@ -27,37 +26,35 @@
               <div class="btn-group">
 	              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="btnSearchProgress">
 	               <span class="caret">신청</span></button>
-	              <ul class="dropdown-menu" role="menu" id="ulProgressList" >
+	              <ul class="dropdown-menu" role="menu" id="ulBookingProgressList" >
 	                <li><a href="#">신청</a></li>
 	                <li><a href="#">접수</a></li>
-	                <li><a href="#">정상 시술 완료</a></li>
-	                <li><a href="#">시술 완료(예약 시간 어김)</a></li>
-	                <li><a href="#">예약 취소</a></li>
-	                <li><a href="#">미방문 종료</a></li>
+	                <li><a href="#">정상 시술 완료</a></li>	                
 	                <li><a href="#">전체</a></li>
 	              </ul>
 	            </div>  
 	            <div>	              
-	              <div id="searchBookingDateFrom" class="input-group date form_date col-md-3" data-date="" data-date-format="yyyy-mm-dd" data-link-field="hid-searchBookingDateFrom" data-link-format="yyyymmdd">	                
+	              <div id="divSearchBookingDateFrom" class="input-group date form_date col-md-3" data-date="" data-date-format="yyyy-mm-dd" data-link-field="hidSearchBookingDateFrom" data-link-format="yyyymmdd">	                
 	                <input class="form-control" size="16" type="text" value="" readonly>
 	                <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
 	                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>	                
 	              </div>
-	              <input type="hidden" id="hid-searchBookingDateFrom" value="" /><br/>	              
-	              <div id="searchBookingDateTo" class="input-group date form_date col-md-3" data-date="" data-date-format="yyyy-mm-dd" data-link-field="hid-searchBookingDateTo" data-link-format="yyyymmdd">
+	              <input type="hidden" id="hidSearchBookingDateFrom" value="" /><br/>	              
+	              <div id="divSearchBookingDateTo" class="input-group date form_date col-md-3" data-date="" data-date-format="yyyy-mm-dd" data-link-field="hidSearchBookingDateTo" data-link-format="yyyymmdd">
                   <input class="form-control" size="16" type="text" value="" readonly>
                   <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
                   <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>                 
                 </div>
-                <input type="hidden" id="hid-searchBookingDateTo" value="" /><br/>
+                <input type="hidden" id="hidSearchBookingDateTo" value="" /><br/>
               </div>
+              <button type="button" class="btn btn-default" data-dismiss="modal" id="btnSearchBookingList">검색</button>
             </div>
           </div>
         </div>
       </div>
     </div>
   	<div class="panel-body">
-    	<table class="table table-striped" id="tblCustomerProcedureHistoryList">
+    	<table class="table table-striped" id="tblBookingList">
         <thead>
           <tr>
 						<th>예약 요청 일시</th>
@@ -107,24 +104,28 @@
           <dl class="dl-horizontal">
 				    <dt>예약 일시</dt>
 				    <dd>
-				      <div id="popupBookingInfo-bookingDatetime" class="input-group date form_date col-md-5" data-date="" data-date-format="yyyy-mm-dd" data-link-field="hidSelectedProcedureDate" data-link-format="yyyymmdd">
+				      <div id="popupBookingInfo-bookingDatetime" class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd hh:ii" data-link-field="popupBookingInfo-bookingDatetime" data-link-format="yyyymmddhhii">
                 <input class="form-control" size="16" type="text" value="" readonly>
                 <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
                 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 	            </div>
-	            <input type="hidden" id="hid-popupBookingInfo-bookingDatetime" value="" /><br/> 
-					    <span>(고객 요청 일시 : 2017.09.10 오전 11:20 )</span>
+	            <input type="hidden" id="popupBookingInfo-bookingDatetime" value="" /><br/> 
+					    <span>(고객 요청 일시 : <span class="bookingDatetime" >2017.09.10 오전 11:20</span> )</span>
 				    </dd>
 				    <dt>고객</dt>
-				    <dd>고객1, 010-1234-1234, <span class="label label-default" id="lblCustomerName">이전 예약 이력</span></dd>
+				    <dd id="popupBookingInfo-customerName">고객1, 010-1234-1234, <span class="label label-default" id="lblCustomerName">이전 예약 이력</span></dd>
 				    <dt>시술</dt>
 				    <dd>염색</dd>
 				    <dt>디자이너</dt>
             <dd>
-              <ul class="dropdown-menu" role="menu" id="ulHairdresserList" >
-                <li><a href="#">루나</a></li>
-                <li><a href="#">지니</a></li>
-              </ul>
+              <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="btnHairdresser">
+                <span class="caret">디자이너</span></button>
+                <ul class="dropdown-menu" role="menu" id="ulHairdresserList" >
+                  <li><a href="#">디자이너1</a></li>
+                  <li><a href="#">디자이너2</a></li>
+                </ul>
+              </div>
             </dd>
             <dt>메모</dt>
             <dd>일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십</dd>
@@ -141,14 +142,12 @@
   <script type="text/javascript" src="${contextPath}/resources/jquery/jquery-3.2.1.min.js"></script>  
   <script type="text/javascript" src="${contextPath}/resources/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
   <%-- <script type="text/javascript" src="${contextPath}/resources/bootstrap-4.0.0-beta-dist/js/popper.min.js"></script> --%>  
-  <%-- <script type="text/javascript" src="${contextPath}/resources/bootstrap-4.0.0-beta-dist/js/bootstrap.min.js"></script> --%> 
+  <%-- <script type="text/javascript" src="${contextPath}/resources/bootstrap-4.0.0-beta-dist/js/bootstrap.min.js"></script> --%>
+  <%-- <script type="text/javascript" src="${contextPath}/resources/moment-with-locales.min.js"></script> --%> 
+  <script type="text/javascript" src="${contextPath}/resources/moment-with-locales.js"></script>
   <script type="text/javascript" src="${contextPath}/js/booking/booking_list.js"></script>  
   <script type="text/javascript" src="${contextPath}/resources/bootstrap-datetimepicker/bootstrap-datetimepicker.js" charset="UTF-8"></script>
   <script type="text/javascript" src="${contextPath}/resources/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.ko.js" charset="UTF-8"></script>
-  
-  <script type="text/javascript">
-    var pv_aBookingProgressList2 = "${bookingProgressList}";
-  </script>
 
 </body>
 </html>

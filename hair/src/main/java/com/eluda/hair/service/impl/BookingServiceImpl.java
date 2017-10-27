@@ -12,12 +12,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.eluda.hair.persistence.dto.BookingDashboardInfo;
+import com.eluda.hair.persistence.dto.BookingInfo;
 import com.eluda.hair.persistence.dto.BookingListBasicInfo;
 import com.eluda.hair.persistence.mapper.BookingMapper;
 import com.eluda.hair.persistence.mapper.HairdresserMapper;
 import com.eluda.hair.persistence.mapper.ShopMapper;
 import com.eluda.hair.persistence.vo.BookingProgressVo;
 import com.eluda.hair.persistence.vo.BookingVo;
+import com.eluda.hair.persistence.vo.HairdresserVo;
 import com.eluda.hair.service.BookingService;
 
 @Service
@@ -82,17 +84,20 @@ public class BookingServiceImpl implements BookingService {
 	}
 	
 	@Override
-	public List<BookingProgressVo> getBookingProgressList(){
-		return bookingMapper.getBookingProgressList("kor");
-	}
-	
-	@Override
 	public BookingListBasicInfo getBookingListBasicInfo( String shopId ) {
 		BookingListBasicInfo lv_oResult = new BookingListBasicInfo();
-		
-		lv_oResult.setBookingProgressList(getBookingProgressList());
+		List<BookingProgressVo> lv_aBookingProgressList = bookingMapper.getBookingProgressList("kor");
+		List<HairdresserVo> lv_aHairDresserList = hairdresserMapper.getShopHairDresserList(shopId);
+				
+		lv_oResult.setBookingProgressList(lv_aBookingProgressList);
+		lv_oResult.setHairdresserList(lv_aHairDresserList);
 		
 		return lv_oResult;
+	}
+
+	@Override
+	public List<BookingInfo> getBookingList(String p_sShopId, int p_nProgress, String p_sFromDateTime, String p_sToDateTime) {
+		return bookingMapper.getBookingList(p_sShopId, p_nProgress, p_sFromDateTime, p_sToDateTime);
 	}
 
 }

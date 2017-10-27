@@ -4,8 +4,8 @@ import java.text.ParseException;
 import java.util.List;
 
 import com.eluda.hair.persistence.dto.BookingDashboardInfo;
+import com.eluda.hair.persistence.dto.BookingInfo;
 import com.eluda.hair.persistence.dto.BookingListBasicInfo;
-import com.eluda.hair.persistence.vo.BookingProgressVo;
 import com.eluda.hair.persistence.vo.BookingVo;
 
 public interface BookingService {
@@ -13,7 +13,7 @@ public interface BookingService {
 	
 	public BookingDashboardInfo getBookingDashboardInfo( String shopId, String procedureExpectBeginDate, int customerId) throws ParseException;
 	
-	public List<BookingProgressVo> getBookingProgressList();
-	
 	public BookingListBasicInfo getBookingListBasicInfo( String shopId );
+	
+	public List<BookingInfo> getBookingList(String p_sShopId, int p_nProgress, String p_sFromDateTime, String p_sToDateTime);
 }

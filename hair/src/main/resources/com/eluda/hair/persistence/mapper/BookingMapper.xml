@@ -7,8 +7,8 @@
             ( shop_id,
               customer_id,
               booking_datetime,
-              procedure_menu_id,
-              procedure_hairdresser_id,
+              shop_menu_id,
+              hairdresser_id,
               progress,
               booking_way,
               memo
@@ -16,8 +16,8 @@
     VALUES  ( #{shopId},
               #{customerId},
               #{bookingDatetime},
-              #{procedureMenuId},
-              #{procedureHairdresserId},
+              #{shopMenuId},
+              #{hairdresserId},
               #{progress},
               #{bookingWay},
               #{memo}
@@ -28,24 +28,24 @@
     SELECT b.criteria_datetime AS booking_datetime,      
            b.customer_id,
            b.my_booking_or_not,
-           IF(b.progress=0, 'N', 'Y') AS assigned_or_not,
+           IF(b.progress=10, 'N', 'Y') AS assigned_or_not,
            c.name AS customer_name,       
            c.phone_number AS customer_phone_number,       
-           b.procedure_hairdresser_id AS hairdresser_id,
+           b.hairdresser_id,
            h.nickname hairdresser_name,
-           sm.name AS procedure_name,
-           b.procedure_expect_begin_datetime,
-           b.procedure_expect_end_datetime,
+           sm.name AS service_name,
+           b.service_expect_begin_datetime,
+           b.service_expect_end_datetime,
            b.memo
     FROM   (
              SELECT shop_id,
                     customer_id,
-                    IF(customer_id=IFNULL(#{customerId},0),IFNULL(procedure_expect_begin_datetime, booking_datetime), procedure_expect_begin_datetime) AS criteria_datetime,
+                    IF(customer_id=IFNULL(#{customerId},0),IFNULL(service_expect_begin_datetime, booking_datetime), service_expect_begin_datetime) AS criteria_datetime,
                     IF(customer_id=IFNULL(#{customerId},0),'Y', 'N') AS my_booking_or_not,
-                    procedure_menu_id,
-                    procedure_hairdresser_id,
-                    procedure_expect_begin_datetime,
-                    procedure_expect_end_datetime,
+                    shop_menu_id,
+                    hairdresser_id,
+                    service_expect_begin_datetime,
+                    service_expect_end_datetime,
                     progress,
                     memo
                FROM booking
@@ -53,39 +53,41 @@
 		       INNER JOIN customer c       
 		       ON b.customer_id = c.id
 		       INNER JOIN hairdresser h
-		       ON b.procedure_hairdresser_id = h.id
+		       ON b.hairdresser_id = h.id
 		       LEFT OUTER JOIN shop_menu sm
-		       ON b.procedure_menu_id = sm.id
+		       ON b.shop_menu_id = sm.id
 		WHERE  b.shop_id = #{shopId}
-		  AND  b.progress IN ( 0, 1 )
+		  AND  b.progress IN ( 10, 30 ) /* 신청, 접수 */
 		  AND  b.criteria_datetime BETWEEN #{fromDateTime} AND #{toDateTime}
 	  ORDER  BY b.criteria_datetime ASC
   </select>
   
-  <select id="getBookingListRequestStep" resultType="com.eluda.hair.persistence.dto.BookingRequestStepInfo">
+  <select id="getBookingList" resultType="com.eluda.hair.persistence.dto.BookingInfo">
     SELECT b.shop_id,
 		       b.customer_id,
 		       c.name AS customer_name,
            c.phone_number AS customer_phone_number,
            b.booking_datetime,
-           sm.id AS prodedure_menu_id,
-           sm.name AS procedure_menu_name,
-           h.id AS procedure_hairdresser_id,
+           sm.id AS shop_menu_id,
+           sm.name AS service_name,
+           h.id AS hairdresser_id,
            h.nickname AS hairdresser_name,
            b.progress,
            b.booking_way,
            b.memo,
-           b.procedure_expect_begin_datetime,
-           b.procedure_expect_end_datetime
+           b.service_expect_begin_datetime,
+           b.service_expect_end_datetime
 		  FROM booking b
 		       INNER JOIN customer c
 		       ON b.customer_id = c.id
 		       INNER JOIN hairdresser h
-		       ON b.procedure_hairdresser_id = h.id
+		       ON b.hairdresser_id = h.id
 		       LEFT OUTER JOIN shop_menu sm
-		       ON b.procedure_menu_id = sm.id
+		       ON b.shop_menu_id = sm.id
 		 WHERE b.shop_id = #{shopId}
-		   AND b.progress = 0
+		 <if test="progress != 0">
+       AND b.progress = #{progress}
+     </if>		   
 		   AND b.booking_datetime BETWEEN #{fromDateTime} AND #{toDateTime}
 		 ORDER BY b.booking_datetime DESC
   </select>
