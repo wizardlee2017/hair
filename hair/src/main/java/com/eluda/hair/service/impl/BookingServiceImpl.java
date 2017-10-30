@@ -40,7 +40,13 @@ public class BookingServiceImpl implements BookingService {
 		//진행상태를 예약 신청(0)으로 설정.
 		bookingVo.setProgress(0);
 		bookingMapper.requestBooking(bookingVo);
-
+	}
+	
+	@Override
+	@Transactional
+	public void updateBooking(BookingVo bookingVo) {
+		//
+		bookingMapper.requestBooking(bookingVo);
 	}
 
 	@Override

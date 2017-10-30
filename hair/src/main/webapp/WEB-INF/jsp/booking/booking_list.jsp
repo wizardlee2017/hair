@@ -120,7 +120,8 @@
             <dd>
               <div class="btn-group">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="btnHairdresser">
-                <span class="caret">디자이너</span></button>
+                  <span class="caret">디자이너</span>
+                </button>
                 <ul class="dropdown-menu" role="menu" id="ulHairdresserList" >
                   <li><a href="#">디자이너1</a></li>
                   <li><a href="#">디자이너2</a></li>
@@ -128,12 +129,23 @@
               </div>
             </dd>
             <dt>메모</dt>
-            <dd>일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십</dd>
+            <dd id="popupBookingInfo-memo">일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십</dd>
 				  </dl>
 		    </div>
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal" id="btnRegisterProdecureHistory-popupInsertProcedureHistory">예약접수/예약변경</button>
+          <div class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="popupBookingInfo-btnBookingProgress">
+              <span class="caret">신청</span>
+            </button>
+            <ul class="dropdown-menu" role="menu" id="popupBookingInfo-ulBookingProgressList" >
+              <li><a href="#">신청</a></li>
+              <li><a href="#">접수</a></li>
+              <li><a href="#">정상 시술 완료</a></li>                 
+              <li><a href="#">전체</a></li>
+            </ul>
+          </div> 
+          <button type="button" class="btn btn-primary" data-dismiss="modal" id="popupBookingInfo-btnBookingUpate">예약변경</button>       
         </div>
       </div>
     </div>

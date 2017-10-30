@@ -90,6 +90,46 @@ public class BookingController {
 		}
 	}
 	
+	@RequestMapping(path = {""}, method= RequestMethod.PUT)
+	public Response updateBooking(@RequestBody BookingRequestInfo pBookingRequestInfo) {
+
+		logger.debug("shopId : {}", pBookingRequestInfo.getShopId());
+		logger.debug("customerId : {}", pBookingRequestInfo.getCustomerId());
+		
+		ShopCustomerInfo lv_cShopCustomerInfo = new ShopCustomerInfo();
+		
+		lv_cShopCustomerInfo.setCustomerName(pBookingRequestInfo.getCustomerName());
+		lv_cShopCustomerInfo.setCustomerPhoneNumber(pBookingRequestInfo.getCustomerPhoneNumber());
+		lv_cShopCustomerInfo.setRegisterShopId(pBookingRequestInfo.getShopId());		
+		lv_cShopCustomerInfo.setShopId(pBookingRequestInfo.getShopId());
+		
+		if( pBookingRequestInfo.getCustomerId() <= 0 ) {
+			//신규 고객 등록.
+			shopService.registerCustomer(lv_cShopCustomerInfo, true);
+			
+			pBookingRequestInfo.setCustomerId(lv_cShopCustomerInfo.getCustomerId());
+		} else {
+			//매장 고객인지 확인
+			CustomerVo lv_cShopCustomer = customerService.getCustomerInfo(pBookingRequestInfo.getShopId(), pBookingRequestInfo.getCustomerId());
+			
+			if( lv_cShopCustomer == null ) {
+				lv_cShopCustomerInfo.setCustomerId(pBookingRequestInfo.getCustomerId());
+				//매장 고객이 아니면 매장 고객에 추가.
+				shopService.registerCustomer(lv_cShopCustomerInfo, false);
+			}
+			
+		}
+		
+		try {
+			BookingVo lv_cBookingInfo = new BookingVo( pBookingRequestInfo );
+			
+			bookingService.requestBooking(lv_cBookingInfo);
+			return Response.status(Response.Status.OK).build();
+		} catch (Exception e) {
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+	
 	@RequestMapping(value = { "/{shopId}/dashboard-info" }, method = RequestMethod.GET)
 	public BookingDashboardInfo getDashboardInfo(@PathVariable("shopId") String shopId, 
 			@RequestParam(value="begin-date", required=false) String beginDate,

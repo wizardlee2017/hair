@@ -22,7 +22,18 @@
               #{bookingWay},
               #{memo}
             )
-  </insert>  
+  </insert>
+  
+  <update id="updateBooking" parameterType="com.eluda.hair.persistence.vo.BookingVo">
+    UPDATE booking
+       SET service_expect_begin_datetime = #{serviceExpectBeginDatetime},
+           service_expect_end_datetime = #{serviceExpectEndDatetime},
+           hairdresser_id = #{hairdresserId},
+           progress = #{progress}
+     WHERE shop_id = #{shopId}
+       AND customer_id = #{customerId}
+       AND booking_datetime = #{bookingDatetime}
+  </update>
   
   <select id="getRequestBookingList" resultType="com.eluda.hair.persistence.dto.BookingInfo">
     SELECT b.criteria_datetime AS booking_datetime,      
@@ -98,4 +109,5 @@
       FROM booking_progress_language
      WHERE language_id = #{languageId}
   </select>
+  
 </mapper>

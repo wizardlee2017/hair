@@ -10,8 +10,8 @@
      WHERE id = #{id}
   </select>
     
-    <select id="getCustomerInfo" resultType="com.eluda.hair.persistence.vo.CustomerVo">
-		SELECT c.id,
+  <select id="getCustomerInfo" resultType="com.eluda.hair.persistence.vo.CustomerVo">
+    SELECT c.id,
 		       c.name,
 		       c.phone_number
 		  FROM shop_customer sc
@@ -19,6 +19,6 @@
 		       ON sc.customer_id = c.id
 		 WHERE sc.shop_id = #{shopId}
 		   AND sc.customer_id = #{customerId}
-    </select>
+  </select>
    
 </mapper>
